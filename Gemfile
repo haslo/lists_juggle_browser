@@ -14,6 +14,7 @@ gem 'jbuilder', '~> 2.5'
 
 group :development, :test do
   gem 'pry', require: false
+  gem 'rspec-rails'
 end
 
 group :development do
