@@ -4,7 +4,6 @@ class Squadron < ApplicationRecord
   belongs_to :tournament
   belongs_to :player
 
-  has_and_belongs_to_many :pilots
-  has_and_belongs_to_many :upgrades
+  has_many :ship_configurations, dependent: :destroy
 
 end

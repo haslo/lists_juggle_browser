@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170128231151) do
+ActiveRecord::Schema.define(version: 20170129003643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,15 +29,22 @@ ActiveRecord::Schema.define(version: 20170128231151) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "pilots_squadrons", id: false, force: :cascade do |t|
-    t.integer "squadron_id"
-    t.integer "pilot_id"
-  end
-
   create_table "players", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "ship_configurations", force: :cascade do |t|
+    t.integer  "squadron_id"
+    t.integer  "pilot_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "ship_configurations_upgrades", id: false, force: :cascade do |t|
+    t.integer "ship_configuration_id"
+    t.integer "upgrade_id"
   end
 
   create_table "ships", force: :cascade do |t|
@@ -50,13 +57,12 @@ ActiveRecord::Schema.define(version: 20170128231151) do
     t.integer  "faction_id"
     t.integer  "player_id"
     t.integer  "tournament_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
-  create_table "squadrons_upgrades", id: false, force: :cascade do |t|
-    t.integer "squadron_id"
-    t.integer "upgrade_id"
+    t.integer  "lists_juggler_id"
+    t.integer  "points"
+    t.integer  "swiss_standing"
+    t.integer  "elimination_standing"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "tournament_types", force: :cascade do |t|
@@ -69,6 +75,7 @@ ActiveRecord::Schema.define(version: 20170128231151) do
     t.date     "date"
     t.string   "name"
     t.integer  "tournament_type_id"
+    t.integer  "lists_juggler_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
   end
@@ -86,14 +93,15 @@ ActiveRecord::Schema.define(version: 20170128231151) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "pilots", "factions"
   add_foreign_key "pilots", "ships"
-  add_foreign_key "pilots_squadrons", "pilots"
-  add_foreign_key "pilots_squadrons", "squadrons"
+  add_foreign_key "ship_configurations", "pilots"
+  add_foreign_key "ship_configurations", "squadrons"
+  add_foreign_key "ship_configurations_upgrades", "ship_configurations"
+  add_foreign_key "ship_configurations_upgrades", "upgrades"
   add_foreign_key "squadrons", "factions"
   add_foreign_key "squadrons", "players"
   add_foreign_key "squadrons", "tournaments"
-  add_foreign_key "squadrons_upgrades", "squadrons"
-  add_foreign_key "squadrons_upgrades", "upgrades"
   add_foreign_key "tournaments", "tournament_types"
   add_foreign_key "upgrades", "upgrade_types"
 end

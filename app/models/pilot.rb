@@ -2,6 +2,7 @@ class Pilot < ApplicationRecord
 
   belongs_to :faction
   belongs_to :ship
-  has_and_belongs_to_many :squadrons
+
+  has_many :ship_configurations
 
 end

@@ -4,6 +4,7 @@ class CreateTournaments < ActiveRecord::Migration[5.0]
       t.date :date
       t.string :name
       t.integer :tournament_type_id
+      t.integer :lists_juggler_id
       t.timestamps null: false
     end
   end
