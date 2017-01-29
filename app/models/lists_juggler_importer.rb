@@ -1,5 +1,24 @@
 class ListsJugglerImporter
 
+  # th 0 Id
+  # td 0 Name
+  # td 1 Venue
+  # td 2 Num. Players
+  # td 3 Results
+  # td 4 Type
+  # td 5 Date Played
+  # td 6 Round Length
+  # td 7 City/State/Country
+  # td 8 Export Lists
+
+  def process_tournament(tournament_row)
+    tournament_type = TournamentType.find_or_create_by!(name: tournament_row.search('td')[4].text)
+    tournament      = Tournament.find_or_create_by!(tournament_type:  tournament_type,
+                                                    lists_juggler_id: tournament_row.search('th')[0].text.to_i,
+                                                    name:             tournament_row.search('td')[0].text,
+                                                    date:             Date.parse(tournament_row.search('td')[5].text))
+  end
+
   #  0 Tourney
   #  1 tourneyType
   #  2 tourneyDate
@@ -37,11 +56,9 @@ class ListsJugglerImporter
 
   def process_data(tournament_id, tournament_data)
     ActiveRecord::Base.transaction do
-      tournament_type = TournamentType.find_or_create_by!(name: tournament_data[1][1])
-      tournament      = Tournament.find_or_create_by!(tournament_type:  tournament_type,
-                                                      lists_juggler_id: tournament_id,
-                                                      name:             tournament_data[1][0],
-                                                      date:             tournament_data[1][2])
+      tournament_type = TournamentType.find_by!(name: tournament_data[1][1])
+      tournament      = Tournament.find_by!(tournament_type:  tournament_type,
+                                            lists_juggler_id: tournament_id)
       tournament.squadrons.destroy_all
       header_row = tournament_data[0]
       tournament_data[1..-1].each do |ship_data|

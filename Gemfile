@@ -12,6 +12,8 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
+gem 'nokogiri'
+
 group :development, :test do
   gem 'pry', require: false
   gem 'rspec-rails'
