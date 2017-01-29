@@ -11,9 +11,7 @@ namespace :sync do
     tournament_rows.each do |tournament_row|
       tournament_id = tournament_row.search('th').first.text
       importer.process_tournament(tournament_row)
-      if tournament_id.to_i > 341
-        import_tournament_lists(importer, tournament_id)
-      end
+      import_tournament_lists(importer, tournament_id)
     end
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170129003643) do
+ActiveRecord::Schema.define(version: 20170129184747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,8 +76,15 @@ ActiveRecord::Schema.define(version: 20170129003643) do
     t.string   "name"
     t.integer  "tournament_type_id"
     t.integer  "lists_juggler_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "lists_juggler_venue_id"
+    t.string   "venue"
+    t.integer  "num_players"
+    t.integer  "round_length"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
   end
 
   create_table "upgrade_types", force: :cascade do |t|

@@ -12,11 +12,17 @@ class ListsJugglerImporter
   # td 8 Export Lists
 
   def process_tournament(tournament_row)
-    tournament_type = TournamentType.find_or_create_by!(name: tournament_row.search('td')[4].text)
-    tournament      = Tournament.find_or_create_by!(tournament_type:  tournament_type,
-                                                    lists_juggler_id: tournament_row.search('th')[0].text.to_i,
-                                                    name:             tournament_row.search('td')[0].text,
-                                                    date:             Date.parse(tournament_row.search('td')[5].text))
+    Tournament.find_or_create_by!(tournament_type:        TournamentType.find_or_create_by!(name: tournament_row.search('td')[4].text),
+                                  lists_juggler_id:       tournament_row.search('th')[0].text.to_i,
+                                  name:                   tournament_row.search('td')[0].text,
+                                  lists_juggler_venue_id: tournament_row.search('td a').first.attributes['href'].value.split('=').last,
+                                  venue:                  tournament_row.search('td')[1].text,
+                                  num_players:            tournament_row.search('td')[2].text,
+                                  round_length:           tournament_row.search('td')[6].text,
+                                  city:                   tournament_row.search('td')[7].text.split('/')[1],
+                                  state:                  tournament_row.search('td')[7].text.split('/')[2],
+                                  country:                tournament_row.search('td')[7].text.split('/')[3],
+                                  date:                   Date.parse(tournament_row.search('td')[5].text))
   end
 
   #  0 Tourney
