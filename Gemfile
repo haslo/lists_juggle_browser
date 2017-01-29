@@ -3,20 +3,21 @@ source 'https://rubygems.org'
 # core
 
 gem 'rails', '~> 5.0.1'
-gem 'pg', '~> 0.18'
-gem 'puma', '~> 3.0'
+gem 'pg'
+gem 'puma'
 
 # views
 
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.2'
+gem 'sass-rails'
+gem 'uglifier'
+gem 'coffee-rails'
+gem 'haml'
 
 # core libs
 
 gem 'jquery-rails'
-gem 'turbolinks', '~> 5'
-gem 'jbuilder', '~> 2.5'
+gem 'turbolinks'
+gem 'jbuilder'
 
 # additional libs
 
@@ -30,6 +31,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '~> 3.0.5'
+  gem 'web-console'
+  gem 'listen'
 end
