@@ -10,8 +10,9 @@ namespace :sync do
     tournament_rows = parsed_body.search('table#tourneys tbody tr')
     tournament_rows.each do |tournament_row|
       tournament_id = tournament_row.search('th').first.text
-      importer.process_tournament(tournament_row)
+      importer.process_tournament(tournament_id, tournament_row)
       import_tournament_lists(importer, tournament_id)
+      importer.build_ranking_data(tournament_id)
     end
   end
 

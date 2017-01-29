@@ -11,9 +11,9 @@ class ListsJugglerImporter
   # td 7 City/State/Country
   # td 8 Export Lists
 
-  def process_tournament(tournament_row)
+  def process_tournament(tournament_id, tournament_row)
     Tournament.find_or_create_by!(tournament_type:        TournamentType.find_or_create_by!(name: tournament_row.search('td')[4].text),
-                                  lists_juggler_id:       tournament_row.search('th')[0].text.to_i,
+                                  lists_juggler_id:       tournament_id,
                                   name:                   tournament_row.search('td')[0].text,
                                   lists_juggler_venue_id: tournament_row.search('td a').first.attributes['href'].value.split('=').last,
                                   venue:                  tournament_row.search('td')[1].text,
@@ -96,6 +96,11 @@ class ListsJugglerImporter
 
   def remove_invalid_chars(string)
     string.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+  end
+
+  def build_ranking_data(tournament_id)
+    tournament = Tournament.find_by(lists_juggler_id: tournament_id)
+    # TODO
   end
 
 end
