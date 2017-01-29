@@ -18,16 +18,12 @@ namespace :sync do
   end
 
   def import_tournament_lists(importer, tournament_id)
-    begin
-      uri      = URI.parse("http://lists.starwarsclubhouse.com/export_tourney_lists?tourney_id=#{tournament_id}")
-      response = Net::HTTP.get_response(uri)
-      quote_char = find_quote_char_for(response.body)
-      data = CSV.parse(response.body, :quote_char => quote_char)
-      importer.process_data(tournament_id, data)
-      print ".#{tournament_id}."
-    rescue => e
-      require 'pry'; binding.pry
-    end
+    uri      = URI.parse("http://lists.starwarsclubhouse.com/export_tourney_lists?tourney_id=#{tournament_id}")
+    response = Net::HTTP.get_response(uri)
+    quote_char = find_quote_char_for(response.body)
+    data = CSV.parse(response.body, :quote_char => quote_char)
+    importer.process_data(tournament_id, data)
+    print ".#{tournament_id}."
   end
 
   def find_quote_char_for(text)
