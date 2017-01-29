@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170129184747) do
+ActiveRecord::Schema.define(version: 20170129192804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,18 @@ ActiveRecord::Schema.define(version: 20170129184747) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "ship_combos", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "ship_combos_ships", id: false, force: :cascade do |t|
+    t.integer "ships_id"
+    t.integer "ship_combos_id"
+    t.index ["ship_combos_id"], name: "index_ship_combos_ships_on_ship_combos_id", using: :btree
+    t.index ["ships_id"], name: "index_ship_combos_ships_on_ships_id", using: :btree
   end
 
   create_table "ship_configurations", force: :cascade do |t|
@@ -61,8 +73,10 @@ ActiveRecord::Schema.define(version: 20170129184747) do
     t.integer  "points"
     t.integer  "swiss_standing"
     t.integer  "elimination_standing"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.float    "swiss_percentile"
+    t.float    "elimination_percentile"
   end
 
   create_table "tournament_types", force: :cascade do |t|
@@ -102,6 +116,8 @@ ActiveRecord::Schema.define(version: 20170129184747) do
 
   add_foreign_key "pilots", "factions"
   add_foreign_key "pilots", "ships"
+  add_foreign_key "ship_combos_ships", "ship_combos", column: "ship_combos_id"
+  add_foreign_key "ship_combos_ships", "ships", column: "ships_id"
   add_foreign_key "ship_configurations", "pilots"
   add_foreign_key "ship_configurations", "squadrons"
   add_foreign_key "ship_configurations_upgrades", "ship_configurations"
