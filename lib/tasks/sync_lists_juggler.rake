@@ -11,16 +11,22 @@ namespace :sync do
     tournament_rows.each do |tournament_row|
       tournament_id = tournament_row.search('th').first.text
       importer.process_tournament(tournament_row)
-      import_tournament_lists(importer, tournament_id)
+      if tournament_id.to_i > 227
+        import_tournament_lists(importer, tournament_id)
+      end
     end
   end
 
   def import_tournament_lists(importer, tournament_id)
-    uri      = URI.parse("http://lists.starwarsclubhouse.com/export_tourney_lists?tourney_id=#{tournament_id}")
-    response = Net::HTTP.get_response(uri)
-    data = CSV.parse(response.body, :quote_char => '£')
-    importer.process_data(tournament_id, data)
-    print ".#{tournament_id}."
+    begin
+      uri      = URI.parse("http://lists.starwarsclubhouse.com/export_tourney_lists?tourney_id=#{tournament_id}")
+      response = Net::HTTP.get_response(uri)
+      data = CSV.parse(response.body, :quote_char => '|')
+      importer.process_data(tournament_id, data)
+      print ".#{tournament_id}."
+    rescue => e
+      require 'pry'; binding.pry
+    end
   end
 
   task lists_juggler: :environment do
