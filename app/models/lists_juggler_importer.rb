@@ -70,12 +70,13 @@ class ListsJugglerImporter
         header_row = tournament_data[0]
         tournament_data[1..-1].each do |ship_data|
           if ship_data[9].present? && ship_data[10].present? # ignore all rows without ship and/or pilot
-            player             = Player.find_or_create_by!(name: remove_invalid_chars(ship_data[3]))
-            faction            = Faction.find_or_create_by!(name: remove_invalid_chars(ship_data[4]))
-            squadron           = Squadron.find_or_create_by!(faction:          faction,
-                                                             tournament:       tournament,
-                                                             player:           player,
-                                                             lists_juggler_id: ship_data[8])
+            player   = Player.find_or_create_by!(name: remove_invalid_chars(ship_data[3]))
+            faction  = Faction.find_or_create_by!(name: remove_invalid_chars(ship_data[4]))
+            squadron = Squadron.find_or_create_by!(faction:          faction,
+                                                   tournament:       tournament,
+                                                   player:           player,
+                                                   lists_juggler_id: ship_data[8])
+            squadron.update(swiss_standing: ship_data[6], elimination_standing: ship_data[7])
             ship               = Ship.find_or_create_by!(name: remove_invalid_chars(ship_data[9]))
             pilot              = Pilot.find_or_create_by!(faction: faction,
                                                           ship:    ship,
@@ -99,15 +100,15 @@ class ListsJugglerImporter
   end
 
   def build_ranking_data(tournament_id)
-    tournament = Tournament.find_by(lists_juggler_id: tournament_id)
+    tournament          = Tournament.find_by(lists_juggler_id: tournament_id)
     number_of_squadrons = [tournament.num_players, tournament.squadrons.count].compact.max
-    number_in_cut = tournament.squadrons.select{|s| s.elimination_standing.present?}.count
+    number_in_cut       = tournament.squadrons.select { |s| s.elimination_standing.present? }.count
     tournament.squadrons.each do |squadron|
-      if squadron.swiss_standing.present?
-        squadron.swiss_percentile = squadron.swiss_standing / number_of_squadrons
+      if squadron.swiss_standing.present? && squadron.swiss_standing > 0
+        squadron.swiss_percentile = squadron.swiss_standing.to_f / number_of_squadrons.to_f
       end
-      if squadron.elimination_standing.present? && number_in_cut > 0
-        squadron.elimination_percentile = squadron.elimination_standing / number_in_cut
+      if squadron.elimination_standing.present? && squadron.elimination_standing > 0 && number_in_cut > 0
+        squadron.elimination_percentile = squadron.elimination_standing.to_f / number_in_cut.to_f
       end
       ship_combo = ShipCombo.with_ships(squadron.ships)
       ship_combo.squadrons << squadron
