@@ -25,9 +25,10 @@ ActiveRecord::Schema.define(version: 20170130191543) do
     t.integer  "ship_id"
     t.integer  "faction_id"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "image_uri"
+    t.string   "image_source_uri"
   end
 
   create_table "players", force: :cascade do |t|
@@ -110,9 +111,10 @@ ActiveRecord::Schema.define(version: 20170130191543) do
   create_table "upgrades", force: :cascade do |t|
     t.string   "name"
     t.integer  "upgrade_type_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "image_uri"
+    t.string   "image_source_uri"
   end
 
   add_foreign_key "pilots", "factions"

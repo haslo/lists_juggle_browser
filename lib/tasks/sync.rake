@@ -3,7 +3,7 @@ require 'csv'
 namespace :sync do
 
   def import_tournament_table
-    importer        = ListsJugglerImporter.new
+    importer        = Importer::ListJuggler.new
     uri             = URI.parse('http://lists.starwarsclubhouse.com/tourneys')
     response        = Net::HTTP.get_response(uri)
     parsed_body     = Nokogiri.parse(response.body)
@@ -13,8 +13,9 @@ namespace :sync do
       print "#{tournament_id},"
       importer.process_tournament(tournament_id, tournament_row)
       import_tournament_lists(importer, tournament_id)
-      importer.build_ranking_data(tournament_id)
+      Importer::Ranking.build_ranking_data(tournament_id)
     end
+    Importer::WikiaImage.fetch_missing_images
   end
 
   def import_tournament_lists(importer, tournament_id)
@@ -29,9 +30,15 @@ namespace :sync do
     %w[| % ç £ @ °].detect { |c| !(text.include?(c)) }
   end
 
-  task lists_juggler: :environment do
+  task rebuild_lists_juggler: :environment do
     puts 'importing all tournaments...'
     import_tournament_table
+    puts "\ndone!"
+  end
+
+  task rebuild_wikia_images: :environment do
+    puts 'rebuilding all images...'
+    Importer::WikiaImage.new.fetch_all_images
     puts "\ndone!"
   end
 

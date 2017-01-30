@@ -9,6 +9,9 @@ https://github.com/lhayhurst/xwlists
 
 Huge props to the guys who built that!
 
+I'm also using images from the X-Wing Fandom Wikia, linking to the source from
+wherever I use an image.
+
 ## Application Stack
 
 The application is written in Ruby on Rails and uses PostgreSQL as its database.
