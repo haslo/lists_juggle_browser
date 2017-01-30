@@ -4,3 +4,16 @@ en:
       title: 'Lists Juggle Browser'
       description: 'Meta analysis for the X-Wing Lists Juggler'
       author: 'Guido Gloor Modjib'
+    top_navigation:
+      title: 'Lists Juggle Browser'
+      browser: 'Data Browser'
+      about: 'About'
+      current: 'current'
+    side_navigation:
+      links:
+        overviews: 'Overview'
+        pilots: 'Pilots'
+        ships: 'Ship Types'
+        ship_combos: 'Ship Combos'
+        squadrons: 'Squadrons'
+      current: 'current'

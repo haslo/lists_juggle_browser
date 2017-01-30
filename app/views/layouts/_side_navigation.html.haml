@@ -1,27 +1,9 @@
 %ul.nav.nav-pills.flex-column
-  %li.nav-item
-    %a.nav-link.active{:href => '#'}
-      Overview
-      %span.sr-only (current)
-  %li.nav-item
-    %a.nav-link{:href => '#'} Reports
-  %li.nav-item
-    %a.nav-link{:href => '#'} Analytics
-  %li.nav-item
-    %a.nav-link{:href => '#'} Export
-%ul.nav.nav-pills.flex-column
-  %li.nav-item
-    %a.nav-link{:href => '#'} Nav item
-  %li.nav-item
-    %a.nav-link{:href => '#'} Nav item again
-  %li.nav-item
-    %a.nav-link{:href => '#'} One more nav
-  %li.nav-item
-    %a.nav-link{:href => '#'} Another nav item
-%ul.nav.nav-pills.flex-column
-  %li.nav-item
-    %a.nav-link{:href => '#'} Nav item again
-  %li.nav-item
-    %a.nav-link{:href => '#'} One more nav
-  %li.nav-item
-    %a.nav-link{:href => '#'} Another nav item
+  - %w[overviews pilots ships ship_combos squadrons].each do |controller|
+    - is_current = controller == params[:controller]
+    - path = controller == 'overviews' ? root_path : __send__("#{controller}_path")
+    %li.nav-item
+      = link_to path, class: "nav-link#{is_current ? ' active' : ''}" do
+        = t(".links.#{controller}")
+        - if is_current
+          %span.sr-only= "(#{t('.current')})"

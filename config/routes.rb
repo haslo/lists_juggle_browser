@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
 
-  root 'searches#show'
+  root 'overviews#index'
 
   resources :pilots, only: [:index, :show]
+  resources :ships, only: [:index, :show]
   resources :ship_combos, only: [:index, :show]
   resources :squadrons, only: [:index, :show]
+
+  resource :about, only: [:show]
 
 end
