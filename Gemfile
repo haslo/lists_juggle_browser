@@ -12,6 +12,7 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
 gem 'haml'
+gem 'bootstrap'
 
 # core libs
 
