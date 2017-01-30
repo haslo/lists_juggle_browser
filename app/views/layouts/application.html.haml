@@ -17,6 +17,7 @@
         %nav.col-sm-3.col-md-2.hidden-xs-down.bg-faded.sidebar
           = render '/layouts/side_navigation'
         %main.col-sm-9.offset-sm-3.col-md-10.offset-md-2.pt-3
+          %h1= yield(:title).presence || t('.title')
           = yield
 
     = javascript_include_tag '//www.google.com/jsapi', 'chartkick'

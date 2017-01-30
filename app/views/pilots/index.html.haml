@@ -1,1 +1,15 @@
-pilots/index
+- content_for :title do
+  = t('.title')
+
+%table.table.table-striped.table-bordered
+  %tr
+    %th= t('.image')
+    %th= t('.ship_name')
+    %th= t('.pilot_name')
+  - @view.pilots.each do |pilot|
+    %tr{data: {pilot_id: pilot.id, ship_id: pilot.ship.id}}
+      %td
+        = link_to pilot.image_source_uri do
+          = image_tag pilot.image_uri, width: '80px'
+      %td= pilot.ship.name
+      %td= pilot.name
