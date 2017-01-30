@@ -1,24 +1,39 @@
-# README
+# Lists Juggle Browser
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+An application that takes the wealth of data from Lists Juggler, and tries to
+distill it down into a number of reports that answer questions the community might
+have.
 
-Things you may want to cover:
+Here's the source of the Lists Juggler frontend and data:
+https://github.com/lhayhurst/xwlists
 
-* Ruby version
+Huge props to the guys who built that!
 
-* System dependencies
+## Application Stack
 
-* Configuration
+The application is written in Ruby on Rails and uses PostgreSQL as its database.
 
-* Database creation
+Preferably, use something like RVM to handle your Rubies and Gemsets. Then checkout
+the repository, make sure you're using Ruby 2.4, and...
 
-* Database initialization
+```bash
+bundle
+rake db:create db:migrate
+```
 
-* How to run the test suite
+...and done. It might not work as easily on Windows, because Windows.
 
-* Services (job queues, cache servers, search engines, etc.)
+Importing all the data (takes a while):
 
-* Deployment instructions
+```bash
+rake sync:lists_juggler
+```
 
-* ...
+## Current Status
+
+Currently, the application can import data from Lists Juggler through their HTML lists
+and CSV exports, and wrangle it into new tables to hold everything. There's also some
+pre-computation of values for statistics.
+
+Next up will be a little UI for the whole thing, and then lots of heavy lifting with
+the data.
