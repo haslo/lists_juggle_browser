@@ -77,15 +77,23 @@ class ListsJugglerImporter
                                                    player:           player,
                                                    lists_juggler_id: ship_data[8])
             squadron.update(swiss_standing: ship_data[6], elimination_standing: ship_data[7])
-            ship               = Ship.find_or_create_by!(name: remove_invalid_chars(ship_data[9]))
-            pilot              = Pilot.find_or_create_by!(faction: faction,
-                                                          ship:    ship,
-                                                          name:    remove_invalid_chars(ship_data[10]))
+            ship  = Ship.find_or_create_by!(name: remove_invalid_chars(ship_data[9]))
+            pilot = Pilot.find_or_initialize_by(faction: faction,
+                                                ship:    ship,
+                                                name:    remove_invalid_chars(ship_data[10]))
+            if pilot.new_record?
+              find_image_for(pilot)
+              pilot.save!
+            end
             ship_configuration = ShipConfiguration.create!(squadron: squadron, pilot: pilot)
             ship_data[11..-1].each.with_index do |upgrade_name, index|
               if upgrade_name.present?
                 upgrade_type = UpgradeType.find_or_create_by!(name: remove_invalid_chars(header_row[11 + index]).split('.')[0])
-                upgrade      = Upgrade.find_or_create_by!(upgrade_type: upgrade_type, name: remove_invalid_chars(upgrade_name))
+                upgrade      = Upgrade.find_or_initialize_by(upgrade_type: upgrade_type, name: remove_invalid_chars(upgrade_name))
+                if upgrade.new_record?
+                  find_image_for(upgrade)
+                  upgrade.save!
+                end
                 ship_configuration.upgrades << upgrade
               end
             end
@@ -97,6 +105,21 @@ class ListsJugglerImporter
 
   def remove_invalid_chars(string)
     string.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+  end
+
+  def find_image_for(entity)
+    search_string = entity.name
+    if entity.is_a?(Upgrade)
+      search_string += " #{entity.upgrade_type.name}"
+    end
+    search_uri         = URI.parse("http://xwing-miniatures.wikia.com/wiki/Special:Search?search=#{URI.encode(search_string)}")
+    search_response    = Net::HTTP.get_response(search_uri)
+    parsed_search_body = Nokogiri.parse(search_response.body)
+    result_uri         = URI.parse(parsed_search_body.search('ul.Results li.result:first a:first').first.attributes['href'].value)
+    result_response    = Net::HTTP.get_response(result_uri)
+    parsed_result_body = Nokogiri.parse(result_response.body)
+    image_uri          = parsed_result_body.search('#WikiaArticle img').first.attributes['src'].value
+    entity.image_uri   = image_uri
   end
 
   def build_ranking_data(tournament_id)
