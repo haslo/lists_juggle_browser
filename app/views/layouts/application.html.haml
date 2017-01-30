@@ -1,10 +1,23 @@
 !!!
-%html
+%html{:lang => 'en'}
   %head
-    %title ListJuggleBrowser
+    %title= t('.title')
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_include_tag "//www.google.com/jsapi", "chartkick"
-    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %meta{:charset => 'utf-8'}/
+    %meta{:content => 'width=device-width, initial-scale=1, shrink-to-fit=no', :name => 'viewport'}/
+    %meta{:content => t('.description'), :name => 'description'}/
+    %meta{:content => t('.author'), :name => 'author'}/
+    %link{:href => '/favicon.ico', :rel => 'icon'}/
+
   %body
-    = yield
+    = render '/layouts/top_navigation'
+    .container-fluid
+      .row
+        %nav.col-sm-3.col-md-2.hidden-xs-down.bg-faded.sidebar
+          = render '/layouts/side_navigation'
+        %main.col-sm-9.offset-sm-3.col-md-10.offset-md-2.pt-3
+          = yield
+
+    = javascript_include_tag '//www.google.com/jsapi', 'chartkick'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
