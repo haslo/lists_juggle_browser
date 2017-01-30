@@ -100,7 +100,19 @@ class ListsJugglerImporter
 
   def build_ranking_data(tournament_id)
     tournament = Tournament.find_by(lists_juggler_id: tournament_id)
-    # TODO
+    number_of_squadrons = [tournament.num_players, tournament.squadrons.count].compact.max
+    number_in_cut = tournament.squadrons.select{|s| s.elimination_standing.present?}.count
+    tournament.squadrons.each do |squadron|
+      if squadron.swiss_standing.present?
+        squadron.swiss_percentile = squadron.swiss_standing / number_of_squadrons
+      end
+      if squadron.elimination_standing.present? && number_in_cut > 0
+        squadron.elimination_percentile = squadron.elimination_standing / number_in_cut
+      end
+      ship_combo = ShipCombo.with_ships(squadron.ships)
+      ship_combo.squadrons << squadron
+      squadron.save!
+    end
   end
 
 end

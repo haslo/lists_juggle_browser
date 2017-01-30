@@ -41,10 +41,8 @@ ActiveRecord::Schema.define(version: 20170129192804) do
   end
 
   create_table "ship_combos_ships", id: false, force: :cascade do |t|
-    t.integer "ships_id"
-    t.integer "ship_combos_id"
-    t.index ["ship_combos_id"], name: "index_ship_combos_ships_on_ship_combos_id", using: :btree
-    t.index ["ships_id"], name: "index_ship_combos_ships_on_ships_id", using: :btree
+    t.integer "ship_id"
+    t.integer "ship_combo_id"
   end
 
   create_table "ship_configurations", force: :cascade do |t|
@@ -77,6 +75,7 @@ ActiveRecord::Schema.define(version: 20170129192804) do
     t.datetime "updated_at",             null: false
     t.float    "swiss_percentile"
     t.float    "elimination_percentile"
+    t.integer  "ship_combo_id"
   end
 
   create_table "tournament_types", force: :cascade do |t|
@@ -116,14 +115,15 @@ ActiveRecord::Schema.define(version: 20170129192804) do
 
   add_foreign_key "pilots", "factions"
   add_foreign_key "pilots", "ships"
-  add_foreign_key "ship_combos_ships", "ship_combos", column: "ship_combos_id"
-  add_foreign_key "ship_combos_ships", "ships", column: "ships_id"
+  add_foreign_key "ship_combos_ships", "ship_combos"
+  add_foreign_key "ship_combos_ships", "ships"
   add_foreign_key "ship_configurations", "pilots"
   add_foreign_key "ship_configurations", "squadrons"
   add_foreign_key "ship_configurations_upgrades", "ship_configurations"
   add_foreign_key "ship_configurations_upgrades", "upgrades"
   add_foreign_key "squadrons", "factions"
   add_foreign_key "squadrons", "players"
+  add_foreign_key "squadrons", "ship_combos"
   add_foreign_key "squadrons", "tournaments"
   add_foreign_key "tournaments", "tournament_types"
   add_foreign_key "upgrades", "upgrade_types"
