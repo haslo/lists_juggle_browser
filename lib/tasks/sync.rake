@@ -13,7 +13,7 @@ namespace :sync do
       print "#{tournament_id},"
       importer.process_tournament(tournament_id, tournament_row)
       import_tournament_lists(importer, tournament_id)
-      Importer::Ranking.build_ranking_data(tournament_id)
+      Importer::Ranking.new.build_ranking_data(tournament_id)
     end
     Importer::WikiaImage.fetch_missing_images
   end
@@ -40,6 +40,10 @@ namespace :sync do
     puts 'rebuilding all images...'
     Importer::WikiaImage.new.fetch_all_images
     puts "\ndone!"
+  end
+
+  task rebuild_rankings: :environment do
+    Importer::Ranking.new.rebuild_all_ranking_data
   end
 
 end
