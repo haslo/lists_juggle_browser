@@ -5,12 +5,17 @@
   %tr
     %th= t('.images')
     %th= t('.ship_name')
+    %th= t('.weight')
     %th= t('.pilot_names')
   - @view.ships.each do |ship|
     %tr{data: {ship_id: ship.id}}
       %td
-        - ship.pilots.each do |pilot|
+        - @view.ship_pilots(ship.id).each do |pilot|
           = link_to pilot.image_source_uri do
             = image_tag pilot.image_uri, width: '80px'
-      %td= ship.name
-      %td= ship.pilots.map{|p| "#{p.name} (#{p.faction.name})"}.join(', ')
+      %td
+        = ship.name
+      %td
+        = ship.weight
+      %td
+        = @view.ship_pilots(ship.id).map{|p| "#{p.name} (#{p.faction.name})"}.join(', ')

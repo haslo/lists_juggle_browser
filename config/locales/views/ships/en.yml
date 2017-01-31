@@ -3,5 +3,6 @@ en:
     index:
       title: 'Ship Types'
       images: 'Card Images'
+      weight: 'Weight'
       ship_name: 'Ship Type'
       pilot_names: 'Pilot Names'

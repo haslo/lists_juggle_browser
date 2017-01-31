@@ -1,4 +1,5 @@
 class Ship < ApplicationRecord
+  include Concerns::DirectQuery
 
   has_many :pilots
 
