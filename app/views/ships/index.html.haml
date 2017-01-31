@@ -1,1 +1,16 @@
-ships/index
+- content_for :title do
+  = t('.title')
+
+%table.table.table-striped.table-bordered
+  %tr
+    %th= t('.images')
+    %th= t('.ship_name')
+    %th= t('.pilot_names')
+  - @view.ships.each do |ship|
+    %tr{data: {ship_id: ship.id}}
+      %td
+        - ship.pilots.each do |pilot|
+          = link_to pilot.image_source_uri do
+            = image_tag pilot.image_uri, width: '80px'
+      %td= ship.name
+      %td= ship.pilots.map{|p| "#{p.name} (#{p.faction.name})"}.join(', ')

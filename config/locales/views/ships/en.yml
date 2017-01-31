@@ -1,0 +1,7 @@
+en:
+  ships:
+    index:
+      title: 'Ship Types'
+      images: 'Card Images'
+      ship_name: 'Ship Type'
+      pilot_names: 'Pilot Names'
