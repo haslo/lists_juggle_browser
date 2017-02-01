@@ -1,7 +1,7 @@
 class ShipCombosController < ApplicationController
 
   def index
-    @view = View.new(1.month.ago, true)
+    @view = View.new(ranking_configuration[:ranking_start], ranking_configuration[:ranking_end], ranking_configuration[:more_is_better])
   end
 
   def show
@@ -10,7 +10,7 @@ class ShipCombosController < ApplicationController
 
   class View
     attr_reader :ship_combos, :ships
-    def initialize(start_date, weigh_numbers)
+    def initialize(start_date, end_date, weigh_numbers)
       weight_query = <<-SQL
         avg(
           case when tournaments.num_players is not null and tournaments.num_players > 0
@@ -38,7 +38,7 @@ class ShipCombosController < ApplicationController
         squadrons: 'count(distinct squadrons.id)',
         tournaments: 'count(distinct tournaments.id)',
       }
-      @ship_combos = ShipCombo.fetch_query(ShipCombo.joins(joins).group('ship_combos.id').order('weight desc').where('tournaments.date >= ?', start_date), attributes)
+      @ship_combos = ShipCombo.fetch_query(ShipCombo.joins(joins).group('ship_combos.id').order('weight desc').where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date), attributes)
       @ships = Hash[ShipCombo.all.includes(:ships).map { |c| [c.id, c.ships.map(&:name).join(', ')] }]
     end
   end

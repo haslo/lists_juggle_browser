@@ -15,7 +15,10 @@
         %strong= "#{index + 1}."
       %td
         = link_to pilot.image_source_uri do
-          = image_tag pilot.image_uri, width: '80px'
+          - if pilot.image_uri.present?
+            = image_tag pilot.image_uri, width: '80px'
+          - else
+            = t('.no_image')
       %td
         = pilot.name
       %td

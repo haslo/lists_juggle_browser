@@ -1,7 +1,7 @@
 class PilotsController < ApplicationController
 
   def index
-    @view = View.new(1.month.ago, true)
+    @view = View.new(ranking_configuration[:ranking_start], ranking_configuration[:ranking_end], ranking_configuration[:more_is_better])
   end
 
   def show
@@ -10,7 +10,7 @@ class PilotsController < ApplicationController
 
   class View
     attr_reader :pilots
-    def initialize(start_date, weigh_numbers)
+    def initialize(start_date, end_date, weigh_numbers)
       weight_query = <<-SQL
         avg(
           case when tournaments.num_players is not null and tournaments.num_players > 0
@@ -50,7 +50,7 @@ class PilotsController < ApplicationController
         squadrons: 'count(distinct squadrons.id)',
         tournaments: 'count(distinct tournaments.id)',
       }
-      @pilots = Pilot.fetch_query(Pilot.joins(joins).group('pilots.id, pilots.name, factions.name, ships.id, ships.name, pilots.image_uri, pilots.image_source_uri').order('weight desc').where('tournaments.date >= ?', start_date), attributes)
+      @pilots = Pilot.fetch_query(Pilot.joins(joins).group('pilots.id, pilots.name, factions.name, ships.id, ships.name, pilots.image_uri, pilots.image_source_uri').order('weight desc').where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date), attributes)
     end
   end
 

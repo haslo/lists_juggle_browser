@@ -2,7 +2,7 @@ require 'csv'
 
 namespace :sync do
 
-  def import_tournament_table
+  def import_tournament_table(start_at_id)
     importer        = Importer::ListsJuggler.new
     uri             = URI.parse('http://lists.starwarsclubhouse.com/tourneys')
     response        = Net::HTTP.get_response(uri)
@@ -11,9 +11,11 @@ namespace :sync do
     tournament_rows.each do |tournament_row|
       tournament_id = tournament_row.search('th').first.text
       print "#{tournament_id},"
-      importer.process_tournament(tournament_id, tournament_row)
-      import_tournament_lists(importer, tournament_id)
-      Importer::Ranking.new.build_ranking_data(tournament_id)
+      if start_at_id.nil? || tournament_id.to_i >= start_at_id.to_i
+        importer.process_tournament(tournament_id, tournament_row)
+        import_tournament_lists(importer, tournament_id)
+        Importer::Ranking.new.build_ranking_data(tournament_id)
+      end
     end
     Importer::WikiaImage.fetch_missing_images
   end
@@ -30,9 +32,9 @@ namespace :sync do
     %w[| % ç £ @ °].detect { |c| !(text.include?(c)) }
   end
 
-  task all: :environment do
+  task :all, [:start_at_id] => :environment do |_t, args|
     puts 'importing all tournaments...'
-    import_tournament_table
+    import_tournament_table(args[:start_at_id])
     puts "\ndone!"
   end
 

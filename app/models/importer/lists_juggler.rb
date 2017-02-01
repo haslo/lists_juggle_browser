@@ -51,7 +51,7 @@ module Importer
     end
 
     def remove_invalid_chars(string)
-      string.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+      string.to_s.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
     end
 
   end

@@ -7,3 +7,4 @@ en:
       weight: 'Weight'
       ship_name: 'Ship Type'
       pilot_names: 'Pilot Names'
+      no_image: '(no image)'

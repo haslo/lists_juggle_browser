@@ -8,3 +8,4 @@ en:
       pilot_name: 'Pilot Name'
       faction: 'Faction'
       ship_name: 'Ship Type'
+      no_image: '(no image)'
