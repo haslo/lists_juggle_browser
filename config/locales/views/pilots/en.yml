@@ -1,7 +1,10 @@
 en:
   pilots:
     index:
+      position: 'Position'
       title: 'Pilots'
       image: 'Card Image'
-      ship_name: 'Ship Type'
+      weight: 'Weight'
       pilot_name: 'Pilot Name'
+      faction: 'Faction'
+      ship_name: 'Ship Type'

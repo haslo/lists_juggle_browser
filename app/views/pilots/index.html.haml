@@ -3,13 +3,28 @@
 
 %table.table.table-striped.table-bordered
   %tr
+    %th= t('.position')
     %th= t('.image')
-    %th= t('.ship_name')
     %th= t('.pilot_name')
-  - @view.pilots.each do |pilot|
-    %tr{data: {pilot_id: pilot.id, ship_id: pilot.ship.id}}
+    %th= t('.faction')
+    %th= t('.weight')
+    %th= t('.ship_name')
+  - @view.pilots.each.with_index do |pilot, index|
+    %tr{data: {pilot_id: pilot.id, ship_id: pilot.ship_id}}
+      %td
+        %strong= "#{index + 1}."
       %td
         = link_to pilot.image_source_uri do
           = image_tag pilot.image_uri, width: '80px'
-      %td= pilot.ship.name
-      %td= pilot.name
+      %td
+        = pilot.name
+      %td
+        = pilot.faction
+      %td
+        = pilot.weight
+        %br
+        = pilot.squadrons
+        %br
+        = pilot.tournaments
+      %td
+        = pilot.ship_name

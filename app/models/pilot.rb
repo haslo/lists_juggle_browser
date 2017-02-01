@@ -1,4 +1,5 @@
 class Pilot < ApplicationRecord
+  include Concerns::DirectQuery
 
   belongs_to :faction
   belongs_to :ship

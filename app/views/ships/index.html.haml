@@ -3,12 +3,15 @@
 
 %table.table.table-striped.table-bordered
   %tr
+    %th= t('.position')
     %th= t('.images')
     %th= t('.ship_name')
     %th= t('.weight')
     %th= t('.pilot_names')
-  - @view.ships.each do |ship|
+  - @view.ships.each.with_index do |ship, index|
     %tr{data: {ship_id: ship.id}}
+      %td
+        %strong= "#{index + 1}."
       %td
         - @view.ship_pilots(ship.id).each do |pilot|
           = link_to pilot.image_source_uri do

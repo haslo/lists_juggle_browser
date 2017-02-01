@@ -1,6 +1,7 @@
 en:
   ships:
     index:
+      position: 'Position'
       title: 'Ship Types'
       images: 'Card Images'
       weight: 'Weight'

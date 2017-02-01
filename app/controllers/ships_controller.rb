@@ -1,7 +1,11 @@
 class ShipsController < ApplicationController
 
   def index
-    @view = View.new(10.days.ago)
+    @view = View.new(1.month.ago)
+  end
+
+  def show
+    # TODO
   end
 
   class View
@@ -17,7 +21,9 @@ class ShipsController < ApplicationController
             +
             case when squadrons.elimination_percentile is not null then squadrons.elimination_percentile else 0 end
           )
-        ) as weight
+        ) *
+        (log(count(distinct squadrons.id)))
+        as weight
       SQL
       joins = <<-SQL
         inner join pilots
