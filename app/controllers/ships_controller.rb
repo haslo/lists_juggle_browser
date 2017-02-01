@@ -1,7 +1,7 @@
 class ShipsController < ApplicationController
 
   def index
-    @view = View.new(1.month.ago)
+    @view = View.new(1.month.ago, true)
   end
 
   def show
@@ -10,7 +10,7 @@ class ShipsController < ApplicationController
 
   class View
     attr_reader :ships
-    def initialize(start_date)
+    def initialize(start_date, weigh_numbers)
       weight_query = <<-SQL
         avg(
           case when tournaments.num_players is not null and tournaments.num_players > 0
@@ -21,8 +21,9 @@ class ShipsController < ApplicationController
             +
             case when squadrons.elimination_percentile is not null then squadrons.elimination_percentile else 0 end
           )
-        ) *
-        (log(count(distinct squadrons.id)))
+        ) #{
+          weigh_numbers ? '* (log(count(distinct squadrons.id)))' : ''
+        }
         as weight
       SQL
       joins = <<-SQL

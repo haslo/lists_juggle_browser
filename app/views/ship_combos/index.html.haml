@@ -1,1 +1,20 @@
-ship_combos/index
+- content_for :title do
+  = t('.title')
+
+%table.table.table-striped.table-bordered
+  %tr
+    %th= t('.position')
+    %th= t('.ship_names')
+    %th= t('.weight')
+  - @view.ship_combos.each.with_index do |ship_combo, index|
+    %tr{data: {ship_combo_id: ship_combo.id}}
+      %td
+        %strong= "#{index + 1}."
+      %td
+        = @view.ships[ship_combo.id]
+      %td
+        = ship_combo.weight
+        %br
+        = ship_combo.squadrons
+        %br
+        = ship_combo.tournaments
