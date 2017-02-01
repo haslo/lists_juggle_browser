@@ -1,0 +1,13 @@
+#filter-accordion{role: 'tablist', style: 'margin-bottom: 0.5rem'}
+  .card
+    #filter-header.card-header{role: 'tab'}
+      %h5.mb-0
+        %a{data: {toggle: 'collapse', parent: '#filter-accordion'}, href: '#filter-content'}= t('.filter')
+    #filter-content.collapse.show{role: 'tabpanel'}
+      .card-block.row{style: 'padding: 0.5rem'}
+        .col-sm-4
+          from - to
+        .col-sm-4
+          checkboxes
+        .col-sm-4
+          swiss / elimination
