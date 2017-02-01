@@ -1,7 +1,9 @@
 class ShipsController < ApplicationController
 
   def index
-    @view = View.new(ranking_configuration[:ranking_start], ranking_configuration[:ranking_end], ranking_configuration[:more_is_better])
+    @view = View.new(ranking_configuration[:ranking_start],
+                     ranking_configuration[:ranking_end],
+                     ranking_configuration)
   end
 
   def show
@@ -10,22 +12,7 @@ class ShipsController < ApplicationController
 
   class View
     attr_reader :ships
-    def initialize(start_date, end_date, weigh_numbers)
-      weight_query = <<-SQL
-        avg(
-          case when tournaments.num_players is not null and tournaments.num_players > 0
-          then log(tournaments.num_players) else 0 end
-          *
-          (
-            case when squadrons.swiss_percentile is not null then squadrons.swiss_percentile else 0 end
-            +
-            case when squadrons.elimination_percentile is not null then squadrons.elimination_percentile else 0 end
-          )
-        ) #{
-          weigh_numbers ? '* (log(count(distinct squadrons.id)))' : ''
-        }
-        as weight
-      SQL
+    def initialize(start_date, end_date, ranking_configuration)
       joins = <<-SQL
         inner join pilots
           on ships.id = pilots.ship_id
@@ -39,7 +26,7 @@ class ShipsController < ApplicationController
       attributes = {
         id: 'ships.id',
         name: 'ships.name',
-        weight: weight_query,
+        weight: WeightQueryBuilder.new.build_weight_query(ranking_configuration),
         squadrons: 'count(distinct squadrons.id)',
         tournaments: 'count(distinct tournaments.id)',
       }
