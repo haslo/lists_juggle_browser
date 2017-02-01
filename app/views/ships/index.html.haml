@@ -17,5 +17,9 @@
         = ship.name
       %td
         = ship.weight
+        %br
+        = ship.squadrons
+        %br
+        = ship.tournaments
       %td
         = @view.ship_pilots(ship.id).map{|p| "#{p.name} (#{p.faction.name})"}.join(', ')
