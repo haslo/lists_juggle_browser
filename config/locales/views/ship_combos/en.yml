@@ -1,0 +1,7 @@
+en:
+  ship_combos:
+    index:
+      position: 'Position'
+      title: 'List Archetypes'
+      ship_names: 'Ship Types'
+      weight: 'Weight'
