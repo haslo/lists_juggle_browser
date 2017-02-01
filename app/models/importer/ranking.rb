@@ -1,6 +1,10 @@
 module Importer
   class Ranking
 
+    def initialize
+      @all_ship_combos = ShipCombo.all.includes(:ships).to_a
+    end
+
     def rebuild_all_ranking_data
       Tournament.includes(:squadrons).all.each do |tournament|
         build_ranking_data(tournament.lists_juggler_id)
@@ -18,10 +22,20 @@ module Importer
         if squadron.elimination_standing.present? && squadron.elimination_standing > 0 && number_in_cut > 0
           squadron.elimination_percentile = (number_in_cut.to_f - squadron.elimination_standing.to_f + 1) / number_in_cut.to_f
         end
-        ship_combo = ShipCombo.with_ships(squadron.ships)
+        ship_combo = find_or_create_ship_combo(squadron.ships)
         ship_combo.squadrons << squadron
         squadron.save!
       end
+    end
+
+    def find_or_create_ship_combo(ships)
+      found_combo = @all_ship_combos.detect do |potential_combo|
+        potential_combo.ships.map(&:id).sort == ships.map(&:id).sort
+      end
+      return found_combo if found_combo.present?
+      new_combo = ShipCombo.create!(ships: ships)
+      @all_ship_combos << new_combo
+      new_combo
     end
 
   end

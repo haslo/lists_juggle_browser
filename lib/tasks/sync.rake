@@ -3,7 +3,7 @@ require 'csv'
 namespace :sync do
 
   def import_tournament_table
-    importer        = Importer::ListJuggler.new
+    importer        = Importer::ListsJuggler.new
     uri             = URI.parse('http://lists.starwarsclubhouse.com/tourneys')
     response        = Net::HTTP.get_response(uri)
     parsed_body     = Nokogiri.parse(response.body)
@@ -30,7 +30,7 @@ namespace :sync do
     %w[| % ç £ @ °].detect { |c| !(text.include?(c)) }
   end
 
-  task rebuild_lists_juggler: :environment do
+  task all: :environment do
     puts 'importing all tournaments...'
     import_tournament_table
     puts "\ndone!"
