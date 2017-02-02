@@ -7,7 +7,10 @@
       = form_tag filter_configurator_path, method: :patch, id: 'filter-form' do
         .card-block.row{style: 'padding: 0.5rem'}
           .col-sm-4
+            = select_tag :preset_ranking_start, options_for_select(preset_dates, ranking_configuration[:ranking_start]), class: 'preset-date', data: {field: '#ranking-start'}
             = text_field_tag :ranking_start, ranking_configuration[:ranking_start], class: 'filter-input', id: 'ranking-start'
+            %br
+            = select_tag :preset_ranking_end, options_for_select(preset_dates, ranking_configuration[:ranking_end]), class: 'preset-date', data: {field: '#ranking-end'}
             = text_field_tag :ranking_end, ranking_configuration[:ranking_end], class: 'filter-input', id: 'ranking-end'
           .col-sm-4
             = label_tag :large_tournament_multiplier
@@ -21,6 +24,10 @@
   :coffeescript
     $ ->
       $('.filter-input').on 'change', (e) ->
+        $(e.target).closest('form').trigger('submit')
+
+      $('.preset-date').on 'change', (e) ->
+        $($(e.target).data('field')).val($(e.target).val())
         $(e.target).closest('form').trigger('submit')
 
       form = $('#filter-form')
