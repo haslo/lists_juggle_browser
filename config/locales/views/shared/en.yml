@@ -1,6 +1,9 @@
 en:
   shared:
     filter_configurator:
+      filter: 'Filter'
+      large_tournament_multiplier: 'Large Tournament Multiplier'
+      widespread_use_multiplier: 'Widespread Use Multiplier'
       dates:
         wave_1: '(Launch / Wave 1)'
         wave_2: '(Wave 2)'

@@ -13,9 +13,10 @@
             = select_tag :preset_ranking_end, options_for_select(preset_dates, ranking_configuration[:ranking_end]), class: 'preset-date', data: {field: '#ranking-end'}
             = text_field_tag :ranking_end, ranking_configuration[:ranking_end], class: 'filter-input', id: 'ranking-end'
           .col-sm-4
-            = label_tag :large_tournament_multiplier
+            = label_tag :large_tournament_multiplier, t('.large_tournament_multiplier')
             = check_box_tag :large_tournament_multiplier, true, ranking_configuration[:large_tournament_multiplier], class: 'filter-input', id: 'large-tournament-multiplier'
-            = label_tag :widespread_use_multiplier
+            %br
+            = label_tag :widespread_use_multiplier, t('.widespread_use_multiplier')
             = check_box_tag :widespread_use_multiplier, true, ranking_configuration[:widespread_use_multiplier], class: 'filter-input', id: 'widespread-use-multiplier'
           .col-sm-4
             = select_tag :use_ranking_data, options_for_select(%w[swiss elimination swiss+elimination], ranking_configuration[:use_ranking_data]), class: 'filter-input', id: 'use-ranking-data'
