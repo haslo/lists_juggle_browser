@@ -1,4 +1,5 @@
 class Upgrade < ApplicationRecord
+  include Concerns::DirectQuery
 
   belongs_to :upgrade_type
 

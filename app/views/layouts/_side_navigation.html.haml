@@ -1,5 +1,5 @@
 %ul.nav.nav-pills.flex-column
-  - %w[overviews pilots ships ship_combos].each do |controller|
+  - %w[overviews pilots ships ship_combos upgrades].each do |controller|
     - is_current = controller == params[:controller]
     - path = controller == 'overviews' ? root_path : __send__("#{controller}_path")
     %li.nav-item
