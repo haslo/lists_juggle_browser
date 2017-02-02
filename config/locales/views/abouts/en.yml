@@ -20,3 +20,5 @@ en:
           <li><a href="http://rubyonrails.org/">Ruby on Rails</a></li>
           <li><a href="https://jquery.com//">jQuery</a> for everything JavaScript</li>
         </ul>
+        <p>The author is known as haslo on the FFG forums, BGG, GitHub, Twitter. Throw me a note in any of those places
+          or create an issue on GitHub if you find bugs or have ideas for improvements.</p>
