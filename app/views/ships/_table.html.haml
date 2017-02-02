@@ -1,0 +1,31 @@
+%table.table.table-striped.table-bordered
+  %tr
+    %th.text-nowrap= t('.position')
+    %th.text-nowrap= t('.ship_name')
+    %th.text-nowrap= t('.pilot_names')
+    %th.text-nowrap= t('.squadron_count')
+    %th.text-nowrap= t('.tournaments_count')
+    %th.text-nowrap= t('.average_percentile')
+    %th.text-nowrap= t('.weight')
+  - ships.each.with_index do |ship, index|
+    %tr{data: {ship_id: ship.id}}
+      %td
+        %strong= "#{index + 1}."
+      %td
+        = link_to ship_path(ship.id) do
+          = ship.name
+      %td
+        - pilots = @view.ship_pilots(ship.id)
+        - pilots.each.with_index do |pilot, index|
+          %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{FontLookup.new.faction_icon(pilot.faction.name)}"}
+          = pilot.name
+          - if index < pilots.count - 1
+            = '-'
+      %td
+        = ship.squadrons
+      %td
+        = ship.tournaments
+      %td
+        = (ship.average_percentile * 1000).to_i / 10.0
+      %td
+        = ship.weight

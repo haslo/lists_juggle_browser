@@ -3,9 +3,11 @@ en:
     show:
       title: 'Ship Type: %{type}'
       pilots: 'Pilots'
+      ship_combos: 'List Archetypes'
     index:
-      position: 'Position'
       title: 'Ship Types'
+    table:
+      position: 'Position'
       images: 'Card Images'
       ship_name: 'Ship Type'
       pilot_names: 'Pilot Names'

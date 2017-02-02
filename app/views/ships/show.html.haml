@@ -2,5 +2,7 @@
   = t('.title', type: @view.ship.name)
 
 %h2= t('.pilots')
-
 = render '/pilots/table', pilots: @view.pilots
+
+%h2= t('.ship_combos')
+= render '/ship_combos/table', ship_combos: @view.ship_combos, ships: @view.ship_combos_ships

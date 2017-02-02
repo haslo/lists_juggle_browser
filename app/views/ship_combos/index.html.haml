@@ -1,25 +1,4 @@
 - content_for :title do
   = t('.title')
 
-%table.table.table-striped.table-bordered
-  %tr
-    %th.text-nowrap= t('.position')
-    %th.text-nowrap= t('.ship_names')
-    %th.text-nowrap= t('.squadron_count')
-    %th.text-nowrap= t('.tournaments_count')
-    %th.text-nowrap= t('.average_percentile')
-    %th.text-nowrap= t('.weight')
-  - @view.ship_combos.each.with_index do |ship_combo, index|
-    %tr{data: {ship_combo_id: ship_combo.id}}
-      %td
-        %strong= "#{index + 1}."
-      %td
-        = @view.ships[ship_combo.id]
-      %td
-        = ship_combo.squadrons
-      %td
-        = ship_combo.tournaments
-      %td
-        = (ship_combo.average_percentile * 1000).to_i / 10.0
-      %td
-        = ship_combo.weight
+= render '/ship_combos/table', ship_combos: @view.ship_combos, ships: @view.ships

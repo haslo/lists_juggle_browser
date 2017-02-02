@@ -1,8 +1,9 @@
 en:
   ship_combos:
     index:
-      position: 'Position'
       title: 'List Archetypes'
+    table:
+      position: 'Position'
       ship_names: 'Ship Types'
       squadron_count: '# Squadrons'
       tournaments_count: '# Tournaments'
