@@ -3,7 +3,7 @@ module Rankers
 
     attr_reader :ship_combos, :ships
 
-    def initialize(ranking_configuration, ship_id: nil)
+    def initialize(ranking_configuration, ship_id: nil, minimum_count_multiplier: 10)
       start_date = ranking_configuration[:ranking_start]
       end_date   = ranking_configuration[:ranking_end]
       joins      = <<-SQL
@@ -20,13 +20,13 @@ module Rankers
         tournaments:        'count(distinct tournaments.id)',
         average_percentile: weight_query_builder.build_average_query,
       }
-      number_of_tournaments = Tournament.where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date).count
       ship_combos_relation  = ShipCombo
                                 .joins(joins)
                                 .group('ship_combos.id')
-                                .having("count(distinct tournament_id) >= #{(number_of_tournaments / 10).to_i}")
                                 .order('weight desc')
                                 .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
+      number_of_tournaments = Tournament.where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date).count
+      ship_combos_relation = ship_combos_relation.having("count(distinct tournament_id) >= #{(number_of_tournaments / minimum_count_multiplier).to_i}")
       if ship_id.present?
         ship_combos_relation = ship_combos_relation.where('ship_combos.id in (select ship_combo_id from ship_combos_ships where ship_id = ?)', ship_id)
       end
