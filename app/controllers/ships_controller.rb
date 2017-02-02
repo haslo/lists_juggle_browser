@@ -23,12 +23,14 @@ class ShipsController < ApplicationController
         inner join tournaments
           on squadrons.tournament_id = tournaments.id
       SQL
+      weight_query_builder = WeightQueryBuilder.new(ranking_configuration)
       attributes = {
         id: 'ships.id',
         name: 'ships.name',
-        weight: WeightQueryBuilder.new.build_weight_query(ranking_configuration),
+        weight: weight_query_builder.build_weight_query,
         squadrons: 'count(distinct squadrons.id)',
         tournaments: 'count(distinct tournaments.id)',
+        average_percentile: weight_query_builder.build_average_query,
       }
       @ships = Ship.fetch_query(Ship.joins(joins).group('ships.id, ships.name').order('weight desc').where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date), attributes)
       @pilots = Pilot.all.includes(:faction).to_a

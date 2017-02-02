@@ -4,4 +4,7 @@ en:
       position: 'Position'
       title: 'List Archetypes'
       ship_names: 'Ship Types'
-      weight: 'Weight'
+      squadron_count: '# Squadrons'
+      tournaments_count: '# Tournaments'
+      average_percentile: 'avg Percentile'
+      weight: 'Magic'

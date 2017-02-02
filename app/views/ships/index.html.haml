@@ -3,29 +3,26 @@
 
 %table.table.table-striped.table-bordered
   %tr
-    %th= t('.position')
-    %th= t('.images')
-    %th= t('.ship_name')
-    %th= t('.weight')
-    %th= t('.pilot_names')
+    %th.text-nowrap= t('.position')
+    %th.text-nowrap= t('.ship_name')
+    %th.text-nowrap= t('.pilot_names')
+    %th.text-nowrap= t('.squadron_count')
+    %th.text-nowrap= t('.tournaments_count')
+    %th.text-nowrap= t('.average_percentile')
+    %th.text-nowrap= t('.weight')
   - @view.ships.each.with_index do |ship, index|
     %tr{data: {ship_id: ship.id}}
       %td
         %strong= "#{index + 1}."
       %td
-        - @view.ship_pilots(ship.id).each do |pilot|
-          = link_to pilot.image_source_uri do
-            - if pilot.image_uri.present?
-              = image_tag pilot.image_uri, width: '80px'
-            - else
-              = t('.no_image')
-      %td
         = ship.name
       %td
-        = ship.weight
-        %br
+        = @view.ship_pilots(ship.id).map{|p| "#{p.name} (#{p.faction.name})"}.join(', ')
+      %td
         = ship.squadrons
-        %br
+      %td
         = ship.tournaments
       %td
-        = @view.ship_pilots(ship.id).map{|p| "#{p.name} (#{p.faction.name})"}.join(', ')
+        = (ship.average_percentile * 1000).to_i / 10.0
+      %td
+        = ship.weight

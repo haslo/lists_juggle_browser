@@ -25,6 +25,7 @@ class PilotsController < ApplicationController
         inner join tournaments
           on squadrons.tournament_id = tournaments.id
       SQL
+      weight_query_builder = WeightQueryBuilder.new(ranking_configuration)
       attributes = {
         id: 'pilots.id',
         name: 'pilots.name',
@@ -33,9 +34,10 @@ class PilotsController < ApplicationController
         image_source_uri: 'pilots.image_source_uri',
         ship_id: 'ships.id',
         ship_name: 'ships.name',
-        weight: WeightQueryBuilder.new.build_weight_query(ranking_configuration),
+        weight: weight_query_builder.build_weight_query,
         squadrons: 'count(distinct squadrons.id)',
         tournaments: 'count(distinct tournaments.id)',
+        average_percentile: weight_query_builder.build_average_query,
       }
       @pilots = Pilot.fetch_query(Pilot.joins(joins).group('pilots.id, pilots.name, factions.name, ships.id, ships.name, pilots.image_uri, pilots.image_source_uri').order('weight desc').where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date), attributes)
     end
