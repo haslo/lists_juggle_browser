@@ -1,1 +1,6 @@
-ships/show
+- content_for :title do
+  = t('.title', type: @view.ship.name)
+
+%h2= t('.pilots')
+
+= render '/pilots/table', pilots: @view.pilots

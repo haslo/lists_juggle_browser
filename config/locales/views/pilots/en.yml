@@ -1,8 +1,9 @@
 en:
   pilots:
     index:
-      position: 'Position'
       title: 'Pilots'
+    table:
+      position: 'Position'
       image: 'Card Image'
       pilot_name: 'Pilot Name'
       faction: 'Faction'

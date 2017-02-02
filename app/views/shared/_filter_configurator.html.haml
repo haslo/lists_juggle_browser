@@ -19,7 +19,7 @@
             = label_tag :widespread_use_multiplier, t('.widespread_use_multiplier')
             = check_box_tag :widespread_use_multiplier, true, ranking_configuration[:widespread_use_multiplier], class: 'filter-input', id: 'widespread-use-multiplier'
           .col-sm-4
-            = select_tag :use_ranking_data, options_for_select(%w[swiss elimination swiss+elimination], ranking_configuration[:use_ranking_data]), class: 'filter-input', id: 'use-ranking-data'
+            = select_tag :use_ranking_data, options_for_select(preset_ranking_data, ranking_configuration[:use_ranking_data]), class: 'filter-input', id: 'use-ranking-data'
 
 - content_for :javascript do
   :coffeescript

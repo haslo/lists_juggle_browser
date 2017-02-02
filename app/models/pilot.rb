@@ -7,7 +7,7 @@ class Pilot < ApplicationRecord
   has_many :ship_configurations
 
   def wikia_search_string
-    "#{name} #{ship.name}"
+    name
   end
 
 end

@@ -22,7 +22,7 @@ class WeightQueryBuilder
                           case when squadrons.elimination_percentile is not null then squadrons.elimination_percentile else 0 end
                         )
                        SQL
-                     when 'swiss+elimination'
+                     when 'all'
                        <<-SQL
                       avg(
                         (
@@ -69,7 +69,7 @@ class WeightQueryBuilder
             case when squadrons.elimination_percentile is not null then squadrons.elimination_percentile else 0 end
           )
         SQL
-      when 'swiss+elimination'
+      when 'all'
         <<-SQL
           avg(
             case when squadrons.swiss_percentile is not null then squadrons.swiss_percentile else 0 end

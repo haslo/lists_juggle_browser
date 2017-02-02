@@ -1,0 +1,36 @@
+%table.table.table-striped.table-bordered
+  %tr
+    %th.text-nowrap= t('.position')
+    %th.text-nowrap= t('.image')
+    %th.text-nowrap= t('.pilot_name')
+    %th.text-nowrap= t('.faction')
+    %th.text-nowrap= t('.ship_name')
+    %th.text-nowrap= t('.squadron_count')
+    %th.text-nowrap= t('.tournaments_count')
+    %th.text-nowrap= t('.average_percentile')
+    %th.text-nowrap= t('.weight')
+  - pilots.each.with_index do |pilot, index|
+    %tr{data: {pilot_id: pilot.id, ship_id: pilot.ship_id}}
+      %td
+        %strong= "#{index + 1}."
+      %td
+        = link_to pilot.image_source_uri do
+          - if pilot.image_uri.present?
+            = image_tag pilot.image_uri, width: '80px'
+          - else
+            = t('.no_image')
+      %td
+        = pilot.name
+      %td
+        %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{FontLookup.new.faction_icon(pilot.faction)}"}
+      %td
+        = link_to ship_path(pilot.ship_id) do
+          = pilot.ship_name
+      %td
+        = pilot.squadrons
+      %td
+        = pilot.tournaments
+      %td
+        = (pilot.average_percentile * 1000).to_i / 10.0
+      %td
+        = pilot.weight

@@ -23,3 +23,7 @@ en:
         rogue_one: 'Rogue One Launch'
         wave_10: 'Wave 10'
         today: 'Today'
+      data_uses:
+        swiss: 'use Swiss ranks'
+        elimination: 'use ranks after cut'
+        all: 'use all ranks'

@@ -5,7 +5,10 @@ class ShipsController < ApplicationController
   end
 
   def show
-    # TODO
+    @view = OpenStruct.new({
+                             ship:   Ship.find(params[:id]),
+                             pilots: Rankers::PilotsRanker.new(ranking_configuration, ship_id: params[:id]).pilots,
+                           })
   end
 
 end

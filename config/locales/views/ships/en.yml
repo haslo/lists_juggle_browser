@@ -1,5 +1,8 @@
 en:
   ships:
+    show:
+      title: 'Ship Type: %{type}'
+      pilots: 'Pilots'
     index:
       position: 'Position'
       title: 'Ship Types'

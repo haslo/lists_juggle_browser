@@ -3,7 +3,7 @@ module Rankers
 
     attr_reader :pilots
 
-    def initialize(ranking_configuration)
+    def initialize(ranking_configuration, ship_id: nil)
       start_date = ranking_configuration[:ranking_start]
       end_date = ranking_configuration[:ranking_end]
       joins = <<-SQL
@@ -32,7 +32,14 @@ module Rankers
         tournaments: 'count(distinct tournaments.id)',
         average_percentile: weight_query_builder.build_average_query,
       }
-      @pilots = Pilot.fetch_query(Pilot.joins(joins).group('pilots.id, pilots.name, factions.name, ships.id, ships.name, pilots.image_uri, pilots.image_source_uri').order('weight desc').where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date), attributes)
+      pilot_relation = Pilot.joins(joins)
+                           .group('pilots.id, pilots.name, factions.name, ships.id, ships.name, pilots.image_uri, pilots.image_source_uri')
+                           .order('weight desc')
+                           .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
+      if ship_id.present?
+        pilot_relation = pilot_relation.where('ships.id = ?', ship_id)
+      end
+      @pilots = Pilot.fetch_query(pilot_relation, attributes)
     end
 
   end

@@ -15,7 +15,8 @@
       %td
         %strong= "#{index + 1}."
       %td
-        = ship.name
+        = link_to ship_path(ship.id) do
+          = ship.name
       %td
         - pilots = @view.ship_pilots(ship.id)
         - pilots.each.with_index do |pilot, index|

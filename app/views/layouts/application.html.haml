@@ -17,7 +17,7 @@
         %nav.col-sm-3.col-md-2.hidden-xs-down.bg-faded.sidebar
           = render '/layouts/side_navigation'
         %main.col-sm-9.offset-sm-3.col-md-10.offset-md-2.pt-3
-          - if %w[ships pilots ship_combos].include?(params[:controller]) && params[:action] == 'index'
+          - if show_filter?(params[:controller], params[:action])
             = render '/shared/filter_configurator'
           %h1= yield(:title).presence || t('.title')
           = yield
