@@ -25,7 +25,7 @@
       %td
         = pilot.name
       %td
-        = pilot.faction
+        %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{FontLookup.new.faction_icon(pilot.faction)}"}
       %td
         = pilot.ship_name
       %td

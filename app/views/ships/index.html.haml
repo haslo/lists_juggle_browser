@@ -17,7 +17,12 @@
       %td
         = ship.name
       %td
-        = @view.ship_pilots(ship.id).map{|p| "#{p.name} (#{p.faction.name})"}.join(', ')
+        - pilots = @view.ship_pilots(ship.id)
+        - pilots.each.with_index do |pilot, index|
+          %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{FontLookup.new.faction_icon(pilot.faction.name)}"}
+          = pilot.name
+          - if index < pilots.count - 1
+            = '-'
       %td
         = ship.squadrons
       %td
