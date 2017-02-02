@@ -2,12 +2,33 @@
   .card
     #filter-header.card-header{role: 'tab'}
       %h5.mb-0
-        %a{data: {toggle: 'collapse', parent: '#filter-accordion'}, href: '#filter-content'}= t('.filter')
+        = t('.filter')
     #filter-content.collapse.show{role: 'tabpanel'}
-      .card-block.row{style: 'padding: 0.5rem'}
-        .col-sm-4
-          from - to
-        .col-sm-4
-          checkboxes
-        .col-sm-4
-          swiss / elimination
+      = form_tag filter_configurator_path, method: :patch, id: 'filter-form' do
+        .card-block.row{style: 'padding: 0.5rem'}
+          .col-sm-4
+            = text_field_tag :ranking_start, ranking_configuration[:ranking_start], class: 'filter-input', id: 'ranking-start'
+            = text_field_tag :ranking_end, ranking_configuration[:ranking_end], class: 'filter-input', id: 'ranking-end'
+          .col-sm-4
+            = label_tag :large_tournament_multiplier
+            = check_box_tag :large_tournament_multiplier, true, ranking_configuration[:large_tournament_multiplier], class: 'filter-input', id: 'large-tournament-multiplier'
+            = label_tag :widespread_use_multiplier
+            = check_box_tag :widespread_use_multiplier, true, ranking_configuration[:widespread_use_multiplier], class: 'filter-input', id: 'widespread-use-multiplier'
+          .col-sm-4
+            = select_tag :use_ranking_data, options_for_select(%w[swiss elimination swiss+elimination], ranking_configuration[:use_ranking_data]), class: 'filter-input', id: 'use-ranking-data'
+
+- content_for :javascript do
+  :coffeescript
+    $ ->
+      $('.filter-input').on 'change', (e) ->
+        $(e.target).closest('form').trigger('submit')
+
+      form = $('#filter-form')
+      form.submit (e) ->
+        $.ajax
+          type: 'PATCH'
+          url: form.attr('action')
+          data: form.serialize()
+          success: (data) ->
+            console.log data
+        e.preventDefault()

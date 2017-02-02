@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   resources :ship_combos, only: [:index, :show]
 
   resource :about, only: [:show]
+  resource :filter_configurator, only: [:update]
 
 end
