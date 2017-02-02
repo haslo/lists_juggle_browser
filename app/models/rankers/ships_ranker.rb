@@ -25,7 +25,15 @@ module Rankers
           tournaments: 'count(distinct tournaments.id)',
           average_percentile: weight_query_builder.build_average_query,
       }
-      @ships = Ship.fetch_query(Ship.joins(joins).group('ships.id, ships.name').order('weight desc').where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date), attributes)
+      ships_query = Ship
+                      .joins(joins)
+                      .group('ships.id, ships.name')
+                      .order('weight desc')
+                      .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
+      if ranking_configuration[:tournament_type].present?
+        ships_query = ships_query.where('tournaments.tournament_type_id = ?', ranking_configuration[:tournament_type])
+      end
+      @ships = Ship.fetch_query(ships_query, attributes)
       @pilots = Pilot.all.includes(:faction).to_a
     end
 

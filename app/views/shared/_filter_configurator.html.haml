@@ -20,6 +20,8 @@
             = check_box_tag :widespread_use_multiplier, true, ranking_configuration[:widespread_use_multiplier], class: 'filter-input', id: 'widespread-use-multiplier'
           .col-sm-4
             = select_tag :use_ranking_data, options_for_select(preset_ranking_data, ranking_configuration[:use_ranking_data]), class: 'filter-input', id: 'use-ranking-data'
+            %br
+            = select_tag :tournament_type, options_from_collection_for_select(TournamentType.all, :id, :name, ranking_configuration[:tournament_type]), include_blank: t('.all_types'), class: 'filter-input', id: 'tournament-type'
 
 - content_for :javascript do
   :coffeescript

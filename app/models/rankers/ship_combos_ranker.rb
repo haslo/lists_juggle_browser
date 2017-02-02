@@ -30,6 +30,9 @@ module Rankers
       if ship_id.present?
         ship_combos_relation = ship_combos_relation.where('ship_combos.id in (select ship_combo_id from ship_combos_ships where ship_id = ?)', ship_id)
       end
+      if ranking_configuration[:tournament_type].present?
+        ship_combos_relation = ship_combos_relation.where('tournaments.tournament_type_id = ?', ranking_configuration[:tournament_type])
+      end
       @ship_combos = ShipCombo.fetch_query(ship_combos_relation, attributes)
       @ships       = Hash[ShipCombo.all.includes(:ships).map { |c| [c.id, c.ships.map(&:name).join(', ')] }]
     end

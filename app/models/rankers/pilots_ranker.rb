@@ -40,6 +40,9 @@ module Rankers
       if ship_id.present?
         pilot_relation = pilot_relation.where('ships.id = ?', ship_id)
       end
+      if ranking_configuration[:tournament_type].present?
+        pilot_relation = pilot_relation.where('tournaments.tournament_type_id = ?', ranking_configuration[:tournament_type])
+      end
       @pilots = Pilot.fetch_query(pilot_relation, attributes)
     end
 

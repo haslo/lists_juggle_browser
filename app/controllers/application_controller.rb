@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
         use_ranking_data:            session[:use_ranking_data].nil?            ? 'all'                : session[:use_ranking_data],
         ranking_start:               session[:ranking_start].nil?               ? 2.months.ago.to_date : session[:ranking_start],
         ranking_end:                 session[:ranking_end].nil?                 ? Time.current.to_date : session[:ranking_end],
+        tournament_type:             session[:tournament_type].nil?             ? nil                  : session[:tournament_type],
     }
   end
   helper_method :ranking_configuration

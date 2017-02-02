@@ -2,7 +2,7 @@ module Importers
   class ListsJuggler
 
     def process_tournament(tournament_id, tournament_row)
-      Tournament.find_or_create_by!(tournament_type:        TournamentType.find_or_create_by!(name: tournament_row.search('td')[4].text),
+      Tournament.find_or_create_by!(tournament_type:        TournamentType.find_or_create_by!(name: tournament_row.search('td')[4].text.titleize),
                                     lists_juggler_id:       tournament_id,
                                     name:                   tournament_row.search('td')[0].text,
                                     lists_juggler_venue_id: tournament_row.search('td a').first.attributes['href'].value.split('=').last,
@@ -18,7 +18,7 @@ module Importers
     def process_data(tournament_id, tournament_data)
       ActiveRecord::Base.transaction do
         if tournament_data.length > 1
-          tournament_type = TournamentType.find_by!(name: remove_invalid_chars(tournament_data[1][1]))
+          tournament_type = TournamentType.find_by!(name: remove_invalid_chars(tournament_data[1][1]).titleize)
           tournament      = Tournament.find_by!(tournament_type:  tournament_type,
                                                 lists_juggler_id: tournament_id)
           tournament.squadrons.destroy_all

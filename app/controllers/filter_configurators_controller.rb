@@ -6,6 +6,7 @@ class FilterConfiguratorsController < ApplicationController
     session[:use_ranking_data]            = params[:use_ranking_data]
     session[:ranking_start]               = params[:ranking_start]
     session[:ranking_end]                 = params[:ranking_end]
+    session[:tournament_type]             = params[:tournament_type]
     render json: {params: params, session: session}, status: :ok
   end
 

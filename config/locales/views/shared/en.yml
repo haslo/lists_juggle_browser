@@ -4,6 +4,7 @@ en:
       filter: 'Filter'
       large_tournament_multiplier: 'Large Tournament Multiplier'
       widespread_use_multiplier: 'Widespread Use Multiplier'
+      all_types: '(all tournament types)'
       dates:
         wave_1: '(Launch / Wave 1)'
         wave_2: '(Wave 2)'
