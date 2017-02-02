@@ -17,7 +17,6 @@ gem 'bootstrap'
 # core libs
 
 gem 'jquery-rails'
-gem 'turbolinks'
 gem 'jbuilder'
 
 # additional libs

@@ -2,3 +2,21 @@ en:
   abouts:
     show:
       title: 'About'
+      contents: |
+        <p>This is a humble attempt at standing upon shoulders of giants.</p>
+        <p>The giants in question are:</p>
+        <ul>
+          <li><a href="https://www.fantasyflightgames.com/en/products/x-wing/">FFG's fantastic X-Wing miniatures game</a>
+            of course</li>
+          <li><a href="http://lists.starwarsclubhouse.com/">X-Wing Lists Juggler</a> and all the folks
+            who contributed data by adding their tournaments</li>
+          <li><a href="http://xwing-miniatures.wikia.com/wiki/X-Wing_Miniatures_Wiki">The Wikia X-Wing Miniatures Wiki</a>
+            and all its contributors (where I'm getting all the images from)</li>
+        </ul>
+        <p>The <a href="https://github.com/haslo/lists_juggle_browser">source is available on GitHub</a> with an MIT license,
+          and the application stack is as follows:</p>
+        <ul>
+          <li><a href="https://www.postgresql.org/">PostgreSQL</a></li>
+          <li><a href="http://rubyonrails.org/">Ruby on Rails</a></li>
+          <li><a href="https://jquery.com//">jQuery</a> for everything JavaScript</li>
+        </ul>
