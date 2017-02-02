@@ -12,6 +12,8 @@ en:
             who contributed data by adding their tournaments</li>
           <li><a href="http://xwing-miniatures.wikia.com/wiki/X-Wing_Miniatures_Wiki">The Wikia X-Wing Miniatures Wiki</a>
             and all its contributors (where I'm getting all the images from)</li>
+          <li>The <a href="https://github.com/geordanr/xwing-miniatures-font">X-Wing Miniatures Font</a> for symbols and
+            icons</li>
         </ul>
         <p>The <a href="https://github.com/haslo/lists_juggle_browser">source is available on GitHub</a> with an MIT license,
           and the application stack is as follows:</p>
