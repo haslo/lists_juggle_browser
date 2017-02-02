@@ -1,4 +1,4 @@
-module Importer
+module Importers
   class Ranking
 
     def initialize

@@ -1,4 +1,4 @@
-module Importer
+module Importers
   class WikiaImage
 
     def fetch_all_images

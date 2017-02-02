@@ -1,4 +1,4 @@
-module Importer
+module Importers
   class ListsJuggler
 
     def process_tournament(tournament_id, tournament_row)
