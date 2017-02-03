@@ -3,6 +3,8 @@ module Rankers
 
     attr_reader :pilots
 
+    # TODO ship_combo_id only filters pilot types, not numbers
+
     def initialize(ranking_configuration, ship_id: nil, pilot_id: nil, ship_combo_id: nil, upgrade_id: nil)
       start_date = ranking_configuration[:ranking_start]
       end_date   = ranking_configuration[:ranking_end]

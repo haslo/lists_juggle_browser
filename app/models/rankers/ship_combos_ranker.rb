@@ -3,6 +3,9 @@ module Rankers
 
     attr_reader :ship_combos, :ships
 
+    # TODO upgrade_id doesn't work yet
+    # TODO look at performance
+
     def initialize(ranking_configuration, ship_id: nil, ship_combo_id: nil, pilot_id: nil, upgrade_id: nil, minimum_count_multiplier: 10, limit: nil, skip_count_multiplier: false)
       start_date = ranking_configuration[:ranking_start]
       end_date   = ranking_configuration[:ranking_end]
