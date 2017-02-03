@@ -3,7 +3,7 @@ module Rankers
 
     attr_reader :ship_combos, :ships
 
-    def initialize(ranking_configuration, ship_id: nil, pilot_id: nil, minimum_count_multiplier: 10, limit: nil)
+    def initialize(ranking_configuration, ship_id: nil, ship_combo_id: nil, pilot_id: nil, minimum_count_multiplier: 10, limit: nil, skip_count_multiplier: false)
       start_date = ranking_configuration[:ranking_start]
       end_date   = ranking_configuration[:ranking_end]
       joins      = <<-SQL
@@ -26,7 +26,9 @@ module Rankers
                                 .order('weight desc')
                                 .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       number_of_tournaments = Tournament.where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date).count
-      ship_combos_relation = ship_combos_relation.having("count(distinct tournament_id) >= #{(number_of_tournaments / minimum_count_multiplier).to_i}")
+      unless skip_count_multiplier
+        ship_combos_relation = ship_combos_relation.having("count(distinct tournament_id) >= #{(number_of_tournaments / minimum_count_multiplier).to_i}")
+      end
       if ship_id.present?
         ship_combos_relation = ship_combos_relation.where('ship_combos.id in (select ship_combo_id from ship_combos_ships where ship_id = ?)', ship_id)
       end
@@ -38,6 +40,9 @@ module Rankers
       end
       if limit.present?
         ship_combos_relation = ship_combos_relation.limit(limit)
+      end
+      if ship_combo_id.present?
+        ship_combos_relation = ship_combos_relation.where('ship_combos.id = ?', ship_combo_id)
       end
       @ship_combos = ShipCombo.fetch_query(ship_combos_relation, attributes)
       @ships       = Hash[ShipCombo.all.includes(:ships).map { |c| [c.id, c.ships.map(&:name).join(', ')] }]

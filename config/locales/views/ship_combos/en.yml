@@ -9,3 +9,9 @@ en:
       tournaments_count: '# Tournaments'
       average_percentile: 'avg Percentile'
       weight: 'Magic'
+    show:
+      title: 'List Archetype'
+      ship_combo: 'Overview'
+      ships: 'Ships'
+      pilots: 'Pilots'
+      upgrades: 'Upgrades'

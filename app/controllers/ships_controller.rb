@@ -5,15 +5,17 @@ class ShipsController < ApplicationController
   end
 
   def show
-    @view = OpenStruct.new({
-                             ship:              Ship.find(params[:id]),
-                             ships:             Rankers::ShipsRanker.new(ranking_configuration, ship_id: params[:id]).ships,
-                             ship_pilots:       Rankers::ShipsRanker.new(ranking_configuration, ship_id: params[:id]).ship_pilots,
-                             pilots:            Rankers::PilotsRanker.new(ranking_configuration, ship_id: params[:id]).pilots,
-                             upgrades:          Rankers::UpgradesRanker.new(ranking_configuration, ship_id: params[:id], limit: 15).upgrades,
-                             ship_combos:       Rankers::ShipCombosRanker.new(ranking_configuration, ship_id: params[:id], limit: 10, minimum_count_multiplier: 50).ship_combos,
-                             ship_combos_ships: Rankers::ShipCombosRanker.new(ranking_configuration, ship_id: params[:id], limit: 10, minimum_count_multiplier: 50).ships,
-                           })
+    ships_ranker       = Rankers::ShipsRanker.new(ranking_configuration, ship_id: params[:id])
+    ship_combos_ranker = Rankers::ShipCombosRanker.new(ranking_configuration, ship_id: params[:id], limit: 10, minimum_count_multiplier: 50)
+    @view              = OpenStruct.new({
+                                          ship:              Ship.find(params[:id]),
+                                          ships:             ships_ranker.ships,
+                                          ship_pilots:       ships_ranker.ship_pilots,
+                                          pilots:            Rankers::PilotsRanker.new(ranking_configuration, ship_id: params[:id]).pilots,
+                                          upgrades:          Rankers::UpgradesRanker.new(ranking_configuration, ship_id: params[:id], limit: 15).upgrades,
+                                          ship_combos:       ship_combos_ranker.ship_combos,
+                                          ship_combos_ships: ship_combos_ranker.ships,
+                                        })
   end
 
 end
