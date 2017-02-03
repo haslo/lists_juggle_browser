@@ -4,6 +4,9 @@
 %h2= t('.pilot')
 = render '/pilots/table', pilots: @view.pilots
 
+%h2= t('.notable_squadrons')
+= render '/shared/notable_squadrons', squadrons: @view.squadrons
+
 %h2= t('.upgrades')
 = render '/upgrades/table', upgrades: @view.upgrades
 

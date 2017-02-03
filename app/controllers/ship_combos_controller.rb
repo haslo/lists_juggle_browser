@@ -12,8 +12,7 @@ class ShipCombosController < ApplicationController
                                           ship_combo:        ship_combo,
                                           ship_combos:       ship_combos_ranker.ship_combos,
                                           ship_combos_ships: ship_combos_ranker.ships,
-                                          ships:             ships_ranker.ships,
-                                          ship_pilots:       ships_ranker.ship_pilots,
+                                          squadrons:         Rankers::SquadronsRanker.new(ranking_configuration, ship_combo_id: params[:id]).squadrons,
                                           pilots:            Rankers::PilotsRanker.new(ranking_configuration, ship_combo_id: params[:id]).pilots,
                                         })
   end

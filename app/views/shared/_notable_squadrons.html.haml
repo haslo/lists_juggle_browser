@@ -1,0 +1,39 @@
+%table.table.table-striped.table-bordered
+  %tr
+    %th.text-nowrap= t('.tournament')
+    %th.text-nowrap= t('.num_tournament_players')
+    %th.text-nowrap= t('.swiss_standing')
+    %th.text-nowrap= t('.elimination_standing')
+    %th.text-nowrap= t('.squad_list')
+  - squadrons.each do |squadron|
+    %tr{data: {squadron_id: squadron.id}}
+      %td
+        = link_to "http://lists.starwarsclubhouse.com/get_tourney_details?tourney_id=#{squadron.tournament.lists_juggler_id}" do
+          = squadron.tournament.name
+        %br
+        = squadron.tournament.tournament_type.name
+        %br
+        = squadron.tournament.date
+      %td
+        = squadron.tournament.num_players
+      %td
+        = squadron.swiss_standing
+      %td
+        = squadron.elimination_standing
+      %td
+        - squadron.ship_configurations.each do |ship_configuration|
+          %strong
+            = link_to pilot_path(ship_configuration.pilot.id) do
+              = ship_configuration.pilot.name
+          %small
+            = link_to ship_path(ship_configuration.pilot.ship.id) do
+              = "(#{ship_configuration.pilot.ship.name})"
+            - ship_configuration.upgrades.each do |upgrade|
+              = link_to upgrade_path(upgrade.id) do
+                = upgrade.name
+          %br
+        %small
+          = link_to ship_combo_path(squadron.ship_combo_id) do
+            = t('.archetype_link')
+          = '-'
+          = t('.played_by', player: squadron.player.name)

@@ -4,8 +4,8 @@
 %h2= t('.ship_combo')
 = render '/ship_combos/table', ship_combos: @view.ship_combos, ships: @view.ship_combos_ships
 
-%h2= t('.ships')
-= render '/ships/table', ships: @view.ships
+%h2= t('.notable_squadrons')
+= render '/shared/notable_squadrons', squadrons: @view.squadrons
 
 %h2= t('.pilots')
 = render '/pilots/table', pilots: @view.pilots

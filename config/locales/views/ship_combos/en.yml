@@ -12,6 +12,7 @@ en:
     show:
       title: 'List Archetype'
       ship_combo: 'Overview'
+      notable_squadrons: 'Some Notable Squadrons'
       ships: 'Ships'
       pilots: 'Pilots'
       upgrades: 'Upgrades'

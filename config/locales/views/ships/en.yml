@@ -3,6 +3,7 @@ en:
     show:
       title: 'Ship Type: %{type}'
       ship: 'Ship Info'
+      notable_squadrons: 'Some Notable Squadrons'
       pilots: 'Pilots'
       upgrades: 'Upgrades'
       ship_combos: 'List Archetypes'
