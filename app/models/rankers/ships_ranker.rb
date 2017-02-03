@@ -3,7 +3,7 @@ module Rankers
 
     attr_reader :ships
 
-    def initialize(ranking_configuration)
+    def initialize(ranking_configuration, ship_id: nil)
       start_date = ranking_configuration[:ranking_start]
       end_date = ranking_configuration[:ranking_end]
       joins = <<-SQL
@@ -33,12 +33,15 @@ module Rankers
       if ranking_configuration[:tournament_type].present?
         ships_query = ships_query.where('tournaments.tournament_type_id = ?', ranking_configuration[:tournament_type])
       end
+      if ship_id.present?
+        ships_query = ships_query.where('ships.id = ?', ship_id)
+      end
       @ships = Ship.fetch_query(ships_query, attributes)
       @pilots = Pilot.all.includes(:faction).to_a
     end
 
-    def ship_pilots(ship_id)
-      @pilots.select { |p| p.ship_id == ship_id }
+    def ship_pilots
+      @pilots.group_by(&:ship_id)
     end
 
   end

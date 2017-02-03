@@ -2,7 +2,9 @@ en:
   ships:
     show:
       title: 'Ship Type: %{type}'
+      ship: 'Ship Info'
       pilots: 'Pilots'
+      upgrades: 'Upgrades'
       ship_combos: 'List Archetypes'
     index:
       title: 'Ship Types'

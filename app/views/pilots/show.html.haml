@@ -1,1 +1,11 @@
-pilots/show
+- content_for :title do
+  = t('.title', name: @view.pilot.name)
+
+%h2= t('.pilot')
+= render '/pilots/table', pilots: @view.pilots
+
+%h2= t('.upgrades')
+= render '/upgrades/table', upgrades: @view.upgrades
+
+%h2= t('.ship_combos')
+= render '/ship_combos/table', ship_combos: @view.ship_combos, ships: @view.ship_combos_ships

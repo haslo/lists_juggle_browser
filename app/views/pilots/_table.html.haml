@@ -20,7 +20,8 @@
           - else
             = t('.no_image')
       %td
-        = pilot.name
+        = link_to pilot_path(pilot.id) do
+          = pilot.name
       %td
         %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{FontLookup.new.faction_icon(pilot.faction)}"}
       %td

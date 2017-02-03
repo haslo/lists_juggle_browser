@@ -1,8 +1,14 @@
 - content_for :title do
   = t('.title', type: @view.ship.name)
 
+%h2= t('.ship')
+= render '/ships/table', ships: @view.ships
+
 %h2= t('.pilots')
 = render '/pilots/table', pilots: @view.pilots
+
+%h2= t('.upgrades')
+= render '/upgrades/table', upgrades: @view.upgrades
 
 %h2= t('.ship_combos')
 = render '/ship_combos/table', ship_combos: @view.ship_combos, ships: @view.ship_combos_ships

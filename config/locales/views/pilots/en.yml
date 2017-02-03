@@ -13,3 +13,8 @@ en:
       average_percentile: 'avg Percentile'
       weight: 'Magic'
       no_image: '(no image)'
+    show:
+      title: 'Pilot: %{name}'
+      pilot: 'Pilot Info'
+      upgrades: 'Upgrades'
+      ship_combos: 'List Archetypes'

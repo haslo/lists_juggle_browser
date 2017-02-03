@@ -3,7 +3,7 @@ module Rankers
 
     attr_reader :upgrades
 
-    def initialize(ranking_configuration, ship_id: nil)
+    def initialize(ranking_configuration, ship_id: nil, pilot_id: nil, limit: nil)
       start_date = ranking_configuration[:ranking_start]
       end_date   = ranking_configuration[:ranking_end]
       joins      = <<-SQL
@@ -13,6 +13,10 @@ module Rankers
           on ship_configurations_upgrades.upgrade_id = upgrades.id
         inner join ship_configurations
           on ship_configurations_upgrades.ship_configuration_id = ship_configurations.id
+        inner join pilots
+          on ship_configurations.pilot_id = pilots.id
+        inner join ships
+          on pilots.ship_id = ships.id
         inner join squadrons
           on ship_configurations.squadron_id = squadrons.id
         inner join tournaments
@@ -37,6 +41,12 @@ module Rankers
                                .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       if ship_id.present?
         upgrade_relation = upgrade_relation.where('ships.id = ?', ship_id)
+      end
+      if pilot_id.present?
+        upgrade_relation = upgrade_relation.where('pilots.id = ?', pilot_id)
+      end
+      if limit.present?
+        upgrade_relation = upgrade_relation.limit(limit)
       end
       if ranking_configuration[:tournament_type].present?
         upgrade_relation = upgrade_relation.where('tournaments.tournament_type_id = ?', ranking_configuration[:tournament_type])
