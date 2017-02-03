@@ -33,10 +33,20 @@ module Rankers
         ship_combos_relation = ship_combos_relation.having("count(distinct tournament_id) >= #{(number_of_tournaments / minimum_count_multiplier).to_i}")
       end
       if ship_id.present?
-        ship_combos_relation = ship_combos_relation.where('ship_combos.id in (select ship_combo_id from ship_combos_ships where ship_id = ?)', ship_id)
+        ship_join = <<-SQL
+          inner join ship_configurations
+            on ship_configurations.squadron_id = squadrons.id
+          inner join pilots
+            on pilots.id = ship_configurations.pilot_id
+        SQL
+        ship_combos_relation = ship_combos_relation.joins(ship_join).where('pilots.ship_id = ?', ship_id)
       end
       if pilot_id.present?
-        ship_combos_relation = ship_combos_relation.where('ship_combos.id in (select ship_combo_id from ship_combos_ships inner join pilots on pilots.ship_id = ship_combos_ships.ship_id and pilots.id = ?)', pilot_id)
+        pilot_join = <<-SQL
+          inner join ship_configurations
+            on ship_configurations.squadron_id = squadrons.id
+        SQL
+        ship_combos_relation = ship_combos_relation.joins(pilot_join).where('ship_configurations.pilot_id = ?', pilot_id)
       end
       if ranking_configuration[:tournament_type].present?
         ship_combos_relation = ship_combos_relation.where('tournaments.tournament_type_id = ?', ranking_configuration[:tournament_type])
