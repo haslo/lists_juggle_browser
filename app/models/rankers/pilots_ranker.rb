@@ -3,8 +3,6 @@ module Rankers
 
     attr_reader :pilots
 
-    # TODO ship_combo_id only filters pilot types, not numbers
-
     def initialize(ranking_configuration, ship_id: nil, pilot_id: nil, ship_combo_id: nil, upgrade_id: nil)
       start_date = ranking_configuration[:ranking_start]
       end_date   = ranking_configuration[:ranking_end]
@@ -50,9 +48,7 @@ module Rankers
         pilot_relation = pilot_relation.joins(upgrade_join).where('ship_configurations_upgrades.upgrade_id = ?', upgrade_id)
       end
       if ship_combo_id.present?
-        pilot_relation = pilot_relation
-                           .joins('inner join ship_combos_ships on ship_combos_ships.ship_id = ships.id')
-                           .where('ship_combos_ships.ship_combo_id = ?', ship_combo_id)
+        pilot_relation = pilot_relation.where('squadrons.ship_combo_id = ?', ship_combo_id)
       end
       if pilot_id.present?
         pilot_relation = pilot_relation.where('pilots.id = ?', pilot_id)

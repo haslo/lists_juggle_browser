@@ -3,7 +3,7 @@ module Rankers
 
     attr_reader :ships
 
-    def initialize(ranking_configuration, ship_id: nil, ship_ids: nil)
+    def initialize(ranking_configuration, ship_id: nil, ship_combo_id: nil)
       start_date = ranking_configuration[:ranking_start]
       end_date   = ranking_configuration[:ranking_end]
       joins      = <<-SQL
@@ -25,21 +25,21 @@ module Rankers
         tournaments:        'count(distinct tournaments.id)',
         average_percentile: weight_query_builder.build_average_query,
       }
-      ships_query          = Ship
+      ships_relation       = Ship
                                .joins(joins)
                                .group('ships.id, ships.name')
                                .order('weight desc')
                                .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       if ranking_configuration[:tournament_type].present?
-        ships_query = ships_query.where('tournaments.tournament_type_id = ?', ranking_configuration[:tournament_type])
+        ships_relation = ships_relation.where('tournaments.tournament_type_id = ?', ranking_configuration[:tournament_type])
       end
       if ship_id.present?
-        ships_query = ships_query.where('ships.id = ?', ship_id)
+        ships_relation = ships_relation.where('ships.id = ?', ship_id)
       end
-      if ship_ids.present?
-        ships_query = ships_query.where("ships.id in (#{ship_ids.join(',')})")
+      if ship_combo_id.present?
+        ships_relation = ships_relation.where('squadrons.ship_combo_id = ?', ship_combo_id)
       end
-      @ships  = Ship.fetch_query(ships_query, attributes)
+      @ships  = Ship.fetch_query(ships_relation, attributes)
       @pilots = Pilot.all.includes(:faction).to_a
     end
 
