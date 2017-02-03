@@ -15,7 +15,6 @@ class ShipCombosController < ApplicationController
                                           ships:             ships_ranker.ships,
                                           ship_pilots:       ships_ranker.ship_pilots,
                                           pilots:            Rankers::PilotsRanker.new(ranking_configuration, ship_combo_id: params[:id]).pilots,
-                                          upgrades:          Rankers::UpgradesRanker.new(ranking_configuration, ship_combo_id: params[:id], limit: 15).upgrades,
                                         })
   end
 
