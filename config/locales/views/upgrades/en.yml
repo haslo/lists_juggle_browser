@@ -12,3 +12,8 @@ en:
       average_percentile: 'avg Percentile'
       weight: 'Magic'
       no_image: '(no image)'
+    show:
+      title: 'Upgrade: %{upgrade} (%{upgrade_type})'
+      upgrade: 'Upgrade Info'
+      pilots: 'Pilots'
+      ship_combos: 'List Archetypes'

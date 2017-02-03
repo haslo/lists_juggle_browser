@@ -19,7 +19,8 @@
           - else
             = t('.no_image')
       %td
-        = upgrade.name
+        = link_to upgrade_path(upgrade.id) do
+          = upgrade.name
       %td
         = upgrade.upgrade_type
       %td

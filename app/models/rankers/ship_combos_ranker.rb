@@ -3,7 +3,7 @@ module Rankers
 
     attr_reader :ship_combos, :ships
 
-    def initialize(ranking_configuration, ship_id: nil, ship_combo_id: nil, pilot_id: nil, minimum_count_multiplier: 10, limit: nil, skip_count_multiplier: false)
+    def initialize(ranking_configuration, ship_id: nil, ship_combo_id: nil, pilot_id: nil, upgrade_id: nil, minimum_count_multiplier: 10, limit: nil, skip_count_multiplier: false)
       start_date = ranking_configuration[:ranking_start]
       end_date   = ranking_configuration[:ranking_end]
       joins      = <<-SQL
@@ -43,6 +43,18 @@ module Rankers
       end
       if ship_combo_id.present?
         ship_combos_relation = ship_combos_relation.where('ship_combos.id = ?', ship_combo_id)
+      end
+      if upgrade_id.present?
+        #upgrade_join = <<-SQL
+        #  inner join ship_configurations_upgrades
+        #    on ship_configurations_upgrades.upgrade_id = upgrades.id
+        #  inner join ship_configurations
+        #    on ship_configurations_upgrades.ship_configuration_id = ship_configurations.id
+        #  inner join pilots
+        #    on ship_configurations.pilot_id = pilots.id
+        #SQL
+        #ship_combos_relation = ship_combos_relation.joins(upgrade_join)
+        ship_combos_relation = ship_combos_relation.none
       end
       @ship_combos = ShipCombo.fetch_query(ship_combos_relation, attributes)
       @ships       = Hash[ShipCombo.all.includes(:ships).map { |c| [c.id, c.ships.map(&:name).join(', ')] }]
