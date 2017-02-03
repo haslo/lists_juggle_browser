@@ -58,16 +58,13 @@ module Rankers
         ship_combos_relation = ship_combos_relation.where('ship_combos.id = ?', ship_combo_id)
       end
       if upgrade_id.present?
-        #upgrade_join = <<-SQL
-        #  inner join ship_configurations_upgrades
-        #    on ship_configurations_upgrades.upgrade_id = upgrades.id
-        #  inner join ship_configurations
-        #    on ship_configurations_upgrades.ship_configuration_id = ship_configurations.id
-        #  inner join pilots
-        #    on ship_configurations.pilot_id = pilots.id
-        #SQL
-        #ship_combos_relation = ship_combos_relation.joins(upgrade_join)
-        ship_combos_relation = ship_combos_relation.none
+        upgrade_join = <<-SQL
+          inner join ship_configurations
+            on ship_configurations.squadron_id = squadrons.id
+          inner join ship_configurations_upgrades
+            on ship_configurations_upgrades.ship_configuration_id = ship_configurations.id
+        SQL
+        ship_combos_relation = ship_combos_relation.joins(upgrade_join).where('ship_configurations_upgrades.upgrade_id = ?', upgrade_id)
       end
       @ship_combos = ShipCombo.fetch_query(ship_combos_relation, attributes)
       @ships       = Hash[ShipCombo.all.includes(:ships).map { |c| [c.id, c.ships.map(&:name).join(', ')] }]
