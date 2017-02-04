@@ -1,6 +1,9 @@
 - content_for :title do
   = t('.title')
 
+.float-md-right
+  %button.btn.btn-primary{data: {target: '#edit-modal', toggle: 'modal'}, type: 'button'}
+    = t('.edit')
 %h2= t('.ship_combo')
 = render '/ship_combos/table', ship_combos: @view.ship_combos, ships: @view.ship_combos_ships
 
@@ -9,3 +12,5 @@
 
 %h2= t('.pilots')
 = render '/pilots/table', pilots: @view.pilots
+
+= render '/ship_combos/edit_modal', ship_combo: @view.ship_combo

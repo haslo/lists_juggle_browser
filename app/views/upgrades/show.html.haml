@@ -1,6 +1,9 @@
 - content_for :title do
   = t('.title', upgrade: @view.upgrade.name, upgrade_type: @view.upgrade.upgrade_type.name)
 
+.float-md-right
+  %button.btn.btn-primary{data: {target: '#edit-modal', toggle: 'modal'}, type: 'button'}
+    = t('.edit')
 %h2= t('.upgrade')
 = render '/upgrades/table', upgrades: @view.upgrades
 
@@ -12,3 +15,5 @@
 
 %h2= t('.ship_combos')
 = render '/ship_combos/table', ship_combos: @view.ship_combos, ships: @view.ship_combos_ships
+
+= render '/upgrades/edit_modal', upgrade: @view.upgrade
