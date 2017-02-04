@@ -3,7 +3,7 @@ module Rankers
 
     attr_reader :ship_combos, :ships
 
-    def initialize(ranking_configuration, ship_id: nil, ship_combo_id: nil, pilot_id: nil, upgrade_id: nil, minimum_count_multiplier: 10, limit: nil, skip_count_multiplier: false)
+    def initialize(ranking_configuration, ship_id: nil, ship_combo_id: nil, pilot_id: nil, upgrade_id: nil, limit: nil)
       start_date = ranking_configuration[:ranking_start]
       end_date   = ranking_configuration[:ranking_end]
       joins      = <<-SQL
@@ -26,9 +26,6 @@ module Rankers
                                 .order('weight desc')
                                 .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       number_of_tournaments = Tournament.where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date).count
-      unless skip_count_multiplier
-        ship_combos_relation = ship_combos_relation.having("count(distinct tournament_id) >= #{(number_of_tournaments / minimum_count_multiplier).to_i}")
-      end
       if ship_id.present?
         ship_join = <<-SQL
           inner join ship_configurations

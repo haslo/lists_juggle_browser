@@ -1,13 +1,13 @@
 class ShipCombosController < ApplicationController
 
   def index
-    @view = Rankers::ShipCombosRanker.new(ranking_configuration)
+    @view = Rankers::ShipCombosRanker.new(ranking_configuration, limit: 30)
   end
 
   def show
     ship_combo         = ShipCombo.find(params[:id])
     ships_ranker       = Rankers::ShipsRanker.new(ranking_configuration, ship_combo_id: params[:id])
-    ship_combos_ranker = Rankers::ShipCombosRanker.new(ranking_configuration, ship_combo_id: params[:id], skip_count_multiplier: true)
+    ship_combos_ranker = Rankers::ShipCombosRanker.new(ranking_configuration, ship_combo_id: params[:id])
     @view              = OpenStruct.new({
                                           ship_combo:        ship_combo,
                                           ship_combos:       ship_combos_ranker.ship_combos,

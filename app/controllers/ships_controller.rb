@@ -6,7 +6,7 @@ class ShipsController < ApplicationController
 
   def show
     ships_ranker       = Rankers::ShipsRanker.new(ranking_configuration, ship_id: params[:id])
-    ship_combos_ranker = Rankers::ShipCombosRanker.new(ranking_configuration, ship_id: params[:id], limit: 10, skip_count_multiplier: true)
+    ship_combos_ranker = Rankers::ShipCombosRanker.new(ranking_configuration, ship_id: params[:id], limit: 10)
     @view              = OpenStruct.new({
                                           ship:              Ship.find(params[:id]),
                                           ships:             ships_ranker.ships,

@@ -25,8 +25,12 @@ en:
         wave_10: 'Wave 10'
         today: 'Today'
       multipliers:
-        multiply: 'factor in'
-        do_not_multiply: 'do not factor in'
+        large_tournament_multiplier:
+          multiply: 'Large tournaments = more Magic'
+          do_not_multiply: '(no effect)'
+        widespread_use_multiplier:
+          multiply: 'Widespread use = more Magic'
+          do_not_multiply: '(no effect)'
       data_uses:
         swiss: 'use Swiss ranks'
         elimination: 'use ranks after cut'
