@@ -15,6 +15,7 @@ module Rankers
       weight_query_builder  = WeightQueryBuilder.new(ranking_configuration)
       attributes            = {
         id:                 'ship_combos.id',
+        archetype_name:     'ship_combos.archetype_name',
         weight:             weight_query_builder.build_weight_query,
         squadrons:          'count(distinct squadrons.id)',
         tournaments:        'count(distinct tournaments.id)',
@@ -22,7 +23,7 @@ module Rankers
       }
       ship_combos_relation  = ShipCombo
                                 .joins(joins)
-                                .group('ship_combos.id')
+                                .group('ship_combos.id, ship_combos.archetype_name')
                                 .order('weight desc')
                                 .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       number_of_tournaments = Tournament.where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date).count
@@ -61,7 +62,7 @@ module Rankers
         ship_combos_relation = ship_combos_relation.joins(upgrade_join).where('ship_configurations_upgrades.upgrade_id = ?', upgrade_id)
       end
       @ship_combos = ShipCombo.fetch_query(ship_combos_relation, attributes)
-      @ships       = Hash[ShipCombo.where(id: @ship_combos.map(&:id)).includes(:ships).map { |c| [c.id, c.ships.map{|s| {name: s.name, font_icon_class: s.font_icon_class}}] }]
+      @ships       = Hash[ShipCombo.where(id: @ship_combos.map(&:id)).includes(:ships).map { |c| [c.id, c.ships.map { |s| {name: s.name, font_icon_class: s.font_icon_class} }] }]
     end
 
   end

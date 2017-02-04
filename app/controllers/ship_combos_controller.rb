@@ -23,7 +23,7 @@ class ShipCombosController < ApplicationController
   end
 
   def ship_combo_attributes
-    params.require(:upgrade).permit(:archetype_name)
+    params.require(:ship_combo).permit(:archetype_name)
   end
 
 end

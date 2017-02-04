@@ -1,6 +1,7 @@
 %table.table.table-striped.table-bordered.table-for-search
   %tr
     %th.text-nowrap= t('.position')
+    %th.text-nowrap= t('.archetype_name')
     %th.text-nowrap= t('.ship_names')
     %th.text-nowrap= t('.squadron_count')
     %th.text-nowrap= t('.tournaments_count')
@@ -10,6 +11,8 @@
     %tr.row-for-search{data: {ship_combo_id: ship_combo.id}}
       %td
         %strong= "#{index + 1}."
+      %td
+        = ship_combo.archetype_name
       %td
         = link_with_filter_to ship_combo_path(ship_combo.id) do
           - ships[ship_combo.id].each do |ship_info|

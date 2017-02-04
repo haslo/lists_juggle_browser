@@ -34,7 +34,9 @@
                 = upgrade.name
           %br
         %small
-          = link_with_filter_to ship_combo_path(squadron.ship_combo_id) do
+          = link_with_filter_to ship_combo_path(squadron.ship_combo.id) do
             = t('.archetype_link')
+            - if squadron.ship_combo.archetype_name.present?
+              = "\"#{squadron.ship_combo.archetype_name}\""
           = '-'
           = t('.played_by', player: squadron.player.name)

@@ -4,6 +4,7 @@ en:
       title: 'List Archetypes'
     table:
       position: 'Position'
+      archetype_name: 'Archetype Name'
       ship_names: 'Ship Types'
       squadron_count: '# Squadrons'
       tournaments_count: '# Tournaments'
