@@ -17,3 +17,4 @@ en:
         ship_combos: 'List Archetypes'
         upgrades: 'Upgrades'
       current: 'current'
+      loading: 'loading...'

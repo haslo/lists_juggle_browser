@@ -7,3 +7,14 @@
         = t(".links.#{controller}")
         - if is_current
           %span.sr-only= "(#{t('.current')})"
+
+.loading-indicator
+  = image_tag 'spinner.gif'
+
+- content_for :javascript do
+  :coffeescript
+    $ ->
+      $('.loading-indicator').hide()
+
+      $('a').on 'click', (e) ->
+        $('.loading-indicator').show()
