@@ -1,0 +1,6 @@
+.magic-bar-container
+  .outer-bar
+  - if max_weight.present? && max_weight > 0
+    .inner-bar{style: "width: #{weight / max_weight * 100}%"}
+  - else
+    .inner-bar{style: 'width: 100%'}

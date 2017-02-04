@@ -8,7 +8,7 @@
     %th.text-nowrap= t('.squadron_count')
     %th.text-nowrap= t('.tournaments_count')
     %th.text-nowrap= t('.average_percentile')
-    %th.text-nowrap= t('.weight')
+    %th.text-nowrap.magic-column= t('.weight')
   - pilots.each.with_index do |pilot, index|
     %tr.row-for-search{data: {pilot_id: pilot.id, ship_id: pilot.ship_id}}
       %td
@@ -34,5 +34,5 @@
         = pilot.tournaments
       %td
         = (pilot.average_percentile * 1000).to_i / 10.0
-      %td
-        = pilot.weight
+      %td.magic-column
+        = render '/shared/magic_bar', max_weight: pilots.first.weight, weight: pilot.weight
