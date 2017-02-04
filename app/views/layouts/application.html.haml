@@ -3,7 +3,7 @@
   %head
     %title= [yield(:title), t('.title')].reject(&:blank?).join(' - ')
     = csrf_meta_tags
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag 'application', media: 'all'
     %meta{:charset => 'utf-8'}/
     %meta{:content => 'width=device-width, initial-scale=1, shrink-to-fit=no', :name => 'viewport'}/
     %meta{:content => t('.description'), :name => 'description'}/
@@ -22,6 +22,5 @@
           %h1= yield(:title).presence || t('.title')
           = yield
 
-    = javascript_include_tag '//www.google.com/jsapi', 'chartkick'
-    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag '//www.google.com/jsapi', 'chartkick', 'application'
     = yield :javascript

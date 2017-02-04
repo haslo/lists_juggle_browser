@@ -2,8 +2,8 @@ en:
   shared:
     filter_configurator:
       filter: 'Filter'
-      large_tournament_multiplier: 'Large Tournament Multiplier'
-      widespread_use_multiplier: 'Widespread Use Multiplier'
+      large_tournament_multiplier: 'Large Tournament'
+      widespread_use_multiplier: 'Widespread Use'
       all_types: '(all tournament types)'
       dates:
         wave_1: '(Launch / Wave 1)'
@@ -24,6 +24,9 @@ en:
         rogue_one: 'Rogue One Launch'
         wave_10: 'Wave 10'
         today: 'Today'
+      multipliers:
+        multiply: 'factor in'
+        do_not_multiply: 'do not factor in'
       data_uses:
         swiss: 'use Swiss ranks'
         elimination: 'use ranks after cut'

@@ -17,6 +17,24 @@
           = t('.about')
           - if active == :about
             %span.sr-only= "(#{t('.current')})"
-    %form.form-inline.mt-2.mt-md-0
+    %form.form-inline.mt-2.mt-md-0#search-form
       %input.form-control.mr-sm-2{:placeholder => 'Search', :type => 'text'}/
       %button.btn.btn-outline-success.my-2.my-sm-0{:type => 'submit'} Search
+
+- content_for :javascript do
+  :coffeescript
+    $ ->
+      $('#search-form input').on 'keyup change', (e) ->
+        if $(e.target).val().length > 0
+          $.each $('.row-for-search'), (index, item) ->
+            row = $(item)
+            if row.text().toLowerCase().indexOf($(e.target).val().toLowerCase()) >= 0
+              row.show()
+            else
+              row.hide()
+        else
+          $('.row-for-search').show()
+
+      $('#search-form button').on 'click', (e) ->
+        e.preventDefault()
+        false

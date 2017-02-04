@@ -1,4 +1,4 @@
-%table.table.table-striped.table-bordered
+%table.table.table-striped.table-bordered.table-for-search
   %tr
     %th.text-nowrap= t('.tournament')
     %th.text-nowrap= t('.num_tournament_players')
@@ -6,7 +6,7 @@
     %th.text-nowrap= t('.elimination_standing')
     %th.text-nowrap= t('.squad_list')
   - squadrons.each do |squadron|
-    %tr{data: {squadron_id: squadron.id}}
+    %tr.row-for-search{data: {squadron_id: squadron.id}}
       %td
         = link_with_filter_to "http://lists.starwarsclubhouse.com/get_tourney_details?tourney_id=#{squadron.tournament.lists_juggler_id}" do
           = squadron.tournament.name

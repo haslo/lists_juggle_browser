@@ -1,4 +1,4 @@
-%table.table.table-striped.table-bordered
+%table.table.table-striped.table-bordered.table-for-search
   %tr
     %th.text-nowrap= t('.position')
     %th.text-nowrap= t('.ship_names')
@@ -7,7 +7,7 @@
     %th.text-nowrap= t('.average_percentile')
     %th.text-nowrap= t('.weight')
   - ship_combos.each.with_index do |ship_combo, index|
-    %tr{data: {ship_combo_id: ship_combo.id}}
+    %tr.row-for-search{data: {ship_combo_id: ship_combo.id}}
       %td
         %strong= "#{index + 1}."
       %td

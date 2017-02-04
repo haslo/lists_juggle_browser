@@ -1,4 +1,4 @@
-%table.table.table-striped.table-bordered
+%table.table.table-striped.table-bordered.table-for-search
   %tr
     %th.text-nowrap= t('.position')
     %th.text-nowrap= t('.image')
@@ -9,7 +9,7 @@
     %th.text-nowrap= t('.average_percentile')
     %th.text-nowrap= t('.weight')
   - upgrades.each.with_index do |upgrade, index|
-    %tr{data: {upgrade_id: upgrade.id}}
+    %tr.row-for-search{data: {upgrade_id: upgrade.id}}
       %td
         %strong= "#{index + 1}."
       %td
