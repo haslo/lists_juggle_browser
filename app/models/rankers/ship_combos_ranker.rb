@@ -61,7 +61,7 @@ module Rankers
         ship_combos_relation = ship_combos_relation.joins(upgrade_join).where('ship_configurations_upgrades.upgrade_id = ?', upgrade_id)
       end
       @ship_combos = ShipCombo.fetch_query(ship_combos_relation, attributes)
-      @ships       = Hash[ShipCombo.all.includes(:ships).map { |c| [c.id, c.ships.map(&:name).join(', ')] }]
+      @ships       = Hash[ShipCombo.where(id: @ship_combos.map(&:id)).includes(:ships).map { |c| [c.id, c.ships.map{|s| {name: s.name, font_icon_class: s.font_icon_class}}] }]
     end
 
   end

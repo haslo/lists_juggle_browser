@@ -20,17 +20,18 @@ module Rankers
       SQL
       weight_query_builder = WeightQueryBuilder.new(ranking_configuration)
       attributes           = {
-        id:                 'pilots.id',
-        name:               'pilots.name',
-        faction:            'factions.name',
-        image_uri:          'pilots.image_uri',
-        wikia_uri:          'pilots.wikia_uri',
-        ship_id:            'ships.id',
-        ship_name:          'ships.name',
-        weight:             weight_query_builder.build_weight_query,
-        squadrons:          'count(distinct squadrons.id)',
-        tournaments:        'count(distinct tournaments.id)',
-        average_percentile: weight_query_builder.build_average_query,
+        id:                   'pilots.id',
+        name:                 'pilots.name',
+        faction:              'factions.name',
+        image_uri:            'pilots.image_uri',
+        wikia_uri:            'pilots.wikia_uri',
+        ship_id:              'ships.id',
+        ship_name:            'ships.name',
+        ship_font_icon_class: 'ships.font_icon_class',
+        weight:               weight_query_builder.build_weight_query,
+        squadrons:            'count(distinct squadrons.id)',
+        tournaments:          'count(distinct tournaments.id)',
+        average_percentile:   weight_query_builder.build_average_query,
       }
       pilot_relation       = Pilot
                                .joins(joins)

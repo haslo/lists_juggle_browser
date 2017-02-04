@@ -12,7 +12,9 @@
         %strong= "#{index + 1}."
       %td
         = link_with_filter_to ship_combo_path(ship_combo.id) do
-          = ships[ship_combo.id]
+          - ships[ship_combo.id].each do |ship_info|
+            %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship_info[:font_icon_class]}"}
+            = ship_info[:name]
       %td
         = ship_combo.squadrons
       %td

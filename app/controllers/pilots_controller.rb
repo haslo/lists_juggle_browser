@@ -18,10 +18,11 @@ class PilotsController < ApplicationController
 
   def update
     Pilot.find(params[:id]).update(pilot_attributes)
+    redirect_to action: :show
   end
 
   def pilot_attributes
-    params.require(:pilot).allow(:wikia_uri)
+    params.require(:pilot).permit(:wikia_uri)
   end
 
 end

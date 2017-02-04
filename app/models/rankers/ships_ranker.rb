@@ -21,6 +21,7 @@ module Rankers
         id:                 'ships.id',
         name:               'ships.name',
         weight:             weight_query_builder.build_weight_query,
+        font_icon_class:    'ships.font_icon_class',
         squadrons:          'count(distinct squadrons.id)',
         tournaments:        'count(distinct tournaments.id)',
         average_percentile: weight_query_builder.build_average_query,

@@ -22,6 +22,7 @@
         = squadron.elimination_standing
       %td
         - squadron.ship_configurations.each do |ship_configuration|
+          %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship_configuration.pilot.ship.font_icon_class}"}
           %strong
             = link_with_filter_to pilot_path(ship_configuration.pilot.id) do
               = ship_configuration.pilot.name

@@ -21,10 +21,11 @@ class ShipsController < ApplicationController
 
   def update
     Ship.find(params[:id]).update(ship_attributes)
+    redirect_to action: :show
   end
 
   def ship_attributes
-    params.require(:ship).allow(:wikia_uri, :font_icon_class)
+    params.require(:ship).permit(:wikia_uri, :font_icon_class)
   end
 
 end

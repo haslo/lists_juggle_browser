@@ -22,6 +22,7 @@
         = link_with_filter_to upgrade_path(upgrade.id) do
           = upgrade.name
       %td
+        %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{upgrade.upgrade_type_font_icon_class}"}
         = upgrade.upgrade_type
       %td
         = upgrade.squadrons
