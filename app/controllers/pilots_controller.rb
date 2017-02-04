@@ -17,7 +17,10 @@ class PilotsController < ApplicationController
   end
 
   def update
-    Pilot.find(params[:id]).update(pilot_attributes)
+    pilot = Pilot.find(params[:id])
+    pilot.assign_attributes(pilot_attributes)
+    Importers::WikiaImage.new.find_image_for(pilot, pilot.wikia_uri)
+    pilot.save!
     redirect_to action: :show
   end
 

@@ -7,7 +7,8 @@
           %button.close{'aria-label' => t('.close'), 'data-dismiss' => 'modal', :type => 'button'}
             %span{'aria-hidden' => 'true'} ×
         .modal-body
-          -# TODO
+          = f.label :archetype_name
+          = f.text_field :archetype_name, class: 'form-control'
         .modal-footer
           %button.btn.btn-secondary{'data-dismiss' => 'modal', :type => 'button'}= t('.close')
-          %button.btn.btn-primary{:type => 'button'}= t('.save')
+          = f.submit t('.save'), class: 'btn btn-primary'

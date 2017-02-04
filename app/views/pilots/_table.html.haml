@@ -14,7 +14,7 @@
       %td
         %strong= "#{index + 1}."
       %td
-        = link_with_filter_to pilot.wikia_uri do
+        = link_to pilot.wikia_uri do
           - if pilot.image_uri.present?
             = image_tag pilot.image_uri, width: '80px'
           - else

@@ -17,7 +17,10 @@ class UpgradesController < ApplicationController
   end
 
   def update
-    Upgrade.find(params[:id]).update(upgrade_attributes)
+    upgrade = Upgrade.find(params[:id])
+    upgrade.assign_attributes(upgrade_attributes)
+    Importers::WikiaImage.new.find_image_for(upgrade, upgrade.wikia_uri)
+    upgrade.save!
     redirect_to action: :show
   end
 
