@@ -19,3 +19,7 @@ en:
       average_percentile: 'avg Percentile'
       weight: 'Magic'
       no_image: '(no image)'
+    edit_modal:
+      title: 'Edit Ship Type Data'
+      close: 'Close'
+      save: 'Save'

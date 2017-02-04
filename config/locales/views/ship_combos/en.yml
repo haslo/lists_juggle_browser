@@ -16,3 +16,7 @@ en:
       ships: 'Ships'
       pilots: 'Pilots'
       upgrades: 'Upgrades'
+    edit_modal:
+      title: 'Edit List Archetype Data'
+      close: 'Close'
+      save: 'Save'

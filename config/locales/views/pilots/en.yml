@@ -19,3 +19,7 @@ en:
       notable_squadrons: 'Some Notable Squadrons'
       upgrades: 'Upgrades'
       ship_combos: 'List Archetypes'
+    edit_modal:
+      title: 'Edit Pilot Data'
+      close: 'Close'
+      save: 'Save'
