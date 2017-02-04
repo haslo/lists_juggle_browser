@@ -12,6 +12,9 @@ Huge props to the guys who built that!
 I'm also using images from the X-Wing Fandom Wikia, linking to the source from
 wherever I use an image.
 
+And finally, thanks to everybody who helps with the X-Wing Miniatures Font:
+https://github.com/geordanr/xwing-miniatures-font
+
 ## Application Stack
 
 The application is written in Ruby on Rails and uses PostgreSQL as its database.
@@ -29,14 +32,9 @@ rake db:create db:migrate
 Importing all the data (takes a while):
 
 ```bash
-rake sync:lists_juggler
+rake sync:all
+rake sync:rebuild_wikia_images
 ```
 
-## Current Status
-
-Currently, the application can import data from Lists Juggler through their HTML lists
-and CSV exports, and wrangle it into new tables to hold everything. There's also some
-pre-computation of values for statistics.
-
-Next up will be a little UI for the whole thing, and then lots of heavy lifting with
-the data.
+You'll need to fix some Wikia links afterwards (from detail pages), but
+most should be correct.
