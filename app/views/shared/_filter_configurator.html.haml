@@ -23,7 +23,6 @@
   :coffeescript
     $ ->
       updateFilteredData = ->
-        $('.loading-indicator').show()
         newPath = window.location.pathname + '?'
         $.each $('.filter-input'), (index, item) ->
           newPath += $(item).attr('name') + '=' + encodeURIComponent($(item).val()) + '&'

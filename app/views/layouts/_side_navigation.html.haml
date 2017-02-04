@@ -16,5 +16,6 @@
     $ ->
       $('.loading-indicator').hide()
 
-      $('a').on 'click', (e) ->
+      $(window).on 'beforeunload', (e) ->
         $('.loading-indicator').show()
+        e.preventDefault()

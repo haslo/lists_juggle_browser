@@ -18,7 +18,8 @@
       %td
         - pilots = @view.ship_pilots[ship.id]
         - pilots.each.with_index do |pilot, index|
-          %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{FontLookup.new.faction_icon(pilot.faction.name)}"}
+          %small
+            %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{FontLookup.new.faction_icon(pilot.faction.name)}"}
           = link_with_filter_to pilot_path(pilot.id) do
             = pilot.name
           - if index < pilots.count - 1
