@@ -20,7 +20,9 @@ en:
         <ul>
           <li><a href="https://www.postgresql.org/">PostgreSQL</a></li>
           <li><a href="http://rubyonrails.org/">Ruby on Rails</a></li>
-          <li><a href="https://jquery.com//">jQuery</a> for everything JavaScript</li>
+          <li><a href="https://jquery.com/">jQuery</a> for everything JavaScript</li>
+          <li><a href="http://getbootstrap.com/">Bootstrap</a> for the grid layout</li>
         </ul>
         <p>The author is known as haslo on the FFG forums, BGG, GitHub, Twitter. Throw me a note in any of those places
-          or create an issue on GitHub if you find bugs or have ideas for improvements.</p>
+          or <a href="https://github.com/haslo/lists_juggle_browser/issues">create an issue on GitHub</a>
+          if you find bugs or have ideas for improvements.</p>
