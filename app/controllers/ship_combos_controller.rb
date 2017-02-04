@@ -17,4 +17,12 @@ class ShipCombosController < ApplicationController
                                         })
   end
 
+  def update
+    ShipCombo.find(params[:id]).update(ship_combo_attributes)
+  end
+
+  def ship_combo_attributes
+    params.require(:upgrade).allow(:archetype_name)
+  end
+
 end

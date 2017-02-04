@@ -27,7 +27,7 @@ module Rankers
         id:                 'upgrades.id',
         name:               'upgrades.name',
         image_uri:          'upgrades.image_uri',
-        image_source_uri:   'upgrades.image_source_uri',
+        wikia_uri:          'upgrades.wikia_uri',
         upgrade_type:       'upgrade_types.name',
         weight:             weight_query_builder.build_weight_query,
         squadrons:          'count(distinct squadrons.id)',
@@ -36,7 +36,7 @@ module Rankers
       }
       upgrade_relation     = Upgrade
                                .joins(joins)
-                               .group('upgrades.id, upgrades.name, upgrades.image_uri, upgrades.image_source_uri, upgrade_types.name')
+                               .group('upgrades.id, upgrades.name, upgrades.image_uri, upgrades.wikia_uri, upgrade_types.name')
                                .order('weight desc')
                                .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       if ship_id.present?

@@ -16,4 +16,12 @@ class UpgradesController < ApplicationController
                                         })
   end
 
+  def update
+    Upgrade.find(params[:id]).update(upgrade_attributes)
+  end
+
+  def upgrade_attributes
+    params.require(:upgrade).allow(:wikia_uri, upgrade_type_attributes: [:font_icon_class])
+  end
+
 end

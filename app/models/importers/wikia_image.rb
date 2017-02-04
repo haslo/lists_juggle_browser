@@ -28,7 +28,7 @@ module Importers
       parsed_result_body = Nokogiri.parse(result_response.body)
       image_uri          = parsed_result_body.search('#WikiaArticle img').first.attributes['src'].value
       entity.assign_attributes({
-                                 image_source_uri: result_uri,
+                                 wikia_uri: result_uri,
                                  image_uri:        image_uri,
                                })
     end

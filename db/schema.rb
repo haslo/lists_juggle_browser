@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170130191543) do
+ActiveRecord::Schema.define(version: 20170204201446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,10 +25,10 @@ ActiveRecord::Schema.define(version: 20170130191543) do
     t.integer  "ship_id"
     t.integer  "faction_id"
     t.string   "name"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string   "image_uri"
-    t.string   "image_source_uri"
+    t.string   "wikia_uri"
   end
 
   create_table "players", force: :cascade do |t|
@@ -38,8 +38,9 @@ ActiveRecord::Schema.define(version: 20170130191543) do
   end
 
   create_table "ship_combos", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "archetype_name"
   end
 
   create_table "ship_combos_ships", id: false, force: :cascade do |t|
@@ -61,8 +62,9 @@ ActiveRecord::Schema.define(version: 20170130191543) do
 
   create_table "ships", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "font_icon_class"
   end
 
   create_table "squadrons", force: :cascade do |t|
@@ -104,17 +106,18 @@ ActiveRecord::Schema.define(version: 20170130191543) do
 
   create_table "upgrade_types", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "font_icon_class"
   end
 
   create_table "upgrades", force: :cascade do |t|
     t.string   "name"
     t.integer  "upgrade_type_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "image_uri"
-    t.string   "image_source_uri"
+    t.string   "wikia_uri"
   end
 
   add_foreign_key "pilots", "factions"

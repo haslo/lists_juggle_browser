@@ -16,4 +16,12 @@ class PilotsController < ApplicationController
                                         })
   end
 
+  def update
+    Pilot.find(params[:id]).update(pilot_attributes)
+  end
+
+  def pilot_attributes
+    params.require(:pilot).allow(:wikia_uri)
+  end
+
 end

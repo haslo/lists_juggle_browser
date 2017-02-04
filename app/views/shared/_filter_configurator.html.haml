@@ -4,7 +4,7 @@
       %h5.mb-0
         = t('.filter')
     #filter-content.collapse.show{role: 'tabpanel'}
-      = form_tag filter_configurator_path, method: :patch, id: 'filter-form' do
+      = form_tag '', method: :patch, id: 'filter-form' do
         .card-block.row{style: 'padding: 0.5rem'}
           .col-sm-2
             = select_tag :preset_ranking_start, options_for_select(preset_dates, ranking_configuration[:ranking_start]), class: 'form-control preset-date', data: {field: '#ranking-start'}
