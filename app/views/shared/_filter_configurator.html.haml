@@ -6,22 +6,21 @@
     #filter-content.collapse.show{role: 'tabpanel'}
       = form_tag filter_configurator_path, method: :patch, id: 'filter-form' do
         .card-block.row{style: 'padding: 0.5rem'}
-          .col-sm-4
-            = select_tag :preset_ranking_start, options_for_select(preset_dates, ranking_configuration[:ranking_start]), class: 'preset-date', data: {field: '#ranking-start'}
-            = text_field_tag :ranking_start, ranking_configuration[:ranking_start], class: 'filter-input', id: 'ranking-start'
-            %br
-            = select_tag :preset_ranking_end, options_for_select(preset_dates, ranking_configuration[:ranking_end]), class: 'preset-date', data: {field: '#ranking-end'}
-            = text_field_tag :ranking_end, ranking_configuration[:ranking_end], class: 'filter-input', id: 'ranking-end'
-          .col-sm-4
+          .col-sm-2
+            = select_tag :preset_ranking_start, options_for_select(preset_dates, ranking_configuration[:ranking_start]), class: 'form-control preset-date', data: {field: '#ranking-start'}
+            = select_tag :preset_ranking_end, options_for_select(preset_dates, ranking_configuration[:ranking_end]), class: 'form-control preset-date', data: {field: '#ranking-end'}
+          .col-sm-2
+            = text_field_tag :ranking_start, ranking_configuration[:ranking_start], class: 'form-control filter-input', id: 'ranking-start'
+            = text_field_tag :ranking_end, ranking_configuration[:ranking_end], class: 'form-control filter-input', id: 'ranking-end'
+          .col-sm-2
             = label_tag :large_tournament_multiplier, t('.large_tournament_multiplier')
-            = select_tag :large_tournament_multiplier, options_for_select(%w[true false], ranking_configuration[:large_tournament_multiplier].to_s), class: 'filter-input'
-            %br
             = label_tag :widespread_use_multiplier, t('.widespread_use_multiplier')
-            = select_tag :widespread_use_multiplier, options_for_select(%w[true false], ranking_configuration[:widespread_use_multiplier].to_s), class: 'filter-input'
+          .col-sm-2
+            = select_tag :large_tournament_multiplier, options_for_select([[t('.multipliers.multiply'), 'true'], [t('.multipliers.do_not_multiply'), 'false']], ranking_configuration[:large_tournament_multiplier].to_s), class: 'form-control filter-input'
+            = select_tag :widespread_use_multiplier, options_for_select([[t('.multipliers.multiply'), 'true'], [t('.multipliers.do_not_multiply'), 'false']], ranking_configuration[:widespread_use_multiplier].to_s), class: 'form-control filter-input'
           .col-sm-4
-            = select_tag :use_ranking_data, options_for_select(preset_ranking_data, ranking_configuration[:use_ranking_data]), class: 'filter-input', id: 'use-ranking-data'
-            %br
-            = select_tag :tournament_type, options_from_collection_for_select(TournamentType.all, :id, :name, ranking_configuration[:tournament_type]), include_blank: t('.all_types'), class: 'filter-input', id: 'tournament-type'
+            = select_tag :use_ranking_data, options_for_select(preset_ranking_data, ranking_configuration[:use_ranking_data]), class: 'form-control filter-input', id: 'use-ranking-data'
+            = select_tag :tournament_type, options_from_collection_for_select(TournamentType.all, :id, :name, ranking_configuration[:tournament_type]), include_blank: t('.all_types'), class: 'form-control filter-input', id: 'tournament-type'
 
 - content_for :javascript do
   :coffeescript
