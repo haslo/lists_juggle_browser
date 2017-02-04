@@ -14,10 +14,10 @@
             = text_field_tag :ranking_end, ranking_configuration[:ranking_end], class: 'filter-input', id: 'ranking-end'
           .col-sm-4
             = label_tag :large_tournament_multiplier, t('.large_tournament_multiplier')
-            = check_box_tag :large_tournament_multiplier, true, ranking_configuration[:large_tournament_multiplier], class: 'filter-input', id: 'large-tournament-multiplier'
+            = select_tag :large_tournament_multiplier, options_for_select(%w[true false], ranking_configuration[:large_tournament_multiplier].to_s), class: 'filter-input'
             %br
             = label_tag :widespread_use_multiplier, t('.widespread_use_multiplier')
-            = check_box_tag :widespread_use_multiplier, true, ranking_configuration[:widespread_use_multiplier], class: 'filter-input', id: 'widespread-use-multiplier'
+            = select_tag :widespread_use_multiplier, options_for_select(%w[true false], ranking_configuration[:widespread_use_multiplier].to_s), class: 'filter-input'
           .col-sm-4
             = select_tag :use_ranking_data, options_for_select(preset_ranking_data, ranking_configuration[:use_ranking_data]), class: 'filter-input', id: 'use-ranking-data'
             %br
@@ -26,20 +26,15 @@
 - content_for :javascript do
   :coffeescript
     $ ->
+      updateFilteredData = ->
+        newPath = window.location.pathname + '?'
+        $.each $('.filter-input'), (index, item) ->
+          newPath += $(item).attr('name') + '=' + encodeURIComponent($(item).val()) + '&'
+        window.location = newPath
+
       $('.filter-input').on 'change', (e) ->
-        $(e.target).closest('form').trigger('submit')
+        updateFilteredData()
 
       $('.preset-date').on 'change', (e) ->
         $($(e.target).data('field')).val($(e.target).val())
-        $(e.target).closest('form').trigger('submit')
-
-      form = $('#filter-form')
-      form.submit (e) ->
-        $.ajax
-          type: 'PATCH'
-          url: form.attr('action')
-          data: form.serialize()
-          success: (data) ->
-            console.log data
-        e.preventDefault()
-        location.reload()
+        updateFilteredData()
