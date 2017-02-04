@@ -12,10 +12,11 @@
       %td
         %strong= "#{index + 1}."
       %td
-        = ship_combo.archetype_name
-      %td
         = link_with_filter_to ship_combo_path(ship_combo.id) do
-          - ships[ship_combo.id].each do |ship_info|
+          = ship_combo.archetype_name.presence || t('.unnamed_archetype')
+      %td
+        - ships[ship_combo.id].each do |ship_info|
+          = link_to ship_path(ship_info[:id]) do
             %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship_info[:font_icon_class]}"}
             = ship_info[:name]
       %td
