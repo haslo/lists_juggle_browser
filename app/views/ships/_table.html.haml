@@ -11,7 +11,7 @@
     %tr.row-for-search{data: {ship_id: ship.id}}
       %td
         %strong= "#{index + 1}."
-      %td
+      %td.text-nowrap
         %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship.font_icon_class}"}
         = link_with_filter_to ship_path(ship.id) do
           = ship.name

@@ -44,6 +44,30 @@ namespace :sync do
     puts "\ndone!"
   end
 
+  task :reset_icons do
+    Ship.where(font_icon_class: nil).each do |ship|
+      ship.update(font_icon_class: ship.name.downcase.gsub(/[^a-z0-9]/, ''))
+    end
+    {
+      'Title'                    => 'title',
+      'Crew'                     => 'crew',
+      'Modification'             => 'modification',
+      'System'                   => 'system',
+      'Astromech Droid'          => 'astromech',
+      'Turret Weapon'            => 'turret',
+      'Missile'                  => 'missile',
+      'Cannon'                   => 'cannon',
+      'Bomb'                     => 'bomb',
+      'Torpedo'                  => 'torpedo',
+      'Illicit'                  => 'illicit',
+      'Salvaged Astromech Droid' => 'salvagedastromech',
+      'Tech'                     => 'tech',
+      'Elite Pilot Talent'       => 'elite',
+    }.each do |upgrade_type_name, font_icon_class|
+      UpgradeType.where(name: upgrade_type_name).update_all(font_icon_class: font_icon_class)
+    end
+  end
+
   task rebuild_rankings: :environment do
     Importers::Ranking.new.rebuild_all_ranking_data
   end

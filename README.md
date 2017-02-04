@@ -34,6 +34,7 @@ Importing all the data (takes a while):
 ```bash
 rake sync:all
 rake sync:rebuild_wikia_images
+rake sync:reset_icons
 ```
 
 You'll need to fix some Wikia links afterwards (from detail pages), but
