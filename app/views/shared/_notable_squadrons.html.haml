@@ -30,6 +30,7 @@
             = link_with_filter_to ship_path(ship_configuration.pilot.ship.id) do
               = "(#{ship_configuration.pilot.ship.name})"
             - ship_configuration.upgrades.each do |upgrade|
+              %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{upgrade.upgrade_type.font_icon_class}"}
               = link_with_filter_to upgrade_path(upgrade.id) do
                 = upgrade.name
           %br
