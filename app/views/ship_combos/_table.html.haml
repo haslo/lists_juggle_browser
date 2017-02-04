@@ -21,8 +21,12 @@
             = ship_info[:name]
       %td
         = ship_combo.squadrons
+        %br
+        %small= "#{(ship_combo.squadrons.to_f / @view.number_of_squadrons.to_f * 10000).to_i / 100.0}%"
       %td
         = ship_combo.tournaments
+        %br
+        %small= "#{(ship_combo.tournaments.to_f / @view.number_of_tournaments.to_f * 10000).to_i / 100.0}%"
       %td
         = (ship_combo.average_percentile * 1000).to_i / 10.0
       %td.magic-column

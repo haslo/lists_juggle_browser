@@ -5,14 +5,17 @@ class UpgradesController < ApplicationController
   end
 
   def show
+    upgrades_ranker    = Rankers::UpgradesRanker.new(ranking_configuration, upgrade_id: params[:id])
     ship_combos_ranker = Rankers::ShipCombosRanker.new(ranking_configuration, upgrade_id: params[:id], limit: 10)
     @view              = OpenStruct.new({
-                                          upgrade:           Upgrade.find(params[:id]),
-                                          upgrades:          Rankers::UpgradesRanker.new(ranking_configuration, upgrade_id: params[:id]).upgrades,
-                                          squadrons:         Rankers::SquadronsRanker.new(ranking_configuration, upgrade_id: params[:id]).squadrons,
-                                          pilots:            Rankers::PilotsRanker.new(ranking_configuration, upgrade_id: params[:id]).pilots,
-                                          ship_combos:       ship_combos_ranker.ship_combos,
-                                          ship_combos_ships: ship_combos_ranker.ships,
+                                          upgrade:               Upgrade.find(params[:id]),
+                                          upgrades:              upgrades_ranker.upgrades,
+                                          squadrons:             Rankers::SquadronsRanker.new(ranking_configuration, upgrade_id: params[:id]).squadrons,
+                                          pilots:                Rankers::PilotsRanker.new(ranking_configuration, upgrade_id: params[:id]).pilots,
+                                          ship_combos:           ship_combos_ranker.ship_combos,
+                                          ship_combos_ships:     ship_combos_ranker.ships,
+                                          number_of_tournaments: upgrades_ranker.number_of_tournaments,
+                                          number_of_squadrons:   upgrades_ranker.number_of_squadrons,
                                         })
   end
 

@@ -30,8 +30,12 @@
           = pilot.ship_name
       %td
         = pilot.squadrons
+        %br
+        %small= "#{(pilot.squadrons.to_f / @view.number_of_squadrons.to_f * 10000).to_i / 100.0}%"
       %td
         = pilot.tournaments
+        %br
+        %small= "#{(pilot.tournaments.to_f / @view.number_of_tournaments.to_f * 10000).to_i / 100.0}%"
       %td
         = (pilot.average_percentile * 1000).to_i / 10.0
       %td.magic-column

@@ -1,12 +1,13 @@
 module Rankers
   class SquadronsRanker
 
-    attr_reader :squadrons
+    attr_reader :squadrons, :number_of_tournaments, :number_of_squadrons
 
     def initialize(ranking_configuration, ship_id: nil, pilot_id: nil, upgrade_id: nil, ship_combo_id: nil, limit: 4)
-      start_date = ranking_configuration[:ranking_start]
-      end_date   = ranking_configuration[:ranking_end]
-      joins = <<-SQL
+      start_date      = ranking_configuration[:ranking_start]
+      end_date        = ranking_configuration[:ranking_end]
+      tournament_type = ranking_configuration[:tournament_type]
+      joins           = <<-SQL
         inner join tournaments
           on tournaments.id = squadrons.tournament_id
       SQL
@@ -39,6 +40,9 @@ module Rankers
       if ship_combo_id.present?
         squadron_query = squadron_query.where('squadrons.ship_combo_id = ?', ship_combo_id)
       end
+      if tournament_type.present?
+        squadron_query = squadron_query.where('tournaments.tournament_type_id = ?', tournament_type)
+      end
       order = <<-SQL
         case when squadrons.elimination_standing is null or squadrons.elimination_standing = 0 then 1000 else squadrons.elimination_standing end asc,
         case when squadrons.swiss_standing is null or squadrons.swiss_standing = 0 then 1000 else squadrons.swiss_standing end asc,
@@ -46,6 +50,8 @@ module Rankers
         max(tournaments.date) desc
       SQL
       @squadrons = squadron_query.all.includes(:ship_combo, :player, {ship_configurations: [{pilot: :ship}, :upgrades]}).limit(limit).order(order).group(Squadron.column_names)
+
+      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
     end
 
   end

@@ -26,8 +26,12 @@
         = upgrade.upgrade_type
       %td
         = upgrade.squadrons
+        %br
+        %small= "#{(upgrade.squadrons.to_f / @view.number_of_squadrons.to_f * 10000).to_i / 100.0}%"
       %td
         = upgrade.tournaments
+        %br
+        %small= "#{(upgrade.tournaments.to_f / @view.number_of_tournaments.to_f * 10000).to_i / 100.0}%"
       %td
         = (upgrade.average_percentile * 1000).to_i / 10.0
       %td.magic-column

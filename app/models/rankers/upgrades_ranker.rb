@@ -1,12 +1,13 @@
 module Rankers
   class UpgradesRanker
 
-    attr_reader :upgrades
+    attr_reader :upgrades, :number_of_tournaments, :number_of_squadrons
 
     def initialize(ranking_configuration, ship_id: nil, pilot_id: nil, limit: nil, upgrade_id: nil)
-      start_date = ranking_configuration[:ranking_start]
-      end_date   = ranking_configuration[:ranking_end]
-      joins      = <<-SQL
+      start_date      = ranking_configuration[:ranking_start]
+      end_date        = ranking_configuration[:ranking_end]
+      tournament_type = ranking_configuration[:tournament_type]
+      joins           = <<-SQL
         inner join upgrade_types
           on upgrade_types.id = upgrades.upgrade_type_id
         inner join ship_configurations_upgrades
@@ -52,10 +53,12 @@ module Rankers
       if limit.present?
         upgrade_relation = upgrade_relation.limit(limit)
       end
-      if ranking_configuration[:tournament_type].present?
-        upgrade_relation = upgrade_relation.where('tournaments.tournament_type_id = ?', ranking_configuration[:tournament_type])
+      if tournament_type.present?
+        upgrade_relation = upgrade_relation.where('tournaments.tournament_type_id = ?', tournament_type)
       end
       @upgrades = Upgrade.fetch_query(upgrade_relation, attributes)
+
+      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
     end
 
   end
