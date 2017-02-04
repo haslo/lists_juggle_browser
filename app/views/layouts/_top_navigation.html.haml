@@ -1,19 +1,19 @@
 %nav.navbar.navbar-toggleable-md.navbar-inverse.fixed-top.bg-inverse
   %button.navbar-toggler.navbar-toggler-right.hidden-lg-up{'aria-controls' => 'navbarsExampleDefault', 'aria-expanded' => 'false', 'aria-label' => 'Toggle navigation', 'data-target' => '#navbarsExampleDefault', 'data-toggle' => 'collapse', :type => 'button'}
     %span.navbar-toggler-icon
-  = link_to root_path, class: 'navbar-brand' do
+  = link_with_filter_to root_path, class: 'navbar-brand' do
     = t('.title')
   #navbar.collapse.navbar-collapse
     %ul.navbar-nav.mr-auto
       - active = :browser
       - active = :about if %w[abouts].include?(params[:controller])
       %li.nav-item{class: active == :browser ? 'active' : ''}
-        = link_to root_path, class: 'nav-link' do
+        = link_with_filter_to root_path, class: 'nav-link' do
           = t('.browser')
           - if active == :browser
             %span.sr-only= "(#{t('.current')})"
       %li.nav-item{class: active == :about ? 'active' : ''}
-        = link_to about_path, class: 'nav-link' do
+        = link_with_filter_to about_path, class: 'nav-link' do
           = t('.about')
           - if active == :about
             %span.sr-only= "(#{t('.current')})"

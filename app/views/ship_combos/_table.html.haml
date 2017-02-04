@@ -11,7 +11,7 @@
       %td
         %strong= "#{index + 1}."
       %td
-        = link_to ship_combo_path(ship_combo.id) do
+        = link_with_filter_to ship_combo_path(ship_combo.id) do
           = ships[ship_combo.id]
       %td
         = ship_combo.squadrons

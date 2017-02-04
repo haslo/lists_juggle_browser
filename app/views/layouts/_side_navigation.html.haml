@@ -3,7 +3,7 @@
     - is_current = controller == params[:controller]
     - path = controller == 'overviews' ? root_path : __send__("#{controller}_path")
     %li.nav-item
-      = link_to path, class: "nav-link#{is_current ? ' active' : ''}" do
+      = link_with_filter_to path, class: "nav-link#{is_current ? ' active' : ''}" do
         = t(".links.#{controller}")
         - if is_current
           %span.sr-only= "(#{t('.current')})"

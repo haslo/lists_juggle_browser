@@ -14,18 +14,18 @@
       %td
         %strong= "#{index + 1}."
       %td
-        = link_to pilot.image_source_uri do
+        = link_with_filter_to pilot.image_source_uri do
           - if pilot.image_uri.present?
             = image_tag pilot.image_uri, width: '80px'
           - else
             = t('.no_image')
       %td
-        = link_to pilot_path(pilot.id) do
+        = link_with_filter_to pilot_path(pilot.id) do
           = pilot.name
       %td
         %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{FontLookup.new.faction_icon(pilot.faction)}"}
       %td
-        = link_to ship_path(pilot.ship_id) do
+        = link_with_filter_to ship_path(pilot.ship_id) do
           = pilot.ship_name
       %td
         = pilot.squadrons

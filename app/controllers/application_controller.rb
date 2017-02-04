@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def ranking_configuration
-    #raise params.inspect
     {
         large_tournament_multiplier: params['large_tournament_multiplier'].nil? ? true                 : (params['large_tournament_multiplier'] == 'true'),
         widespread_use_multiplier:   params['widespread_use_multiplier'].nil?   ? true                 : (params['widespread_use_multiplier'] == 'true'),

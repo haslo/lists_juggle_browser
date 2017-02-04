@@ -13,13 +13,13 @@
       %td
         %strong= "#{index + 1}."
       %td
-        = link_to upgrade.image_source_uri do
+        = link_with_filter_to upgrade.image_source_uri do
           - if upgrade.image_uri.present?
             = image_tag upgrade.image_uri, width: '60px'
           - else
             = t('.no_image')
       %td
-        = link_to upgrade_path(upgrade.id) do
+        = link_with_filter_to upgrade_path(upgrade.id) do
           = upgrade.name
       %td
         = upgrade.upgrade_type
