@@ -1,7 +1,7 @@
 en:
   layouts:
     application:
-      title: 'Lists Juggle Browser'
+      title: 'X-Wing Meta Analysis'
       description: 'Meta analysis for the X-Wing Lists Juggler'
       author: 'Guido Gloor Modjib'
     top_navigation:
