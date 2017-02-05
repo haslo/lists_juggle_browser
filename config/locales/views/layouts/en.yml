@@ -5,7 +5,7 @@ en:
       description: 'Meta analysis for the X-Wing Lists Juggler'
       author: 'Guido Gloor Modjib'
     top_navigation:
-      title: 'Lists Juggle Browser'
+      title: 'X-Wing Meta Analysis'
       browser: 'Data Browser'
       about: 'About'
       current: 'current'
