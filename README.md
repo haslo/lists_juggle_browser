@@ -21,10 +21,16 @@ rake db:create db:migrate
 Importing all the data (takes a while):
 
 ```bash
-rake sync:all
+rake sync:lists_juggler
 rake sync:rebuild_wikia_images
 rake sync:reset_icons
 ```
 
 You'll need to fix some Wikia links afterwards (from detail pages), but
 most should be correct.
+
+For updates later (updates everything, including images and icons, if necessary):
+
+```bash
+ranke sync:update
+```

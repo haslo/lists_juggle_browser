@@ -2,7 +2,7 @@ require 'csv'
 
 namespace :sync do
 
-  def import_tournament_table(start_at_id)
+  def import_tournament_table(start_at_id: nil, start_at_date: nil)
     importer        = Importers::ListsJuggler.new
     uri             = URI.parse('http://lists.starwarsclubhouse.com/tourneys')
     response        = Net::HTTP.get_response(uri)
@@ -11,13 +11,14 @@ namespace :sync do
     tournament_rows.each do |tournament_row|
       tournament_id = tournament_row.search('th').first.text
       print "#{tournament_id},"
-      if start_at_id.nil? || tournament_id.to_i >= start_at_id.to_i
+      allow_id = start_at_id.nil? || tournament_id.to_i >= start_at_id.to_i
+      allow_date = start_at_date.nil? || Date.parse(tournament_row.search('td')[5].text) >= Date.parse(start_at_date.to_s)
+      if allow_id && allow_date
         importer.process_tournament(tournament_id, tournament_row)
         import_tournament_lists(importer, tournament_id)
         Importers::Ranking.new.build_ranking_data(tournament_id)
       end
     end
-    Importers::WikiaImage.fetch_missing_images
   end
 
   def import_tournament_lists(importer, tournament_id)
@@ -32,9 +33,17 @@ namespace :sync do
     %w[| % ç £ @ °].detect { |c| !(text.include?(c)) }
   end
 
-  task :all, [:start_at_id] => :environment do |_t, args|
+  task update: :environment do
+    import_tournament_table(start_at_date: 2.months.ago)
+    Importers::WikiaImage.new.fetch_missing_images
+    Ship.where(font_icon_class: nil).each do |ship|
+      ship.update(font_icon_class: ship.name.downcase.gsub(/[^a-z0-9]/, ''))
+    end
+  end
+
+  task :lists_juggler, [:start_at_id] => :environment do |_t, args|
     puts 'importing all tournaments...'
-    import_tournament_table(args[:start_at_id])
+    import_tournament_table(start_at_id: args[:start_at_id])
     puts "\ndone!"
   end
 
