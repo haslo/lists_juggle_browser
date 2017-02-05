@@ -2,7 +2,7 @@
 %html{:lang => 'en'}
   %head
     - title = yield(:title)
-    - if title.include?("\n"); title = title.split("\n").last.gsub('&quot;', ''); end
+    - if title.include?('&quot;'); title = title.split('&quot;')[1]; end
     %title= [title, t('.title')].reject(&:blank?).join(' - ')
     = csrf_meta_tags
     = stylesheet_link_tag 'application', media: 'all'
