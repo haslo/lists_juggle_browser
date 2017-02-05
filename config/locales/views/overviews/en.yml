@@ -1,4 +1,35 @@
 en:
   overviews:
     index:
-      title: 'Overview'
+      title: 'Data Browser'
+      intro_text: |
+        <p>What this tool is trying to do is a bit of meta analysis. It uses the data from the
+          <a href="http://lists.starwarsclubhouse.com/">X-Wing Lists Juggler</a> and slices and dices it in a
+          variety of ways.</p>
+        <p>On the surface, you can use it to answer simple questions like this, with a bit of drilldown:</p>
+        <ul>
+          <li><a href="/pilots">Which pilots perform best right now?</a></li>
+          <li><a href="/ship_combos">What list archetypes do I have to expect at a tournament?</a></li>
+          <li><a href="/pilots/%{guri}">I want to fly Guri, how do I build a squad with her?</a></li>
+        </ul>
+        <p>On top of that, you can filter quite a bit of stuff, for both historical analysis of results and current
+          detail information:</p>
+        <ul>
+          <li>Start and end date for the tournaments to be analyzed, with a variety of presets (wave release dates etc.)</li>
+          <li>Whether tournaments with many participants should weigh their results higher or not</li>
+          <li>Whether having many players with a list should weigh the results higher or not</li>
+          <li>Whether rankings from before the cut, after the cut, or both should be used (if both,
+            results that have only a Swiss ranking will suffer because their ranking after the cut is "none")</li>
+          <li>There's also a filter for tournament types (Regionals, Store Champs, etc.)</li>
+        </ul>
+        <p>Together, these filters can be used to answer questions like...</p>
+        <ul>
+          <li><a href="/ship_combos?ranking_start=%{release}">Which list archetypes have been performing most consistently
+            since release?</a></li>
+          <li><a href="/ship_combos?ranking_start=%{weeks_ago}&tournament_type=%{regional_type}&widespread_use_multiplier=false&use_ranking_data=elimination">Which
+            lists have been performing surprisingly well at Regionals in the last two weeks?</a></li>
+          <li><a href="/ships?ranking_start=2016-03-17&ranking_end=2016-10-17">Which ships were able to stand up to the
+            U-Boats before the Deadeye nerf?</a></li>
+        </ul>
+        <p>You'll find technical details of both implementation and algorithms on the <a href="/about">About page</a>.</p>
+        <p>Have fun, and <strong>Fly Casual</strong>.</p>

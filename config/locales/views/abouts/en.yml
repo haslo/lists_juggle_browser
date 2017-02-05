@@ -3,23 +3,46 @@ en:
     show:
       title: 'About'
       contents: |
-        <p>This is a humble attempt at standing upon shoulders of giants.</p>
-        <p>The giants in question are:</p>
-        <ul>
-          <li><a href="https://www.fantasyflightgames.com/en/products/x-wing/">FFG's fantastic X-Wing miniatures game</a>
-            of course</li>
-          <li><a href="http://lists.starwarsclubhouse.com/">X-Wing Lists Juggler</a> and all the folks
-            who contributed data by adding their tournaments</li>
-          <li><a href="http://xwing-miniatures.wikia.com/wiki/X-Wing_Miniatures_Wiki">The Wikia X-Wing Miniatures Wiki</a>
-            and all its contributors (where I'm getting all the images from)</li>
-          <li>The <a href="https://github.com/geordanr/xwing-miniatures-font">X-Wing Miniatures Font</a> for symbols and
-            icons</li>
-        </ul>
-        <p>The <a href="https://github.com/haslo/lists_juggle_browser">source is available on GitHub</a> with an MIT license,
-          and the application stack uses <a href="https://www.postgresql.org/">PostgreSQL</a>,
-          <a href="http://rubyonrails.org/">Ruby on Rails</a>, <a href="https://jquery.com/">jQuery</a> and
-          <a href="http://getbootstrap.com/">Bootstrap</a>.
-        </ul>
-        <p>The author is known as haslo on the FFG forums, BGG, GitHub, Twitter. Throw me a note in any of those places
-          or <a href="https://github.com/haslo/lists_juggle_browser/issues">create an issue on GitHub</a>
-          if you find bugs or have ideas for improvements.</p>
+        <h2>Many thanks to...</h2>
+          <ul>
+            <li><a href="https://www.fantasyflightgames.com/en/products/x-wing/">FFG's fantastic X-Wing miniatures game</a>,
+              of course</li>
+            <li><a href="http://lists.starwarsclubhouse.com/">X-Wing Lists Juggler</a> and all the folks
+              who contributed data by adding their tournaments</li>
+            <li><a href="http://xwing-miniatures.wikia.com/wiki/X-Wing_Miniatures_Wiki">The Wikia X-Wing Miniatures Wiki</a>
+              and all its contributors</li>
+            <li>The <a href="https://github.com/geordanr/xwing-miniatures-font">X-Wing Miniatures Font</a> for symbols and
+              icons</li>
+            <li>My X-Wing team, the <a href="http://theflyingdragons.ch/">Krayt Dragons</a>, who helped develop and test this tool</li>
+          </ul>
+        <h2>Implementation</h2>
+          <p>The <a href="https://github.com/haslo/lists_juggle_browser">source is available on GitHub</a> with an MIT license,
+            and the application stack uses <a href="https://www.postgresql.org/">PostgreSQL</a>,
+            <a href="http://rubyonrails.org/">Ruby on Rails</a>, <a href="https://jquery.com/">jQuery</a> and
+            <a href="http://getbootstrap.com/">Bootstrap</a>.
+          <p>Imports are automatic, and things like list archetypes or ships the DB doesn't know yet are automagically generated,
+            which means they'll never get stale because no human interaction is involved. On the other hand, my database
+            has no clue what these things (ships, pilots, upgrades) represent and whether the combinations it gets are legal
+            or posible, they're just a name and a number without anything else attached.</p>
+        <h2>Algorithms</h2>
+          <p>I'm ranking things based on one primary attribute: Ranking percentiles. For this, I calculate the percentile of each
+            squadron's result in each tournament, already when importing the Lists Juggler data. Like that, I can then do
+            all the heavy lifting in the database, which results in reasonable performance even for complex filters in queries.</p>
+          <p>Examples (slightly simplified): <code>3rd of 12 => 75th percentile</code>, <code>9th of 90 => 90th percentile</code> - and after the cut:
+            <code>2nd of 16 in cut of 80 => 87.5th percentile</code>.</p>
+          <p>The ranking then adds these percentiles for the chosen rankings (Swiss or cut or both), which results in a value
+            I call "Magic". Two multipliers are used on this Magic value, if used for the filter:
+            <code>log(number of players in tournament)</code> in order to reward heavy competition, and
+            <code>log(number of squadrons who used this thing, total)</code> in order to bring things to the top
+            that are prevalent in the meta. Logarithms in both places because they're both easy to calculate and just make sense,
+            mathematically.</p>
+        <h2>Editing Contents</h2>
+          <p>You might have noticed edit buttons here and there. Feel free to fix any wrong or missing data, particularly
+            list archetype names.</p>
+          <p>The Wikia links should go to the corresponding upgrade / pilot page, and that will result in the correct images
+            being used for pilots and upgrades. The classes refer to <a href="https://geordanr.github.io/xwing-miniatures-font/">this
+            list</a> (without prefixes).</p>
+        <h2>Author</h2>
+          <p>The author is known as haslo on the FFG forums, BGG, GitHub, Twitter. Throw me a note in any of those places
+            or <a href="https://github.com/haslo/lists_juggle_browser/issues">create an issue on GitHub</a>
+            if you find bugs or have ideas for improvements.</p>

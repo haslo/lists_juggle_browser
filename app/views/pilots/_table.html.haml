@@ -37,6 +37,6 @@
         %br
         %small= "#{(pilot.tournaments.to_f / @view.number_of_tournaments.to_f * 10000).to_i / 100.0}%"
       %td
-        = (pilot.average_percentile * 1000).to_i / 10.0
+        = "#{(pilot.average_percentile * 10000).to_i / 100.0}%"
       %td.magic-column
         = render '/shared/magic_bar', max_weight: pilots.first.weight, weight: pilot.weight

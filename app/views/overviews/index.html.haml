@@ -1,4 +1,7 @@
 - content_for :title do
   = t('.title')
 
-Hier kommen Erklärungen, Beispiele etc. hin.
+= t('.intro_text', release: Date.new(2012, 9, 14).iso8601,
+                   weeks_ago: 2.week.ago.to_date.iso8601,
+                   guri: Pilot.find_by(name: 'Guri').try(:id),
+                   regional_type: TournamentType.find_by(name: 'Regional').try(:id)).html_safe

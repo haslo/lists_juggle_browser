@@ -11,7 +11,7 @@ en:
       current: 'current'
     side_navigation:
       links:
-        overviews: 'Overview'
+        overviews: 'Data Browser'
         pilots: 'Pilots'
         ships: 'Ship Types'
         ship_combos: 'List Archetypes'
