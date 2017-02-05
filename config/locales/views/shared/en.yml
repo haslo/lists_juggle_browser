@@ -2,6 +2,7 @@ en:
   shared:
     filter_configurator:
       filter: 'Filter'
+      reset_filter: 'Reset Filter'
       large_tournament_multiplier: 'Large Tournament'
       widespread_use_multiplier: 'Widespread Use'
       all_types: '(all tournament types)'

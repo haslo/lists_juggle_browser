@@ -2,6 +2,9 @@
   .card
     #filter-header.card-header{role: 'tab'}
       %h5.mb-0
+        .float-sm-right
+          = link_to request.env['PATH_INFO'], class: 'btn btn-primary btn-sm' do
+            = t('.reset_filter')
         = t('.filter')
     #filter-content.collapse.show{role: 'tabpanel'}
       = form_tag '', method: :patch, id: 'filter-form' do

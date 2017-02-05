@@ -2,7 +2,7 @@
   = t('.title', name: @view.pilot.name)
 
 .float-md-right
-  %button.btn.btn-primary{data: {target: '#edit-modal', toggle: 'modal'}, type: 'button'}
+  %button.btn.btn-primary.btn-sm{data: {target: '#edit-modal', toggle: 'modal'}, type: 'button'}
     = t('.edit')
 %h2= t('.pilot')
 = render '/pilots/table', pilots: @view.pilots
