@@ -17,7 +17,7 @@
       %td
         - ships[ship_combo.id].each do |ship_info|
           %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship_info[:font_icon_class]}"}
-          = link_to ship_path(ship_info[:id]) do
+          = link_with_filter_to ship_path(ship_info[:id]) do
             = ship_info[:name]
       %td
         = ship_combo.squadrons
