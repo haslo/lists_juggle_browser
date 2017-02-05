@@ -4,23 +4,12 @@ An application that takes the wealth of data from Lists Juggler, and tries to
 distill it down into a number of reports that answer questions the community might
 have.
 
-Here's the source of the Lists Juggler frontend and data:
-https://github.com/lhayhurst/xwlists
-
-Huge props to the guys who built that!
-
-I'm also using images from the X-Wing Fandom Wikia, linking to the source from
-wherever I use an image.
-
-And finally, thanks to everybody who helps with the X-Wing Miniatures Font:
-https://github.com/geordanr/xwing-miniatures-font
-
 ## Application Stack
 
 The application is written in Ruby on Rails and uses PostgreSQL as its database.
 
 Preferably, use something like RVM to handle your Rubies and Gemsets. Then checkout
-the repository, make sure you're using Ruby 2.4, and...
+the repository, make sure you're using Ruby 2.4 and have Postgres installed, and...
 
 ```bash
 bundle
