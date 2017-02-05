@@ -2,6 +2,11 @@ en:
   overviews:
     index:
       title: 'Data Browser'
+      current_status: 'Stats'
+      latest_import: 'Latest Import'
+      number_of_tournaments: 'Number of analyzed Tournaments'
+      number_of_squadrons: 'Number of analyzed Squadrons'
+      intro_title: 'What is this?'
       intro_text: |
         <p>What this tool is trying to do is a bit of meta analysis. It uses the data from the
           <a href="http://lists.starwarsclubhouse.com/">X-Wing Lists Juggler</a> and slices and dices it in a
