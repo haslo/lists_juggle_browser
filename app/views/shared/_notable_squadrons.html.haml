@@ -8,7 +8,7 @@
   - squadrons.each do |squadron|
     %tr.row-for-search{data: {squadron_id: squadron.id}}
       %td
-        = link_with_filter_to "http://lists.starwarsclubhouse.com/get_tourney_details?tourney_id=#{squadron.tournament.lists_juggler_id}" do
+        = link_to "http://lists.starwarsclubhouse.com/get_tourney_details?tourney_id=#{squadron.tournament.lists_juggler_id}" do
           = squadron.tournament.name
         %br
         = squadron.tournament.tournament_type.name
