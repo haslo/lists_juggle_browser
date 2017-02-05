@@ -1,7 +1,7 @@
 en:
   overviews:
     index:
-      title: 'Data Browser'
+      title: 'Intro'
       current_status: 'Stats'
       latest_import: 'Latest Import'
       number_of_tournaments: 'Number of analyzed Tournaments'
