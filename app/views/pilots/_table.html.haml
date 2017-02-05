@@ -13,10 +13,11 @@
     %tr.row-for-search{data: {pilot_id: pilot.id, ship_id: pilot.ship_id}}
       %td
         %strong= "#{index + 1}."
-      %td
+      %td.image-hover-cell.pilot
         = link_to pilot.wikia_uri do
           - if pilot.image_uri.present?
-            = image_tag pilot.image_uri, width: '80px'
+            .image-with-hover
+              = image_tag pilot.image_uri
           - else
             = t('.no_image')
       %td

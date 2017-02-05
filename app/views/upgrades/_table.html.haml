@@ -12,10 +12,11 @@
     %tr.row-for-search{data: {upgrade_id: upgrade.id}}
       %td
         %strong= "#{index + 1}."
-      %td
+      %td.image-hover-cell.upgrade
         = link_to upgrade.wikia_uri do
           - if upgrade.image_uri.present?
-            = image_tag upgrade.image_uri, width: '60px'
+            .image-with-hover
+              = image_tag upgrade.image_uri
           - else
             = t('.no_image')
       %td
