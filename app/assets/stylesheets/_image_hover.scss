@@ -3,28 +3,22 @@
   img {
     width: 80px;
   }
-  &:hover img {
-    width: 250px;
-    margin-left: -30px;
-    margin-top: -50px;
-    z-index: 3;
-  }
 }
 .image-hover-cell.upgrade {
   height: 118px;
   img {
     width: 60px;
   }
-  &:hover img {
-    width: 200px;
-    margin-left: -30px;
-    margin-top: -50px;
-    z-index: 3;
-  }
 }
 .image-with-hover {
   position: relative;
   img {
     position: absolute;
+  }
+  &:hover img {
+    width: inherit;
+    margin-left: -30px;
+    margin-top: -50px;
+    z-index: 3;
   }
 }
