@@ -44,7 +44,7 @@ namespace :sync do
     puts "\ndone!"
   end
 
-  task :reset_icons do
+  task reset_icons: :environment do
     Ship.where(font_icon_class: nil).each do |ship|
       ship.update(font_icon_class: ship.name.downcase.gsub(/[^a-z0-9]/, ''))
     end
