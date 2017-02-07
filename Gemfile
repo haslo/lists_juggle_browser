@@ -21,6 +21,7 @@ gem 'jbuilder'
 
 # additional libs
 
+gem 'execjs'
 gem 'nokogiri'
 gem 'chartkick'
 gem 'groupdate', require: 'groupdate'
