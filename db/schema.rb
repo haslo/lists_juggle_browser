@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170204201446) do
+ActiveRecord::Schema.define(version: 20170207194352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "conditions", force: :cascade do |t|
+    t.integer  "pilot_id"
+    t.integer  "upgrade_id"
+    t.string   "image_path"
+    t.string   "xws"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pilot_id"], name: "index_conditions_on_pilot_id", using: :btree
+    t.index ["upgrade_id"], name: "index_conditions_on_upgrade_id", using: :btree
+  end
 
   create_table "factions", force: :cascade do |t|
     t.string   "name"
@@ -27,8 +38,8 @@ ActiveRecord::Schema.define(version: 20170204201446) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "image_uri"
-    t.string   "wikia_uri"
+    t.string   "xws"
+    t.string   "image_path"
   end
 
   create_table "players", force: :cascade do |t|
@@ -65,6 +76,7 @@ ActiveRecord::Schema.define(version: 20170204201446) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "font_icon_class"
+    t.string   "xws"
   end
 
   create_table "squadrons", force: :cascade do |t|
@@ -116,10 +128,12 @@ ActiveRecord::Schema.define(version: 20170204201446) do
     t.integer  "upgrade_type_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.string   "image_uri"
-    t.string   "wikia_uri"
+    t.string   "xws"
+    t.string   "image_path"
   end
 
+  add_foreign_key "conditions", "pilots"
+  add_foreign_key "conditions", "upgrades"
   add_foreign_key "pilots", "factions"
   add_foreign_key "pilots", "ships"
   add_foreign_key "ship_combos_ships", "ship_combos"

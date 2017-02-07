@@ -5,6 +5,7 @@ class Pilot < ApplicationRecord
   belongs_to :ship
 
   has_many :ship_configurations
+  has_many :conditions
 
   def wikia_search_string
     name
