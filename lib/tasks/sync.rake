@@ -3,7 +3,7 @@ require 'csv'
 namespace :sync do
 
   task xwing_data: :environment do
-
+    Importers::XwingData.sync_all
   end
 
   task rebuild_rankings: :environment do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170207201440) do
+ActiveRecord::Schema.define(version: 20170207210330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20170207201440) do
   create_table "conditions", force: :cascade do |t|
     t.integer  "pilot_id"
     t.integer  "upgrade_id"
+    t.string   "name"
     t.string   "image_path"
     t.string   "xws"
     t.datetime "created_at", null: false
@@ -79,6 +80,8 @@ ActiveRecord::Schema.define(version: 20170207201440) do
     t.datetime "updated_at",      null: false
     t.string   "font_icon_class"
     t.string   "xws"
+    t.string   "size"
+    t.index ["size"], name: "index_ships_on_size", using: :btree
   end
 
   create_table "squadrons", force: :cascade do |t|

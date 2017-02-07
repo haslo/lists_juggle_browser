@@ -16,6 +16,7 @@ class AddXwsFields < ActiveRecord::Migration[5.0]
     create_table :conditions do |t|
       t.references :pilot, index: true
       t.references :upgrade, index: true
+      t.string :name
       t.string :image_path
       t.string :xws
       t.timestamps null: false
