@@ -1,7 +1,8 @@
 module Importers
   class ListsJuggler
 
-    class InvalidTournament < StandardError; end
+    class InvalidTournament < StandardError;
+    end
 
     def sync_tournaments(minimum_id: nil, start_date: nil)
       uri         = URI.parse('http://lists.starwarsclubhouse.com/api/v1/tournaments')
@@ -23,29 +24,28 @@ module Importers
       response        = Net::HTTP.get_response(uri)
       tournament_data = JSON.parse(response.body).try(:[], 'tournament')
       if tournament_data.present?
-        # TODO
+        tournament.assign_attributes({
+                                       name:            tournament_data['name'],
+                                       date:            tournament_data['date'],
+                                       format:          tournament_data['format'],
+                                       round_length:    tournament_data['round_length'],
+                                       num_players:     tournament_data['tournament']['players'].length,
+                                       tournament_type: TournamentType.find_or_initialize_by(name: tournament_data['type']),
+                                       # TODO city, state, country? for filters, #15
+                                     })
+        tournament.save!
+        tournament_data['players'].each do |squadron_data|
+          sync_squadron(squadron_data)
+        end
       else
         raise InvalidTournament
       end
     end
 
-    # def process_tournament(tournament_id, tournament_row)
-    #   tournament = Tournament.find_or_initialize_by(lists_juggler_id: tournament_id)
-    #   tournament.assign_attributes({
-    #                                  tournament_type:        TournamentType.find_or_create_by!(name: tournament_row.search('td')[4].text.titleize),
-    #                                  name:                   tournament_row.search('td')[0].text,
-    #                                  lists_juggler_venue_id: tournament_row.search('td a').first.attributes['href'].value.split('=').last,
-    #                                  venue:                  tournament_row.search('td')[1].text,
-    #                                  num_players:            tournament_row.search('td')[2].text,
-    #                                  round_length:           tournament_row.search('td')[6].text,
-    #                                  city:                   tournament_row.search('td')[7].text.split('/')[1],
-    #                                  state:                  tournament_row.search('td')[7].text.split('/')[2],
-    #                                  country:                tournament_row.search('td')[7].text.split('/')[3],
-    #                                  date:                   Date.parse(tournament_row.search('td')[5].text)
-    #                                })
-    #   tournament.save!
-    # end
-    #
+    def sync_squadron(squadron_data)
+      # TODO
+    end
+
     # def process_data(tournament_id, tournament_data)
     #   ActiveRecord::Base.transaction do
     #     if tournament_data.length > 1

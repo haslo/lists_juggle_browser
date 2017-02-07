@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170207210330) do
+ActiveRecord::Schema.define(version: 20170207230911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,8 @@ ActiveRecord::Schema.define(version: 20170207210330) do
     t.float    "elimination_percentile"
     t.integer  "ship_combo_id"
     t.string   "player_name"
+    t.integer  "mov"
+    t.json     "xws"
     t.index ["faction_id"], name: "index_squadrons_on_faction_id", using: :btree
     t.index ["ship_combo_id"], name: "index_squadrons_on_ship_combo_id", using: :btree
     t.index ["tournament_id"], name: "index_squadrons_on_tournament_id", using: :btree
@@ -113,15 +115,14 @@ ActiveRecord::Schema.define(version: 20170207210330) do
     t.string   "name"
     t.integer  "tournament_type_id"
     t.integer  "lists_juggler_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "lists_juggler_venue_id"
-    t.string   "venue"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.integer  "num_players"
     t.integer  "round_length"
     t.string   "city"
     t.string   "state"
     t.string   "country"
+    t.string   "format"
     t.index ["tournament_type_id"], name: "index_tournaments_on_tournament_type_id", using: :btree
   end
 
