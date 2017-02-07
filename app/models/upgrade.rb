@@ -9,6 +9,8 @@ class Upgrade < ApplicationRecord
 
   accepts_nested_attributes_for :upgrade_type
 
+  validates :xws, uniqueness: true
+
   def wikia_search_string
     "#{name} #{upgrade_type.name}"
   end
