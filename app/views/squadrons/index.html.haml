@@ -1,4 +1,14 @@
 - content_for :title do
   = t('.title')
 
+- @view.rankers.each do |klass, ranker|
+  - model_name = klass.name.underscore
+  %h2{id: model_name.gsub('_', '-')}= t(".#{model_name}")
+  - if klass == ShipCombo
+    = render "/ship_combos/table", ship_combos: ranker.ship_combos, ships: ranker.ships
+  - else
+    - model_key = model_name.pluralize.to_sym
+    = render "/#{model_name.pluralize}/table", { model_key => model.__send__(model_key) }
+
+%h2#squadrons= t('.squadrons')
 = render '/squadrons/table', squadrons: @view.squadrons

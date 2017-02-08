@@ -2,6 +2,11 @@ en:
   squadrons:
     index:
       title: 'Notable Squadrons'
+      pilot: 'Pilot'
+      ship: 'Ship'
+      ship_combo: 'List Archetype'
+      upgrade: 'Upgrade'
+      squadrons: 'Squadrons'
     table:
       tournament: 'Tournament'
       num_tournament_players: 'Players'
