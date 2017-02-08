@@ -8,5 +8,9 @@
       .modal-body
         %p= t('.explanation')
         = text_area_tag 'xws-text-area', '', id: 'xws-text-area', class: 'form-control'
+        %p
+          %small
+            = link_to 'javascript:void(0);', id: 'xws-json-link', target: '_blank' do
+              = t('.link_to_xws')
       .modal-footer
         %button.btn.btn-primary{'data-dismiss' => 'modal', :type => 'button'}= t('.close')

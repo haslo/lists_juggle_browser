@@ -54,7 +54,7 @@
             = '-'
           = t('.played_by', player: squadron.player_name)
           = '-'
-          = link_to 'javascript:void(0);', class: 'xws-link', data: {xws: squadron.xws} do
+          = link_to 'javascript:void(0);', class: 'xws-link', data: {xws: squadron.xws, link: squadron_url(squadron, format: :json)} do
             = t('.download_xws')
 
 = render '/squadrons/xws_modal'
@@ -65,6 +65,7 @@
       $('.xws-link').on 'click', (e) ->
         console.log JSON.stringify($(e.target).data('xws'))
         $('#xws-text-area').val(JSON.stringify($(e.target).data('xws')))
+        $('#xws-json-link').attr('href', $(e.target).data('link'))
         $('#xws-modal').modal('show')
 
       $('#xws-text-area').on 'focus', (e) ->

@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :conditions, only: [] do
     resource :image, only: [:show]
   end
+  resources :squadrons, only: [:show]
   resource :about, only: [:show]
 
 end

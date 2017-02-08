@@ -15,6 +15,10 @@ class SquadronsController < ApplicationController
                                       })
   end
 
+  def show
+    render json: Squadron.find(params[:id]).xws
+  end
+
   private
 
   def get_rankers_from_params

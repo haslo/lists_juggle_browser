@@ -20,4 +20,5 @@ en:
     xws_modal:
       title: 'XWS Data'
       explanation: 'The content below is a representation of this squadron. You can copy it and then paste it into the input dialog of your favourite squad builder.'
+      link_to_xws: 'Link to XWS as JSON'
       close: 'Close Dialog'
