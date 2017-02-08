@@ -1,0 +1,12 @@
+#xws-modal.modal.fade{'aria-hidden' => 'true', :role => 'dialog', :tabindex => '-1'}
+  .modal-dialog{:role => 'document'}
+    .modal-content
+      .modal-header
+        %h5.modal-title= t('.title')
+        %button.close{'aria-label' => t('.close'), 'data-dismiss' => 'modal', :type => 'button'}
+          %span{'aria-hidden' => 'true'} ×
+      .modal-body
+        %p= t('.explanation')
+        = text_area_tag 'xws-text-area', '', id: 'xws-text-area', class: 'form-control'
+      .modal-footer
+        %button.btn.btn-primary{'data-dismiss' => 'modal', :type => 'button'}= t('.close')
