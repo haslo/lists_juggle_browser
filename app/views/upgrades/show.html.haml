@@ -8,7 +8,7 @@
 = render '/upgrades/table', upgrades: @view.upgrades
 
 .float-md-right
-  = link_to upgrade_squadrons_path(@view.upgrade), class: 'btn btn-primary btn-sm' do
+  = link_with_filter_to upgrade_squadrons_path(@view.upgrade), class: 'btn btn-primary btn-sm' do
     = t('.more_squadrons')
 %h2= t('.notable_squadrons')
 = render '/squadrons/table', squadrons: @view.squadrons
