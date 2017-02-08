@@ -36,9 +36,9 @@ module Importers
     def sync_pilots
       pilots_hash = parse_json('pilots')
       pilots_hash.each do |pilot_data|
-        pilot            = Pilot.find_or_initialize_by(xws: pilot_data['xws'])
+        ship             = Ship.find_by(name: pilot_data['ship'])
+        pilot            = Pilot.find_or_initialize_by(ship: ship, xws: pilot_data['xws'])
         pilot.name       = pilot_data['name']
-        pilot.ship       = Ship.find_by(name: pilot_data['ship'])
         pilot.image_path = pilot_data['image']
         pilot.faction    = Faction.find_or_initialize_by(name: pilot_data['faction'])
         if pilot_data['conditions'].present?
