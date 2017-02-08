@@ -37,16 +37,3 @@ en:
         swiss: 'use Swiss ranks'
         elimination: 'use ranks after cut'
         all: 'use all ranks'
-    notable_squadrons:
-      tournament: 'Tournament'
-      num_tournament_players: 'Players'
-      swiss_standing: 'Swiss'
-      elimination_standing: 'Cut'
-      squad_list: 'Squad List'
-      archetype_link: 'Visit Archetype'
-      played_by: 'played by %{player}'
-      download_xws: 'download XWS'
-    xws_modal:
-      title: 'XWS Data'
-      explanation: 'The content below is a representation of this squadron. You can copy it and then paste it into the input dialog of your favourite squad builder.'
-      close: 'Close Dialog'

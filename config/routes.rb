@@ -2,12 +2,23 @@ Rails.application.routes.draw do
 
   root 'overviews#index'
 
-  resources :pilots,      only: [:index, :show, :update] { resource :image, only: :show }
-  resources :ships,       only: [:index, :show, :update]
-  resources :ship_combos, only: [:index, :show, :update]
-  resources :upgrades,    only: [:index, :show, :update] { resource :image, only: :show }
-  resources :conditions,  only: []                       { resource :image, only: :show }
-
+  resources :pilots, only: [:index, :show, :update] do
+    resources :squadrons, only: [:index]
+    resource :image, only: [:show]
+  end
+  resources :ships, only: [:index, :show, :update] do
+    resources :squadrons, only: [:index]
+  end
+  resources :ship_combos, only: [:index, :show, :update] do
+    resources :squadrons, only: [:index]
+  end
+  resources :upgrades, only: [:index, :show, :update] do
+    resources :squadrons, only: [:index]
+    resource :image, only: [:show]
+  end
+  resources :conditions, only: [] do
+    resource :image, only: [:show]
+  end
   resource :about, only: [:show]
 
 end

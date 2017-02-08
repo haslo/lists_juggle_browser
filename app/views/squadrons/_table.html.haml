@@ -1,0 +1,62 @@
+%table.table.table-striped.table-bordered.table-for-search
+  %tr
+    %th.text-nowrap= t('.tournament')
+    %th.text-nowrap= t('.num_tournament_players')
+    %th.text-nowrap= t('.swiss_standing')
+    %th.text-nowrap= t('.elimination_standing')
+    %th.text-nowrap= t('.squad_list')
+  - squadrons.each do |squadron|
+    %tr.row-for-search{data: {squadron_id: squadron.id}}
+      %td
+        = link_to "http://lists.starwarsclubhouse.com/get_tourney_details?tourney_id=#{squadron.tournament.lists_juggler_id}" do
+          = squadron.tournament.name
+        %br
+        = squadron.tournament.tournament_type.name
+        %br
+        = squadron.tournament.date
+      %td
+        = squadron.tournament.num_players
+      %td
+        = squadron.swiss_standing
+      %td
+        = squadron.elimination_standing
+      %td
+        - squadron.ship_configurations.each do |ship_configuration|
+          %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship_configuration.pilot.ship.font_icon_class}"}
+          %strong
+            = link_with_filter_to pilot_path(ship_configuration.pilot.id), class: 'link-with-hover-image' do
+              = image_tag pilot_image_path(ship_configuration.pilot, format: :png)
+              = ship_configuration.pilot.name
+          %small
+            = link_with_filter_to ship_path(ship_configuration.pilot.ship.id) do
+              = "(#{ship_configuration.pilot.ship.name})"
+            - ship_configuration.upgrades.each do |upgrade|
+              %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{upgrade.upgrade_type.font_icon_class}"}
+              = link_with_filter_to upgrade_path(upgrade.id), class: 'link-with-hover-image' do
+                = image_tag upgrade_image_path(upgrade, format: :png)
+                = upgrade.name
+          %br
+        %small
+          - if squadron.ship_combo.present?
+            = link_with_filter_to ship_combo_path(squadron.ship_combo.id) do
+              = t('.archetype_link')
+              - if squadron.ship_combo.archetype_name.present?
+                = "\"#{squadron.ship_combo.archetype_name}\""
+            = '-'
+          = t('.played_by', player: squadron.player_name)
+          = '-'
+          = link_to 'javascript:void(0);', class: 'xws-link', data: {xws: squadron.xws} do
+            = t('.download_xws')
+
+= render '/squadrons/xws_modal'
+
+- content_for :javascript do
+  :coffeescript
+    $ ->
+      $('.xws-link').on 'click', (e) ->
+        console.log JSON.stringify($(e.target).data('xws'))
+        $('#xws-text-area').val(JSON.stringify($(e.target).data('xws')))
+        $('#xws-modal').modal('show')
+
+      $('#xws-text-area').on 'focus', (e) ->
+        $('#xws-text-area').select()

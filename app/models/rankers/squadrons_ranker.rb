@@ -3,7 +3,7 @@ module Rankers
 
     attr_reader :squadrons, :number_of_tournaments, :number_of_squadrons
 
-    def initialize(ranking_configuration, ship_id: nil, pilot_id: nil, upgrade_id: nil, ship_combo_id: nil, limit: 4)
+    def initialize(ranking_configuration, ship_id: nil, pilot_id: nil, upgrade_id: nil, ship_combo_id: nil, limit: 2)
       start_date      = ranking_configuration[:ranking_start]
       end_date        = ranking_configuration[:ranking_end]
       tournament_type = ranking_configuration[:tournament_type]
