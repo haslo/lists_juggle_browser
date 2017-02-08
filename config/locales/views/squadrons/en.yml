@@ -1,5 +1,7 @@
 en:
   squadrons:
+    index:
+      title: 'Notable Squadrons'
     table:
       tournament: 'Tournament'
       num_tournament_players: 'Players'

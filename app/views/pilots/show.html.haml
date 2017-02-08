@@ -7,6 +7,9 @@
 %h2= t('.pilot')
 = render '/pilots/table', pilots: @view.pilots
 
+.float-md-right
+  = link_to pilot_squadrons_path(@view.pilot), class: 'btn btn-primary btn-sm' do
+    = t('.more_squadrons')
 %h2#squadrons= t('.notable_squadrons')
 = render '/squadrons/table', squadrons: @view.squadrons
 

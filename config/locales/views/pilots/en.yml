@@ -17,6 +17,7 @@ en:
       title: 'Pilot: %{name}'
       pilot: 'Pilot Info'
       edit: 'Edit Pilot Info'
+      more_squadrons: 'More Squadrons'
       notable_squadrons: 'Some Notable Squadrons'
       upgrades: 'Upgrades'
       ship_combos: 'List Archetypes'

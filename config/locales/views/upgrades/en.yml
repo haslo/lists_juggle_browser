@@ -16,6 +16,7 @@ en:
       title: 'Upgrade: %{upgrade} (%{upgrade_type})'
       upgrade: 'Upgrade Info'
       edit: 'Edit Upgrade Info'
+      more_squadrons: 'More Squadrons'
       notable_squadrons: 'Some Notable Squadrons'
       pilots: 'Pilots'
       ship_combos: 'List Archetypes'

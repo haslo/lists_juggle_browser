@@ -9,6 +9,9 @@
 %h2= t('.ship_combo')
 = render '/ship_combos/table', ship_combos: @view.ship_combos, ships: @view.ship_combos_ships
 
+.float-md-right
+  = link_to ship_combo_squadrons_path(@view.ship_combo), class: 'btn btn-primary btn-sm' do
+    = t('.more_squadrons')
 %h2#squadrons= t('.notable_squadrons')
 = render '/squadrons/table', squadrons: @view.squadrons
 

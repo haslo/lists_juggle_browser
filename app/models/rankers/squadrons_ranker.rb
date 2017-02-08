@@ -44,17 +44,15 @@ module Rankers
         squadron_query = squadron_query.where('tournaments.tournament_type_id = ?', tournament_type)
       end
       order = <<-SQL
-        (
-          case when squadrons.elimination_standing is null or squadrons.elimination_standing = 0 then 1000 else squadrons.elimination_standing end +
-          case when squadrons.swiss_standing is null or squadrons.swiss_standing = 0 then 1000 else squadrons.swiss_standing end +
-          case when squadrons.elimination_standing > 16 and squadrons.elimination_standing = squadrons.swiss_standing then 1000 else 0 end
-        ) asc,
-        case when squadrons.elimination_standing is null or squadrons.elimination_standing = 0 then 1000 else squadrons.elimination_standing end asc,
+        case when squadrons.elimination_standing is null
+          or squadrons.elimination_standing = 0
+          or (squadrons.elimination_standing > 16 and squadrons.elimination_standing = squadrons.swiss_standing)
+        then 1000 else squadrons.elimination_standing end asc,
         case when squadrons.swiss_standing is null or squadrons.swiss_standing = 0 then 1000 else squadrons.swiss_standing end asc,
         case when sum(tournaments.num_players) is null or sum(tournaments.num_players) = 0 then 1000 else sum(tournaments.num_players) end desc,
         max(tournaments.date) desc
       SQL
-      @squadrons = squadron_query.all.includes(:ship_combo, {ship_configurations: [{pilot: :ship}, :upgrades]}).limit(limit).order(order).group(Squadron.column_names - ['xws'])
+      @squadrons = squadron_query.all.includes({tournament: :tournament_type}, :ship_combo, {ship_configurations: [{pilot: :ship}, {upgrades: :upgrade_type}]}).limit(limit).order(order).group(Squadron.column_names - ['xws'])
 
       @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
     end

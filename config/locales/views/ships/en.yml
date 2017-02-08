@@ -4,6 +4,7 @@ en:
       title: 'Ship Type: %{type}'
       ship: 'Ship Info'
       edit: 'Edit Ship Type'
+      more_squadrons: 'More Squadrons'
       notable_squadrons: 'Some Notable Squadrons'
       pilots: 'Pilots'
       upgrades: 'Upgrades'
