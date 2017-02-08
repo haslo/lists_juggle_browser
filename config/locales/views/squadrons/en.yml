@@ -13,6 +13,7 @@ en:
       swiss_standing: 'Swiss'
       elimination_standing: 'Cut'
       squad_list: 'Squad List'
+      missing_pilot: '(missing pilot)'
       archetype_link: 'Visit Archetype'
       played_by: 'played by %{player}'
       download_xws: 'download XWS'
