@@ -20,7 +20,7 @@
         = squadron.swiss_standing
       %td
         = squadron.elimination_standing
-      %td
+      %td.squadron-cell
         - squadron.ship_configurations.each do |ship_configuration|
           %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship_configuration.pilot.ship.font_icon_class}"}
           %strong

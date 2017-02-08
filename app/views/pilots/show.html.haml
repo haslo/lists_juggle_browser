@@ -7,13 +7,13 @@
 %h2= t('.pilot')
 = render '/pilots/table', pilots: @view.pilots
 
-%h2= t('.notable_squadrons')
+%h2#squadrons= t('.notable_squadrons')
 = render '/squadrons/table', squadrons: @view.squadrons
 
-%h2= t('.upgrades')
+%h2#upgrades= t('.upgrades')
 = render '/upgrades/table', upgrades: @view.upgrades
 
-%h2= t('.ship_combos')
+%h2#ship_combos= t('.ship_combos')
 = render '/ship_combos/table', ship_combos: @view.ship_combos, ships: @view.ship_combos_ships
 
 = render '/pilots/edit_modal', pilot: @view.pilot
