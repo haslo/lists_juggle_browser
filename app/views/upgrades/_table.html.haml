@@ -7,7 +7,8 @@
     %th.text-nowrap= t('.squadron_count')
     %th.text-nowrap= t('.tournaments_count')
     %th.text-nowrap= t('.average_percentile')
-    %th.text-nowrap.magic-column= t('.weight')
+    - unless upgrades.count <= 1
+      %th.text-nowrap.magic-column= t('.weight')
   - upgrades.each.with_index do |upgrade, index|
     %tr.row-for-search{data: {upgrade_id: upgrade.id}}
       %td
@@ -31,5 +32,6 @@
         %small= "#{(upgrade.tournaments.to_f / @view.number_of_tournaments.to_f * 10000).to_i / 100.0}%"
       %td
         = "#{(upgrade.average_percentile * 10000).to_i / 100.0}%"
-      %td.magic-column
-        = render '/shared/magic_bar', max_weight: upgrades.first.weight, weight: upgrade.weight
+      - unless upgrades.count <= 1
+        %td.magic-column
+          = render '/shared/magic_bar', max_weight: upgrades.first.weight, weight: upgrade.weight

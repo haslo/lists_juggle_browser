@@ -6,7 +6,8 @@
     %th.text-nowrap= t('.squadron_count')
     %th.text-nowrap= t('.tournaments_count')
     %th.text-nowrap= t('.average_percentile')
-    %th.text-nowrap.magic-column= t('.weight')
+    - unless ship_combos.count <= 1
+      %th.text-nowrap.magic-column= t('.weight')
   - ship_combos.each.with_index do |ship_combo, index|
     %tr.row-for-search{data: {ship_combo_id: ship_combo.id}}
       %td
@@ -29,5 +30,6 @@
         %small= "#{(ship_combo.tournaments.to_f / @view.number_of_tournaments.to_f * 10000).to_i / 100.0}%"
       %td
         = "#{(ship_combo.average_percentile * 10000).to_i / 100.0}%"
-      %td.magic-column
-        = render '/shared/magic_bar', max_weight: ship_combos.first.weight, weight: ship_combo.weight
+      - unless ship_combos.count <= 1
+        %td.magic-column
+          = render '/shared/magic_bar', max_weight: ship_combos.first.weight, weight: ship_combo.weight
