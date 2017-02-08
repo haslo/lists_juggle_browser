@@ -6,7 +6,7 @@ class SquadronsController < ApplicationController
                                          pilot_id:      params[:pilot_id],
                                          ship_combo_id: params[:ship_combo_id],
                                          upgrade_id:    params[:upgrade_id],
-                                         limit:         30)
+                                         limit:         50)
   end
 
 end

@@ -42,13 +42,9 @@ class WeightQueryBuilder
       SQL
     end
     weight_query += ') '
-    if ranking_configuration[:widespread_use_multiplier] == 'high'
+    if ranking_configuration[:widespread_use_multiplier]
       weight_query += <<-SQL
         * (log(count(distinct squadrons.id) + 1))
-      SQL
-    elsif ranking_configuration[:widespread_use_multiplier] == 'low'
-      weight_query += <<-SQL
-        * (log(count(distinct squadrons.id) + 10))
       SQL
     end
     weight_query += ' as weight'
