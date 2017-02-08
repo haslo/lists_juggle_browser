@@ -30,7 +30,8 @@ en:
           multiply: 'Large tournaments = more Magic'
           do_not_multiply: '(no effect)'
         widespread_use_multiplier:
-          multiply: 'Widespread use = more Magic'
+          multiply_high: 'Widespread use = more Magic'
+          multiply_low: 'Widespread use = slightly more Magic'
           do_not_multiply: '(no effect)'
       data_uses:
         swiss: 'use Swiss ranks'
