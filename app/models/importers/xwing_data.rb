@@ -55,8 +55,10 @@ module Importers
       upgrades_hash.each do |upgrade_data|
         upgrade              = Upgrade.find_or_initialize_by(xws: upgrade_data['xws'])
         upgrade.name         = upgrade_data['name']
-        upgrade.upgrade_type = UpgradeType.find_or_initialize_by(name:            upgrade_data['slot'],
-                                                                 font_icon_class: upgrade_data['slot'].downcase)
+        upgrade_type_data    = upgrade_type_for(upgrade_data['slot'])
+        upgrade.upgrade_type = UpgradeType.find_or_initialize_by(name:            upgrade_type_data[1],
+                                                                 xws:             upgrade_type_data[2],
+                                                                 font_icon_class: upgrade_type_data[3])
         upgrade.image_path   = upgrade_data['image']
         if upgrade_data['conditions'].present?
           upgrade_data['conditions'].each do |condition_name|
@@ -73,6 +75,35 @@ module Importers
       js_path   = Rails.root + 'vendor' + 'xwing-data' + 'data' + "#{type}.js"
       js_string = File.read(js_path)
       ExecJS.eval(js_string)
+    end
+
+    def upgrade_type_for(type_string)
+      upgrade_types.detect do |potential_type|
+        potential_type.any? { |s| s == type_string }
+      end
+    end
+
+    def upgrade_types
+      # Lists Juggler name, canonical name, XWS, font icon
+      [
+        ['Turret', 'Turret' 'turret', 'turret'],
+        ['Torpedo', 'Torpedo' 'torpedo', 'torpedo'],
+        ['Astromech', 'Astromech Droid' 'amd', 'astromech'],
+        ['Elite', 'Elite Pilot Talent' 'ept', 'elite'],
+        ['Missile', 'Missile' 'missile', 'missile'],
+        ['Crew', 'Crew' 'crew', 'crew'],
+        ['Cannon', 'Cannon' 'cannon', 'cannon'],
+        ['Bomb', 'Bomb' 'bomb', 'bomb'],
+        ['System', 'System' 'system', 'system'],
+        ['Cargo', 'Cargo' 'cargo', 'cargo'],
+        ['Hardpoint', 'Hardpoint' 'hardpoint', 'hardpoint'],
+        ['Team', 'Team' 'team', 'team'],
+        ['Illicit', 'Illicit' 'illicit', 'illicit'],
+        ['Salvaged Astromech', 'Salvaged Astromech Droid' 'samd', 'salvagedastromech'],
+        ['Title', 'Title' 'title', 'title'],
+        ['Tech', 'Tech' 'tech', 'tech'],
+        ['Modification', 'Modification' 'mod', 'modification'],
+      ]
     end
 
   end
