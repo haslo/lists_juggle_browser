@@ -8,9 +8,9 @@ module Importers
       uri         = URI.parse('http://lists.starwarsclubhouse.com/api/v1/tournaments')
       response    = Net::HTTP.get_response(uri)
       tournaments = JSON.parse(response.body).try(:[], 'tournaments') || []
-      tournaments.each do |lists_juggler_id|
+      tournaments.sort.each do |lists_juggler_id|
         if minimum_id.nil? || lists_juggler_id >= minimum_id
-          print "#{lists_juggler_id},"
+          puts "[#{lists_juggler_id}]"
           tournament = Tournament.find_by(lists_juggler_id: lists_juggler_id)
           if start_date.nil? || tournament.nil? || tournament.date.nil? || tournament.date >= start_date
             tournament ||= Tournament.new(lists_juggler_id: lists_juggler_id)
@@ -65,7 +65,9 @@ module Importers
             upgrade = upgrade_type.upgrades.find_by(xws: upgrade_key)
             if upgrade.nil?
               puts "-> looking again for upgrade #{upgrade_key} <-"
-              upgrade = upgrade_type.upgrades.find_by(xws: upgrade_key.gsub('adv', 'advanced').gsub('ketsupnyo', 'ketsuonyo'))
+              substitute_key = upgrade_key.gsub('adv', 'advanced').gsub('ketsupnyo', 'ketsuonyo').gsub('pivotwing', 'pivotwinglanding')
+              upgrade = upgrade_type.upgrades.find_by(xws: substitute_key)
+              puts "-> found with #{substitute_key} <-"
             end
             if upgrade.present?
               configuration.upgrades << upgrade
