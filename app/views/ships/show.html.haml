@@ -5,7 +5,7 @@
   %button.btn.btn-primary.btn-sm{data: {target: '#edit-modal', toggle: 'modal'}, type: 'button'}
     = t('.edit')
 %h2= t('.ship')
-= render '/ships/table', ships: @view.ships
+= render '/ships/table', ships: @view.ships, ship_pilots: @view.ship_pilots
 
 .float-md-right
   = link_to ship_squadrons_path(@view.ship), class: 'btn btn-primary btn-sm' do

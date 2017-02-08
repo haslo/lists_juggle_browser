@@ -16,7 +16,7 @@
         = link_with_filter_to ship_path(ship.id) do
           = ship.name
       %td
-        - pilots = @view.ship_pilots[ship.id]
+        - pilots = ship_pilots[ship.id]
         - pilots.each.with_index do |pilot, index|
           %small
             %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{FontLookup.new.faction_icon(pilot.faction.name)}"}

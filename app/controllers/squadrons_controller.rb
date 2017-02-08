@@ -21,7 +21,7 @@ class SquadronsController < ApplicationController
     [Ship, ShipCombo, Upgrade, Pilot].map do |klass|
       parameter_name = "#{klass.name.underscore}_id".to_sym
       if params[parameter_name].present?
-        ranker = "Rankers::#{ShipCombo.name.pluralize}Ranker".constantize
+        ranker = "Rankers::#{klass.name.pluralize}Ranker".constantize
         [klass, ranker.new(ranking_configuration, { parameter_name => params[parameter_name] })]
       else
         nil
