@@ -64,6 +64,7 @@ module Importers
           upgrade_keys.each do |upgrade_key|
             upgrade = upgrade_type.upgrades.find_by(xws: upgrade_key)
             if upgrade.nil?
+              puts "-> looking again for upgrade #{upgrade_key} <-"
               upgrade = upgrade_type.upgrades.find_by(xws: upgrade_key.gsub('adv', 'advanced').gsub('ketsupnyo', 'ketsuonyo'))
             end
             if upgrade.present?
