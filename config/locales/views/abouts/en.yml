@@ -7,12 +7,12 @@ en:
           <ul>
             <li><a href="https://www.fantasyflightgames.com/en/products/x-wing/">FFG's fantastic X-Wing miniatures game</a>,
               of course</li>
-            <li><a href="http://lists.starwarsclubhouse.com/">X-Wing Lists Juggler</a> and all the folks
+            <li><a href="http://lists.starwarsclubhouse.com/">X-Wing Lists Juggler</a>, sozin who built it, and all the folks
               who contributed data by adding their tournaments</li>
-            <li><a href="http://xwing-miniatures.wikia.com/wiki/X-Wing_Miniatures_Wiki">The Wikia X-Wing Miniatures Wiki</a>
-              and all its contributors</li>
             <li>The <a href="https://github.com/geordanr/xwing-miniatures-font">X-Wing Miniatures Font</a> for symbols and
               icons</li>
+            <li>Everybody behind the <a href="https://github.com/elistevens/xws-spec">XWS Spec</a></li>
+            <li>Guido Kessels and his <a href="https://github.com/guidokessels/xwing-data">Data repository</a></li>
             <li>My X-Wing team, the <a href="http://theflyingdragons.ch/">Krayt Dragons</a>, who helped develop and test this tool</li>
           </ul>
         <h2>Implementation</h2>
