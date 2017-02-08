@@ -7,7 +7,7 @@ namespace :sync do
   end
 
   task tournaments: :environment do
-    Importers::ListsJuggler
+    Importers::ListsJuggler.new.sync_tournaments
   end
 
   task rebuild_rankings: :environment do
