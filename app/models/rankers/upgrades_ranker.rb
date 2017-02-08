@@ -27,8 +27,6 @@ module Rankers
       attributes           = {
         id:                           'upgrades.id',
         name:                         'upgrades.name',
-        image_uri:                    'upgrades.image_uri',
-        wikia_uri:                    'upgrades.wikia_uri',
         upgrade_type:                 'upgrade_types.name',
         upgrade_type_font_icon_class: 'upgrade_types.font_icon_class',
         weight:                       weight_query_builder.build_weight_query,
@@ -38,7 +36,7 @@ module Rankers
       }
       upgrade_relation     = Upgrade
                                .joins(joins)
-                               .group('upgrades.id, upgrades.name, upgrades.image_uri, upgrades.wikia_uri, upgrade_types.name, upgrade_types.font_icon_class')
+                               .group('upgrades.id, upgrades.name, upgrade_types.name, upgrade_types.font_icon_class')
                                .order('weight desc')
                                .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       if ship_id.present?

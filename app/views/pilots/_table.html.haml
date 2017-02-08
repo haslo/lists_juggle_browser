@@ -14,12 +14,8 @@
       %td
         %strong= "#{index + 1}."
       %td.image-hover-cell.pilot
-        = link_to pilot.wikia_uri do
-          - if pilot.image_uri.present?
-            .image-with-hover
-              = image_tag pilot.image_uri
-          - else
-            = t('.no_image')
+        .image-with-hover
+          = image_tag pilot_image_path(pilot.id, format: :png)
       %td
         = link_with_filter_to pilot_path(pilot.id) do
           = pilot.name

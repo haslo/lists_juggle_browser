@@ -24,8 +24,6 @@ module Rankers
         id:                   'pilots.id',
         name:                 'pilots.name',
         faction:              'factions.name',
-        image_uri:            'pilots.image_uri',
-        wikia_uri:            'pilots.wikia_uri',
         ship_id:              'ships.id',
         ship_name:            'ships.name',
         ship_font_icon_class: 'ships.font_icon_class',
@@ -36,7 +34,7 @@ module Rankers
       }
       pilot_relation       = Pilot
                                .joins(joins)
-                               .group('pilots.id, pilots.name, factions.name, ships.id, ships.name, pilots.image_uri, pilots.wikia_uri')
+                               .group('pilots.id, pilots.name, factions.name, ships.id, ships.name')
                                .order('weight desc')
                                .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       if ship_id.present?

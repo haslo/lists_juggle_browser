@@ -1,7 +1,7 @@
 class ShipCombosController < ApplicationController
 
   def index
-    @view = Rankers::ShipCombosRanker.new(ranking_configuration, limit: 80)
+    @view = Rankers::ShipCombosRanker.new(ranking_configuration, limit: 120)
   end
 
   def show

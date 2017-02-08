@@ -7,8 +7,6 @@
           %button.close{'aria-label' => t('.close'), 'data-dismiss' => 'modal', :type => 'button'}
             %span{'aria-hidden' => 'true'} ×
         .modal-body
-          = f.label :wikia_uri
-          = f.text_field :wikia_uri, class: 'form-control'
           %hr
           = f.fields_for :upgrade_type do |ff|
             = ff.hidden_field :id

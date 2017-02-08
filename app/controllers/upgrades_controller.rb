@@ -22,13 +22,12 @@ class UpgradesController < ApplicationController
   def update
     upgrade = Upgrade.find(params[:id])
     upgrade.assign_attributes(upgrade_attributes)
-    Importers::WikiaImage.new.find_image_for(upgrade, upgrade.wikia_uri)
     upgrade.save!
     redirect_to action: :show
   end
 
   def upgrade_attributes
-    params.require(:upgrade).permit(:wikia_uri, upgrade_type_attributes: [:id, :font_icon_class])
+    params.require(:upgrade).permit(upgrade_type_attributes: [:id, :font_icon_class])
   end
 
 end

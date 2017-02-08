@@ -10,6 +10,8 @@ module Rankers
       joins           = <<-SQL
         inner join squadrons
           on squadrons.ship_combo_id = ship_combos.id
+        inner join ship_combos_ships
+          on ship_combos_ships.ship_combo_id = ship_combos.id
         inner join tournaments
           on squadrons.tournament_id = tournaments.id
       SQL

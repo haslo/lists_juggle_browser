@@ -22,13 +22,12 @@ class PilotsController < ApplicationController
   def update
     pilot = Pilot.find(params[:id])
     pilot.assign_attributes(pilot_attributes)
-    Importers::WikiaImage.new.find_image_for(pilot, pilot.wikia_uri)
     pilot.save!
     redirect_to action: :show
   end
 
   def pilot_attributes
-    params.require(:pilot).permit(:wikia_uri)
+    params.require(:pilot).permit([])
   end
 
 end
