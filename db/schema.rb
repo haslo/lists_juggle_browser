@@ -85,9 +85,7 @@ ActiveRecord::Schema.define(version: 20170207230911) do
   end
 
   create_table "squadrons", force: :cascade do |t|
-    t.integer  "faction_id"
     t.integer  "tournament_id"
-    t.integer  "lists_juggler_id"
     t.integer  "points"
     t.integer  "swiss_standing"
     t.integer  "elimination_standing"
@@ -99,7 +97,6 @@ ActiveRecord::Schema.define(version: 20170207230911) do
     t.string   "player_name"
     t.integer  "mov"
     t.json     "xws"
-    t.index ["faction_id"], name: "index_squadrons_on_faction_id", using: :btree
     t.index ["ship_combo_id"], name: "index_squadrons_on_ship_combo_id", using: :btree
     t.index ["tournament_id"], name: "index_squadrons_on_tournament_id", using: :btree
   end
@@ -153,7 +150,6 @@ ActiveRecord::Schema.define(version: 20170207230911) do
   add_foreign_key "ship_configurations", "squadrons"
   add_foreign_key "ship_configurations_upgrades", "ship_configurations"
   add_foreign_key "ship_configurations_upgrades", "upgrades"
-  add_foreign_key "squadrons", "factions"
   add_foreign_key "squadrons", "ship_combos"
   add_foreign_key "squadrons", "tournaments"
   add_foreign_key "tournaments", "tournament_types"

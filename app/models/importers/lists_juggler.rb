@@ -34,16 +34,32 @@ module Importers
                                        # TODO city, state, country? for filters, #15
                                      })
         tournament.save!
+        tournament.squadrons.destroy_all
         tournament_data['players'].each do |squadron_data|
-          sync_squadron(squadron_data)
+          sync_squadron(tournament, squadron_data)
         end
       else
         raise InvalidTournament
       end
     end
 
-    def sync_squadron(squadron_data)
-      # TODO
+    def sync_squadron(tournament, squadron_data)
+      squadron = Squadron.create!({
+                                    tournament:           tournament,
+                                    player_name:          squadron_data['name'],
+                                    xws:                  squadron_data['list'],
+                                    mov:                  squadron_data['mov'],
+                                    points:               squadron_data['score'],
+                                    elimination_standing: squadron_data['rank']['elimination'],
+                                    swiss_standing:       squadron_data['rank']['swiss'],
+                                  })
+      squadron_data['list']['pilots'].each do |ship_configuration_data|
+        configuration = ShipConfiguration.create!({
+                                                    squadron: squadron,
+                                                    pilot:    Pilot.find_by(xws: ship_configuration_data['name'])
+                                                  })
+        # TODO Upgrades
+      end
     end
 
     # def process_data(tournament_id, tournament_data)
