@@ -1,7 +1,7 @@
 module FilterHelper
 
   def show_filter?(controller, action)
-    %w[ships pilots ship_combos upgrades].include?(controller) && %w[index show].include?(action)
+    %w[ships pilots ship_combos upgrades squadrons].include?(controller) && %w[index show].include?(action)
   end
 
   def preset_dates
