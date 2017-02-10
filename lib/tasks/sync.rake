@@ -7,6 +7,7 @@ namespace :sync do
   end
 
   task tournaments: :environment do
+    # TODO take parameters
     Importers::ListsJuggler.new.sync_tournaments
   end
 

@@ -55,9 +55,32 @@ module Importers
                                     swiss_standing:       squadron_data['rank']['swiss'],
                                   })
       (squadron_data['list'].try(:[], 'pilots') || []).each do |ship_configuration_data|
+        # TODO refactor substitute keys
+        ship = Ship.find_by(xws: ship_configuration_data['ship'])
+        if ship.nil?
+          ship_key = ship_configuration_data['ship'].gsub('yt2400freighter', 'yt2400')
+          puts "-> looking again with #{ship_key} <-"
+          ship     = Ship.find_by(xws: ship_key)
+          if ship.present?
+            puts "-> ship found with #{ship_key} <-"
+          else
+            raise "=> ship not found: #{ship_key} <="
+          end
+        end
+        pilot = ship.pilots.find_by(xws: ship_configuration_data['name'])
+        if pilot.nil?
+          puts "-> looking again for pilot #{ship_configuration_data['name']} <-"
+          pilot_key = ship_configuration_data['name'].gsub('sabinewren-swx56', 'sabinewren').gsub('Deathrain', 'deathrain')
+          pilot     = ship.pilots.find_by(xws: pilot_key)
+          if pilot.present?
+            puts "-> found with #{pilot_key} <-"
+          else
+            raise "=> pilot not found: #{pilot_key} <="
+          end
+        end
         configuration = ShipConfiguration.create!({
                                                     squadron: squadron,
-                                                    pilot:    Pilot.find_by(xws: ship_configuration_data['name'])
+                                                    pilot:    pilot,
                                                   })
         (ship_configuration_data['upgrades'] || []).each do |upgrade_type_key, upgrade_keys|
           upgrade_type = UpgradeType.find_by(xws: upgrade_type_key)
@@ -66,7 +89,7 @@ module Importers
             if upgrade.nil?
               puts "-> looking again for upgrade #{upgrade_key} <-"
               substitute_key = upgrade_key.gsub('adv', 'advanced').gsub('ketsupnyo', 'ketsuonyo').gsub('pivotwing', 'pivotwinglanding')
-              upgrade = upgrade_type.upgrades.find_by(xws: substitute_key)
+              upgrade        = upgrade_type.upgrades.find_by(xws: substitute_key)
               puts "-> found with #{substitute_key} <-"
             end
             if upgrade.present?
