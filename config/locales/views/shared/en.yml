@@ -6,6 +6,7 @@ en:
       large_tournament_multiplier: 'Large Tournament'
       widespread_use_multiplier: 'Widespread Use'
       all_types: '(all tournament types)'
+      all_countries: '(all countries)'
       dates:
         wave_1: '(Launch / Wave 1)'
         wave_2: '(Wave 2)'

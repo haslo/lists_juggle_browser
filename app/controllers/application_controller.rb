@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
         ranking_start:               params['ranking_start'].nil?               ? 2.months.ago.to_date : params['ranking_start'],
         ranking_end:                 params['ranking_end'].nil?                 ? Time.current.to_date : params['ranking_end'],
         tournament_type:             params['tournament_type'].nil?             ? nil                  : params['tournament_type'],
+        country:                     params['country'].nil?                     ? nil                  : params['country'],
     }
   end
   helper_method :ranking_configuration
