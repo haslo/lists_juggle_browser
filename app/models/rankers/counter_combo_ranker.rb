@@ -20,21 +20,27 @@ module Rankers
       end
       won             = won_games(counter_combo_query)
       lost            = lost_games(counter_combo_query)
-      other_combo_ids = won.map { |w| w[:losing_combo_id] } + lost.map { |l| l[:winning_combo_id] }
+      other_combo_ids = (won.map { |w| w[:losing_combo_id] } + lost.map { |l| l[:winning_combo_id] }).uniq
       other_combos    = ShipCombo.where(id: other_combo_ids).includes(:ships)
-      @counter_combos = other_combo_ids.map do |ship_combo_id|
-        ship_combo     = other_combos.detect { |c| c.id == ship_combo_id }
-        wins_against   = won.detect { |w| w[:losing_combo_id] == ship_combo_id }.try(:[], :number_of_wins) || 0
-        losses_against = lost.detect { |w| w[:winning_combo_id] == ship_combo_id }.try(:[], :number_of_losses) || 0
+      @counter_combos = other_combo_ids.map do |other_combo_id|
+        ship_combo     = other_combos.detect { |c| c.id == other_combo_id }
+        wins_against   = won.detect { |w| w[:losing_combo_id] == other_combo_id }.try(:[], :number_of_wins) || 0
+        losses_against = lost.detect { |w| w[:winning_combo_id] == other_combo_id }.try(:[], :number_of_losses) || 0
         {
           ship_combo:     ship_combo,
-          ships:          ship_combo.ships,
           games_against:  wins_against + losses_against,
           wins_against:   wins_against,
           losses_against: losses_against,
           win_loss_ratio: wins_against.to_f / (wins_against.to_f + losses_against.to_f),
         }
-      end.sort_by { |counter| counter[:win_loss_ratio] }
+      end
+      @counter_combos.reject! { |counter|
+        counter[:ship_combo].id == ship_combo_id ||
+          counter[:win_loss_ratio] >= 0.6 ||
+          counter[:ship_combo].ships.count <= 0 ||
+          counter[:games_against] <= 1
+      }
+      @counter_combos.sort_by! { |counter| [counter[:win_loss_ratio], -counter[:games_against]] }
     end
 
     def won_games(counter_combo_query)
@@ -44,7 +50,7 @@ module Rankers
       SQL
       attributes = {
         losing_combo_id: 'games.losing_combo_id',
-        number_of_wins:  'count(*)',
+        number_of_wins:  'count(distinct games.id)',
       }
       ShipCombo.fetch_query(counter_combo_query.joins(won_games_join).group('games.losing_combo_id'), attributes)
     end
@@ -56,7 +62,7 @@ module Rankers
       SQL
       attributes = {
         winning_combo_id: 'games.winning_combo_id',
-        number_of_losses: 'count(*)',
+        number_of_losses: 'count(distinct games.id)',
       }
       ShipCombo.fetch_query(counter_combo_query.joins(won_games_join).group('games.winning_combo_id'), attributes)
     end

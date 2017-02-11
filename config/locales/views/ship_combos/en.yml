@@ -20,8 +20,17 @@ en:
       notable_squadrons: 'Some Notable Squadrons'
       ships: 'Ships'
       pilots: 'Pilots'
-      upgrades: 'Upgrades'
+      counters: 'Possible Counter Archetypes'
     edit_modal:
       title: 'Edit List Archetype Data'
       close: 'Close'
       save: 'Save'
+    counter_table:
+      position: 'Position'
+      archetype_name: 'Archetype Name'
+      unnamed_archetype: '(unnamed)'
+      ship_names: 'Ship Types'
+      games: '# Games'
+      wins: '# Wins'
+      losses: '# Losses'
+      win_loss_ratio: 'Win-Loss Ratio'

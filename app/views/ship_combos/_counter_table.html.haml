@@ -1,0 +1,31 @@
+%table.table.table-striped.table-bordered.table-for-search
+  %tr
+    %th.text-nowrap= t('.position')
+    %th.text-nowrap= t('.archetype_name')
+    %th.text-nowrap= t('.ship_names')
+    %th.text-nowrap= t('.games')
+    %th.text-nowrap= t('.wins')
+    %th.text-nowrap= t('.losses')
+    %th.text-nowrap= t('.win_loss_ratio')
+  - counter_combos.each.with_index do |counter_combo, index|
+    - ship_combo = counter_combo[:ship_combo]
+    %tr.row-for-search{data: {ship_combo_id: ship_combo.id}}
+      %td
+        %strong= "#{index + 1}."
+      %td
+        = link_with_filter_to ship_combo_path(ship_combo.id) do
+          = ship_combo.archetype_name.presence || t('.unnamed_archetype')
+      %td.ship-combo-cell
+        - ship_combo.ships.each do |ship_info|
+          %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship_info[:font_icon_class]}"}
+          = link_with_filter_to ship_path(ship_info[:id]) do
+            = ship_info[:name]
+          %br
+      %td
+        = counter_combo[:games_against]
+      %td
+        = counter_combo[:wins_against]
+      %td
+        = counter_combo[:losses_against]
+      %td
+        = "#{(counter_combo[:win_loss_ratio] * 10000).to_i / 100.0}%"
