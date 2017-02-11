@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170211004005) do
+ActiveRecord::Schema.define(version: 20170211013044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -167,6 +167,9 @@ ActiveRecord::Schema.define(version: 20170211004005) do
     t.float    "lon"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["city"], name: "index_venues_on_city", using: :btree
+    t.index ["country"], name: "index_venues_on_country", using: :btree
+    t.index ["state"], name: "index_venues_on_state", using: :btree
   end
 
   add_foreign_key "conditions", "pilots"
