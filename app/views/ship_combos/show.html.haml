@@ -18,6 +18,9 @@
 %h2#pilots= t('.pilots')
 = render '/pilots/table', pilots: @view.pilots
 
+%h2#upgrades= t('.upgrades')
+= render '/upgrades/table', upgrades: @view.upgrades
+
 %h2#counters= t('.counters')
 = render '/ship_combos/counter_table', counter_combos: @view.counter_combos
 

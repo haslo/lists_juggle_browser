@@ -20,6 +20,7 @@ en:
       notable_squadrons: 'Some Notable Squadrons'
       ships: 'Ships'
       pilots: 'Pilots'
+      upgrades: 'Upgrades'
       counters: 'Possible Counter Archetypes'
     edit_modal:
       title: 'Edit List Archetype Data'
