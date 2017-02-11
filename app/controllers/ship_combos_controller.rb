@@ -15,6 +15,7 @@ class ShipCombosController < ApplicationController
                                           pilots:                Rankers::PilotsRanker.new(ranking_configuration, ship_combo_id: params[:id]).pilots,
                                           number_of_tournaments: ship_combos_ranker.number_of_tournaments,
                                           number_of_squadrons:   ship_combos_ranker.number_of_squadrons,
+                                          counter_combos:        Rankers::CounterComboRanker.new(ranking_configuration, params[:id]).counter_combos
                                         })
   end
 
