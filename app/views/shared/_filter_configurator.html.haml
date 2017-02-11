@@ -27,7 +27,7 @@
           .col-sm-2
             = select_tag :tournament_type, options_from_collection_for_select(TournamentType.all, :id, :name, ranking_configuration[:tournament_type]), include_blank: t('.all_types'), class: 'form-control filter-input', id: 'tournament-type'
           .col-sm-2
-            = select_tag :country, options_from_collection_for_select(Venue.all.group('country').select(:country).order(:country).uniq, :country, :country, ranking_configuration[:country]), include_blank: t('.all_countries'), class: 'form-control filter-input', id: 'country'
+            = select_tag :country, options_from_collection_for_select(Venue.all.group('country').select(:country).order(:country).uniq.reject{|v| v.country.to_s.strip.blank?}, :country, :country, ranking_configuration[:country]), include_blank: t('.all_countries'), class: 'form-control filter-input', id: 'country'
 
 - content_for :javascript do
   :coffeescript

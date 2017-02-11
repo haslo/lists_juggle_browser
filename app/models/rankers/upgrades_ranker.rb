@@ -7,6 +7,7 @@ module Rankers
       start_date      = ranking_configuration[:ranking_start]
       end_date        = ranking_configuration[:ranking_end]
       tournament_type = ranking_configuration[:tournament_type]
+      country         = ranking_configuration[:country]
       joins           = <<-SQL
         inner join upgrade_types
           on upgrade_types.id = upgrades.upgrade_type_id
@@ -55,6 +56,13 @@ module Rankers
             on squadrons.ship_combo_id = ship_combos.id
         SQL
         upgrade_relation = upgrade_relation.joins(combos_join).where('ship_combos.id = ?', ship_combo_id)
+      end
+      if country.present?
+        country_join = <<-SQL
+          inner join venues
+            on tournaments.venue_id = venues.id
+        SQL
+        upgrade_relation = upgrade_relation.joins(country_join).where('venues.country = ?', country)
       end
       if limit.present?
         upgrade_relation = upgrade_relation.limit(limit)

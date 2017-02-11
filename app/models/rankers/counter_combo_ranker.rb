@@ -7,6 +7,7 @@ module Rankers
       start_date      = ranking_configuration[:ranking_start]
       end_date        = ranking_configuration[:ranking_end]
       tournament_type = ranking_configuration[:tournament_type]
+      country         = ranking_configuration[:country]
       joins           = <<-SQL
         inner join squadrons
           on squadrons.ship_combo_id = ship_combos.id
@@ -17,6 +18,13 @@ module Rankers
       counter_combo_query = counter_combo_query.where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       if tournament_type.present?
         counter_combo_query = counter_combo_query.where('tournaments.tournament_type_id = ?', tournament_type)
+      end
+      if country.present?
+        country_join = <<-SQL
+          inner join venues
+            on tournaments.venue_id = venues.id
+        SQL
+        counter_combo_query = counter_combo_query.joins(country_join).where('venues.country = ?', country)
       end
       won             = won_games(counter_combo_query)
       lost            = lost_games(counter_combo_query)

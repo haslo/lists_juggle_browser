@@ -7,6 +7,7 @@ module Rankers
       start_date      = ranking_configuration[:ranking_start]
       end_date        = ranking_configuration[:ranking_end]
       tournament_type = ranking_configuration[:tournament_type]
+      country         = ranking_configuration[:country]
       joins           = <<-SQL
         inner join tournaments
           on tournaments.id = squadrons.tournament_id
@@ -42,6 +43,13 @@ module Rankers
       end
       if tournament_type.present?
         squadron_query = squadron_query.where('tournaments.tournament_type_id = ?', tournament_type)
+      end
+      if country.present?
+        country_join = <<-SQL
+          inner join venues
+            on tournaments.venue_id = venues.id
+        SQL
+        squadron_query = squadron_query.joins(country_join).where('venues.country = ?', country)
       end
       order = <<-SQL
         case when squadrons.elimination_standing is null

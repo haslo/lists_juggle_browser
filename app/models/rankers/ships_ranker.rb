@@ -7,6 +7,7 @@ module Rankers
       start_date      = ranking_configuration[:ranking_start]
       end_date        = ranking_configuration[:ranking_end]
       tournament_type = ranking_configuration[:tournament_type]
+      country         = ranking_configuration[:country]
       joins           = <<-SQL
         inner join pilots
           on ships.id = pilots.ship_id
@@ -41,6 +42,13 @@ module Rankers
       end
       if tournament_type.present?
         ships_relation = ships_relation.where('tournaments.tournament_type_id = ?', tournament_type)
+      end
+      if country.present?
+        country_join = <<-SQL
+          inner join venues
+            on tournaments.venue_id = venues.id
+        SQL
+        ships_relation = ships_relation.joins(country_join).where('venues.country = ?', country)
       end
       @ships  = Ship.fetch_query(ships_relation, attributes)
       @pilots = Pilot.all.includes(:faction).to_a
