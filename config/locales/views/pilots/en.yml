@@ -11,6 +11,7 @@ en:
       squadron_count: '# Squadrons'
       tournaments_count: '# Tournaments'
       average_percentile: 'avg Percentile'
+      win_loss_ratio: 'Win/Loss Ratio'
       weight: 'Magic'
       no_image: '(no image)'
     show:

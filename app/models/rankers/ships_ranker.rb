@@ -26,6 +26,7 @@ module Rankers
         squadrons:          'count(distinct squadrons.id)',
         tournaments:        'count(distinct tournaments.id)',
         average_percentile: weight_query_builder.build_average_query,
+        average_wlr:        weight_query_builder.build_win_loss_query,
       }
       ships_relation       = Ship
                                .joins(joins)

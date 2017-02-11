@@ -78,4 +78,34 @@ class WeightQueryBuilder
     end
   end
 
+  def build_win_loss_query
+    case ranking_configuration[:use_ranking_data]
+      when 'swiss'
+        <<-SQL
+          avg(squadrons.win_loss_ratio_swiss)
+        SQL
+      when 'elimination'
+        <<-SQL
+          avg(squadrons.win_loss_ratio_elimination)
+        SQL
+      when 'all'
+        <<-SQL
+          avg(
+            case
+              when squadrons.win_loss_ratio_swiss is not null and squadrons.win_loss_ratio_elimination is not null
+                then ((squadrons.win_loss_ratio_swiss + squadrons.win_loss_ratio_elimination) / 2)
+              when squadrons.win_loss_ratio_swiss is not null and squadrons.win_loss_ratio_elimination is null
+                then squadrons.win_loss_ratio_swiss
+              when squadrons.win_loss_ratio_swiss is null and squadrons.win_loss_ratio_elimination is not null
+                then squadrons.win_loss_ratio_elimination
+              else
+                0
+            end
+          )
+        SQL
+      else
+        raise 'error'
+    end
+  end
+
 end

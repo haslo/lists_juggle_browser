@@ -23,6 +23,7 @@ module Rankers
         squadrons:          'count(distinct squadrons.id)',
         tournaments:        'count(distinct tournaments.id)',
         average_percentile: weight_query_builder.build_average_query,
+        average_wlr:        weight_query_builder.build_win_loss_query,
       }
       ship_combos_relation = ShipCombo
                                .joins(joins)
@@ -64,7 +65,7 @@ module Rankers
         ship_combos_relation = ship_combos_relation.where('tournaments.tournament_type_id = ?', tournament_type)
       end
       @ship_combos = ShipCombo.fetch_query(ship_combos_relation, attributes)
-      @ships       = Hash[ShipCombo.where(id: @ship_combos.map(&:id)).includes(:ships).map { |c| [c.id, c.ships.map { |s| {id: s.id, name: s.name, font_icon_class: s.font_icon_class} }] }]
+      @ships       = Hash[ShipCombo.where(id: @ship_combos.map(&:id)).includes(:ships).map { |c| [c.id, c.ships.map { |s| { id: s.id, name: s.name, font_icon_class: s.font_icon_class } }] }]
 
       @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
     end
