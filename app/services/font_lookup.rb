@@ -6,8 +6,10 @@ class FontLookup
         'firstorder'
       when 'Galactic Empire'
         'empire'
-      when 'Rebel Alliance', 'Resistance'
+      when 'Rebel Alliance'
         'rebel'
+      when 'Resistance'
+        'rebel-outline'
       when 'Scum and Villainy'
         'scum'
       else
