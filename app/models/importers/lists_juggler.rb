@@ -61,8 +61,8 @@ module Importers
 
     def sync_games(tournament, rounds_data, squadron_container)
       rounds_data.each do |round_data|
-        round_number = round_data['round_number']
-        round_type   = round_data['round_type']
+        round_number = round_data['round-number']
+        round_type   = round_data['round-type']
         round_data['matches'].each do |game_data|
           if game_data['result'] == 'win'
             if game_data['player1points'].to_i > game_data['player2points'].to_i

@@ -12,6 +12,7 @@ module Importers
     end
 
     def build_ranking_data(tournament_id)
+      print '.'
       tournament          = Tournament.find_by(lists_juggler_id: tournament_id)
       number_of_squadrons = [tournament.num_players, tournament.squadrons.count].compact.max
       number_in_cut       = tournament.squadrons.select { |s| s.elimination_standing.present? }.count
@@ -26,11 +27,29 @@ module Importers
         ship_combo.squadrons << squadron
         squadron.save!
       end
+      squadron_win_loss_rations = Hash[tournament.squadrons.map do |squadron|
+        [squadron, { swiss_wins: 0, swiss_losses: 0, elimination_wins: 0, elimination_losses: 0 }]
+      end]
       tournament.games.each do |game|
         game.update({
                       winning_combo: game.winning_squadron.ship_combo,
                       losing_combo:  game.losing_squadron.ship_combo,
                     })
+        game.round_type = 'swiss' unless %w[swiss elimination].include?(game.round_type)
+        squadron_win_loss_rations[game.winning_squadron]["#{game.round_type}_wins".to_sym]  += 1
+        squadron_win_loss_rations[game.losing_squadron]["#{game.round_type}_losses".to_sym] += 1
+      end
+      squadron_win_loss_rations.each do |squadron, results|
+        %w[swiss elimination].each do |type|
+          wins   = results["#{type}_wins".to_sym]
+          losses = results["#{type}_losses".to_sym]
+          if (wins > 0) || (losses > 0)
+            ratio = wins.to_f / (wins.to_f + losses.to_f)
+            squadron.update("win_loss_ratio_#{type}".to_sym => ratio)
+          else
+            squadron.update("win_loss_ratio_#{type}".to_sym => nil)
+          end
+        end
       end
     end
 
