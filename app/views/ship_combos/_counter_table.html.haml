@@ -3,9 +3,7 @@
     %th.text-nowrap= t('.position')
     %th.text-nowrap= t('.archetype_name')
     %th.text-nowrap= t('.ship_names')
-    %th.text-nowrap= t('.games')
-    %th.text-nowrap= t('.wins')
-    %th.text-nowrap= t('.losses')
+    %th.text-nowrap= t('.games_wins_losses')
     %th.text-nowrap= t('.win_loss_ratio')
   - counter_combos.each.with_index do |counter_combo, index|
     - ship_combo = counter_combo[:ship_combo]
@@ -22,10 +20,7 @@
             = ship_info[:name]
           %br
       %td
-        = counter_combo[:games_against]
-      %td
-        = counter_combo[:wins_against]
-      %td
-        = counter_combo[:losses_against]
+        %strong= "#{counter_combo[:games_against]}:"
+        = "#{counter_combo[:wins_against]} / #{counter_combo[:losses_against]}"
       %td
         = "#{(counter_combo[:win_loss_ratio] * 10000).to_i / 100.0}%"

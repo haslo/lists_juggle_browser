@@ -35,7 +35,7 @@ module Rankers
         }
       end
       @counter_combos.reject! { |counter|
-        counter[:ship_combo].id == ship_combo_id ||
+        counter[:ship_combo].id == ship_combo_id.to_i ||
           counter[:win_loss_ratio] >= 0.6 ||
           counter[:ship_combo].ships.count <= 0 ||
           counter[:games_against] <= 1

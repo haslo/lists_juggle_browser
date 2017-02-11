@@ -30,7 +30,5 @@ en:
       archetype_name: 'Archetype Name'
       unnamed_archetype: '(unnamed)'
       ship_names: 'Ship Types'
-      games: '# Games'
-      wins: '# Wins'
-      losses: '# Losses'
+      games_wins_losses: 'Games: W/L'
       win_loss_ratio: 'Win-Loss Ratio'
