@@ -17,9 +17,11 @@ class AddAdditionalModels < ActiveRecord::Migration[5.0]
 
     create_table :games do |t|
       t.integer :tournament_id
+      t.integer :winning_squadron_id
+      t.integer :losing_squadron_id
       t.integer :winning_combo_id
       t.integer :losing_combo_id
-      t.integer :round
+      t.integer :round_number
       t.string :round_type # swiss, elimination
       t.timestamps null: false
     end
@@ -27,7 +29,11 @@ class AddAdditionalModels < ActiveRecord::Migration[5.0]
     add_foreign_key :games, :tournaments
     add_foreign_key :games, :ship_combos, column: :winning_combo_id
     add_foreign_key :games, :ship_combos, column: :losing_combo_id
+    add_foreign_key :games, :squadrons, column: :winning_squadron_id
+    add_foreign_key :games, :squadrons, column: :losing_squadron_id
     add_index :games, :tournament_id
+    add_index :games, :winning_squadron_id
+    add_index :games, :losing_squadron_id
     add_index :games, :winning_combo_id
     add_index :games, :losing_combo_id
 

@@ -33,6 +33,7 @@ module Importers
         lon:     tournament_data['venue']['lon'],
       }
       if tournament_data.present?
+        squadron_container = {}
         tournament.assign_attributes({
                                        name:            tournament_data['name'],
                                        date:            tournament_data['date'],
@@ -44,11 +45,41 @@ module Importers
                                      })
         tournament.save!
         tournament.squadrons.destroy_all
+        tournament.games.destroy_all
         tournament_data['players'].each do |squadron_data|
-          sync_squadron(tournament, squadron_data)
+          squadron_container[squadron_data['name']] = sync_squadron(tournament, squadron_data)
         end
+        sync_games(tournament, tournament_data['rounds'], squadron_container)
       else
         raise InvalidTournament
+      end
+    end
+
+    def sync_games(tournament, rounds_data, squadron_container)
+      rounds_data.each do |round_data|
+        round_number = round_data['round_number']
+        round_type   = round_data['round_type']
+        round_data['matches'].each do |game_data|
+          if game_data['result'] == 'win'
+            if game_data['player1points'].to_i > game_data['player2points'].to_i
+              Game.create!({
+                             tournament:       tournament,
+                             winning_squadron: squadron_container[game_data['player1']],
+                             losing_squadron:  squadron_container[game_data['player2']],
+                             round_number:     round_number,
+                             round_type:       round_type,
+                           })
+            elsif game_data['player2points'].to_i > game_data['player1points'].to_i
+              Game.create!({
+                             tournament:       tournament,
+                             winning_squadron: squadron_container[game_data['player2']],
+                             losing_squadron:  squadron_container[game_data['player1']],
+                             round_number:     round_number,
+                             round_type:       round_type,
+                           })
+            end
+          end
+        end
       end
     end
 
@@ -78,6 +109,7 @@ module Importers
           end
         end
       end
+      squadron
     end
 
     def find_with_key(relation, key)

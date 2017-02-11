@@ -35,15 +35,19 @@ ActiveRecord::Schema.define(version: 20170211013044) do
 
   create_table "games", force: :cascade do |t|
     t.integer  "tournament_id"
+    t.integer  "winning_squadron_id"
+    t.integer  "losing_squadron_id"
     t.integer  "winning_combo_id"
     t.integer  "losing_combo_id"
-    t.integer  "round"
+    t.integer  "round_number"
     t.string   "round_type"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.index ["losing_combo_id"], name: "index_games_on_losing_combo_id", using: :btree
+    t.index ["losing_squadron_id"], name: "index_games_on_losing_squadron_id", using: :btree
     t.index ["tournament_id"], name: "index_games_on_tournament_id", using: :btree
     t.index ["winning_combo_id"], name: "index_games_on_winning_combo_id", using: :btree
+    t.index ["winning_squadron_id"], name: "index_games_on_winning_squadron_id", using: :btree
   end
 
   create_table "pilots", force: :cascade do |t|
@@ -176,6 +180,8 @@ ActiveRecord::Schema.define(version: 20170211013044) do
   add_foreign_key "conditions", "upgrades"
   add_foreign_key "games", "ship_combos", column: "losing_combo_id"
   add_foreign_key "games", "ship_combos", column: "winning_combo_id"
+  add_foreign_key "games", "squadrons", column: "losing_squadron_id"
+  add_foreign_key "games", "squadrons", column: "winning_squadron_id"
   add_foreign_key "games", "tournaments"
   add_foreign_key "pilots", "factions"
   add_foreign_key "pilots", "ships"

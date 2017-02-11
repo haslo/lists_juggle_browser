@@ -6,6 +6,7 @@ en:
       latest_import: 'Latest Import'
       number_of_tournaments: 'Number of analyzed Tournaments'
       number_of_squadrons: 'Number of analyzed Squadrons'
+      number_of_games: 'Number of analyzed Games'
       intro_title: 'What is this?'
       intro_text: |
         <p>What this tool is trying to do is a bit of meta analysis. It uses the data from the
