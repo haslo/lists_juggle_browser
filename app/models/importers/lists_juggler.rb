@@ -41,7 +41,6 @@ module Importers
                                        num_players:     tournament_data['players'].length,
                                        tournament_type: TournamentType.find_or_initialize_by(name: tournament_data['type']),
                                        venue:           Venue.find_or_initialize_by(venue_attributes),
-                                       # TODO city, state, country? for filters, #15
                                      })
         tournament.save!
         tournament.squadrons.destroy_all
@@ -64,51 +63,43 @@ module Importers
                                     swiss_standing:       squadron_data['rank']['swiss'],
                                   })
       (squadron_data['list'].try(:[], 'pilots') || []).each do |ship_configuration_data|
-        # TODO refactor substitute keys
-        ship = Ship.find_by(xws: ship_configuration_data['ship'])
-        if ship.nil?
-          ship_key = ship_configuration_data['ship'].gsub('yt2400freighter', 'yt2400')
-          puts "-> looking again with #{ship_key} <-"
-          ship = Ship.find_by(xws: ship_key)
-          if ship.present?
-            puts "-> ship found with #{ship_key} <-"
-          else
-            raise "=> ship not found: #{ship_key} <="
-          end
-        end
-        pilot = ship.pilots.find_by(xws: ship_configuration_data['name'])
-        if pilot.nil?
-          puts "-> looking again for pilot #{ship_configuration_data['name']} <-"
-          pilot_key = ship_configuration_data['name'].gsub('sabinewren-swx56', 'sabinewren').gsub('Deathrain', 'deathrain')
-          pilot     = ship.pilots.find_by(xws: pilot_key)
-          if pilot.present?
-            puts "-> found with #{pilot_key} <-"
-          else
-            raise "=> pilot not found: #{pilot_key} <="
-          end
-        end
+        ship          = find_with_key(Ship, ship_configuration_data['ship'])
+        pilot         = find_with_key(ship.pilots, ship_configuration_data['name'])
         configuration = ShipConfiguration.create!({
                                                     squadron: squadron,
                                                     pilot:    pilot,
                                                   })
         (ship_configuration_data['upgrades'] || []).each do |upgrade_type_key, upgrade_keys|
-          upgrade_type = UpgradeType.find_by(xws: upgrade_type_key)
+          upgrade_type = find_with_key(UpgradeType, upgrade_type_key)
           upgrade_keys.each do |upgrade_key|
-            upgrade = upgrade_type.upgrades.find_by(xws: upgrade_key)
-            if upgrade.nil?
-              puts "-> looking again for upgrade #{upgrade_key} <-"
-              substitute_key = upgrade_key.gsub('adv', 'advanced').gsub('ketsupnyo', 'ketsuonyo').gsub('pivotwing', 'pivotwinglanding')
-              upgrade        = upgrade_type.upgrades.find_by(xws: substitute_key)
-              puts "-> found with #{substitute_key} <-"
-            end
-            if upgrade.present?
-              configuration.upgrades << upgrade
-              upgrade.save!
-            else
-              puts "=> upgrade not found: #{upgrade_key} <="
-            end
+            upgrade = find_with_key(upgrade_type.upgrades, upgrade_key)
+            configuration.upgrades << upgrade
+            upgrade.save!
           end
         end
+      end
+    end
+
+    def find_with_key(relation, key)
+      model = relation.find_by(xws: key)
+      return model if model.present?
+      puts "-> looking again for #{relation.name} #{key} <-"
+      {
+        'adv'              => 'advanced',
+        'ketsupnyo'        => 'ketsuonyo',
+        'pivotwing'        => 'pivotwinglanding',
+        'sabinewren-swx56' => 'sabinewren',
+        'Deathrain'        => 'deathrain',
+        'yt2400freighter'  => 'yt2400',
+      }.each do |original, substitute|
+        key = key.gsub(original, substitute)
+      end
+      model = relation.find_by(xws: key)
+      if model.present?
+        puts "-> found with #{key} <-"
+        model
+      else
+        raise "=> #{relation.name} not found for #{key} <="
       end
     end
 
