@@ -1,7 +1,7 @@
 module Importers
   class ListsJuggler
 
-    class InvalidTournament < StandardError;
+    class InvalidTournament < StandardError
     end
 
     def sync_tournaments(minimum_id: nil, start_date: nil)
@@ -23,35 +23,39 @@ module Importers
     def sync_tournament(tournament)
       uri              = URI.parse("http://lists.starwarsclubhouse.com/api/v1/tournament/#{tournament.lists_juggler_id}")
       response         = Net::HTTP.get_response(uri)
-      tournament_data  = JSON.parse(response.body).try(:[], 'tournament')
-      venue_attributes = {
-        name:    tournament_data['venue']['name'],
-        city:    tournament_data['venue']['city'],
-        state:   tournament_data['venue']['state'],
-        country: tournament_data['venue']['country'],
-        lat:     tournament_data['venue']['lat'],
-        lon:     tournament_data['venue']['lon'],
-      }
-      if tournament_data.present?
-        squadron_container = {}
-        tournament.assign_attributes({
-                                       name:            tournament_data['name'],
-                                       date:            tournament_data['date'],
-                                       format:          tournament_data['format'],
-                                       round_length:    tournament_data['round_length'],
-                                       num_players:     tournament_data['players'].length,
-                                       tournament_type: TournamentType.find_or_initialize_by(name: tournament_data['type']),
-                                       venue:           Venue.find_or_initialize_by(venue_attributes),
-                                     })
-        tournament.save!
-        tournament.squadrons.destroy_all
-        tournament.games.destroy_all
-        tournament_data['players'].each do |squadron_data|
-          squadron_container[squadron_data['name']] = sync_squadron(tournament, squadron_data)
+      begin
+        tournament_data  = JSON.parse(response.body).try(:[], 'tournament')
+        venue_attributes = {
+          name:    tournament_data['venue']['name'],
+          city:    tournament_data['venue']['city'],
+          state:   tournament_data['venue']['state'],
+          country: tournament_data['venue']['country'],
+          lat:     tournament_data['venue']['lat'],
+          lon:     tournament_data['venue']['lon'],
+        }
+        if tournament_data.present?
+          squadron_container = {}
+          tournament.assign_attributes({
+                                         name:            tournament_data['name'],
+                                         date:            tournament_data['date'],
+                                         format:          tournament_data['format'],
+                                         round_length:    tournament_data['round_length'],
+                                         num_players:     tournament_data['players'].length,
+                                         tournament_type: TournamentType.find_or_initialize_by(name: tournament_data['type']),
+                                         venue:           Venue.find_or_initialize_by(venue_attributes),
+                                       })
+          tournament.save!
+          tournament.games.destroy_all
+          tournament.squadrons.destroy_all
+          tournament_data['players'].each do |squadron_data|
+            squadron_container[squadron_data['name']] = sync_squadron(tournament, squadron_data)
+          end
+          sync_games(tournament, tournament_data['rounds'], squadron_container)
+        else
+          raise InvalidTournament
         end
-        sync_games(tournament, tournament_data['rounds'], squadron_container)
-      else
-        raise InvalidTournament
+      rescue => e
+        puts e.message
       end
     end
 
@@ -123,6 +127,7 @@ module Importers
         'sabinewren-swx56' => 'sabinewren',
         'Deathrain'        => 'deathrain',
         'yt2400freighter'  => 'yt2400',
+        'ltlorrir'         => 'lieutenantlorrir',
       }.each do |original, substitute|
         key = key.gsub(original, substitute)
       end
