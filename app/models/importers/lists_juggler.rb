@@ -12,7 +12,7 @@ module Importers
         if minimum_id.nil? || lists_juggler_id >= minimum_id
           puts "[#{lists_juggler_id}]"
           tournament = Tournament.find_by(lists_juggler_id: lists_juggler_id)
-          if start_date.nil? || tournament.nil? || tournament.date.nil? || tournament.date >= start_date
+          if start_date.nil? || tournament.nil? || tournament.date.nil? || tournament.date >= DateTime.parse(start_date.to_s)
             tournament ||= Tournament.new(lists_juggler_id: lists_juggler_id)
             sync_tournament(tournament)
           end
@@ -21,9 +21,17 @@ module Importers
     end
 
     def sync_tournament(tournament)
-      uri             = URI.parse("http://lists.starwarsclubhouse.com/api/v1/tournament/#{tournament.lists_juggler_id}")
-      response        = Net::HTTP.get_response(uri)
-      tournament_data = JSON.parse(response.body).try(:[], 'tournament')
+      uri              = URI.parse("http://lists.starwarsclubhouse.com/api/v1/tournament/#{tournament.lists_juggler_id}")
+      response         = Net::HTTP.get_response(uri)
+      tournament_data  = JSON.parse(response.body).try(:[], 'tournament')
+      venue_attributes = {
+        name:    tournament_data['venue']['name'],
+        city:    tournament_data['venue']['city'],
+        state:   tournament_data['venue']['state'],
+        country: tournament_data['venue']['country'],
+        lat:     tournament_data['venue']['lat'],
+        lon:     tournament_data['venue']['lon'],
+      }
       if tournament_data.present?
         tournament.assign_attributes({
                                        name:            tournament_data['name'],
@@ -32,6 +40,7 @@ module Importers
                                        round_length:    tournament_data['round_length'],
                                        num_players:     tournament_data['players'].length,
                                        tournament_type: TournamentType.find_or_initialize_by(name: tournament_data['type']),
+                                       venue:           Venue.find_or_initialize_by(venue_attributes),
                                        # TODO city, state, country? for filters, #15
                                      })
         tournament.save!
@@ -60,7 +69,7 @@ module Importers
         if ship.nil?
           ship_key = ship_configuration_data['ship'].gsub('yt2400freighter', 'yt2400')
           puts "-> looking again with #{ship_key} <-"
-          ship     = Ship.find_by(xws: ship_key)
+          ship = Ship.find_by(xws: ship_key)
           if ship.present?
             puts "-> ship found with #{ship_key} <-"
           else
