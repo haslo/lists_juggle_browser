@@ -26,6 +26,12 @@ module Importers
         ship_combo.squadrons << squadron
         squadron.save!
       end
+      tournament.games.each do |game|
+        game.update({
+                      winning_combo: game.winning_squadron.ship_combo,
+                      losing_combo:  game.losing_squadron.ship_combo,
+                    })
+      end
     end
 
     def find_or_create_ship_combo(ships)
