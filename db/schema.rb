@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208000703) do
+ActiveRecord::Schema.define(version: 20170211004005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,19 @@ ActiveRecord::Schema.define(version: 20170208000703) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.integer  "tournament_id"
+    t.integer  "winning_combo_id"
+    t.integer  "losing_combo_id"
+    t.integer  "round"
+    t.string   "round_type"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["losing_combo_id"], name: "index_games_on_losing_combo_id", using: :btree
+    t.index ["tournament_id"], name: "index_games_on_tournament_id", using: :btree
+    t.index ["winning_combo_id"], name: "index_games_on_winning_combo_id", using: :btree
   end
 
   create_table "pilots", force: :cascade do |t|
@@ -89,14 +102,16 @@ ActiveRecord::Schema.define(version: 20170208000703) do
     t.integer  "points"
     t.integer  "swiss_standing"
     t.integer  "elimination_standing"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.float    "swiss_percentile"
     t.float    "elimination_percentile"
     t.integer  "ship_combo_id"
     t.string   "player_name"
     t.integer  "mov"
     t.json     "xws"
+    t.float    "win_loss_ratio_swiss"
+    t.float    "win_loss_ratio_elimination"
     t.index ["ship_combo_id"], name: "index_squadrons_on_ship_combo_id", using: :btree
     t.index ["tournament_id"], name: "index_squadrons_on_tournament_id", using: :btree
   end
@@ -120,7 +135,9 @@ ActiveRecord::Schema.define(version: 20170208000703) do
     t.string   "state"
     t.string   "country"
     t.string   "format"
+    t.integer  "venue_id"
     t.index ["tournament_type_id"], name: "index_tournaments_on_tournament_type_id", using: :btree
+    t.index ["venue_id"], name: "index_tournaments_on_venue_id", using: :btree
   end
 
   create_table "upgrade_types", force: :cascade do |t|
@@ -141,8 +158,22 @@ ActiveRecord::Schema.define(version: 20170208000703) do
     t.index ["upgrade_type_id"], name: "index_upgrades_on_upgrade_type_id", using: :btree
   end
 
+  create_table "venues", force: :cascade do |t|
+    t.string   "name"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.float    "lat"
+    t.float    "lon"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "conditions", "pilots"
   add_foreign_key "conditions", "upgrades"
+  add_foreign_key "games", "ship_combos", column: "losing_combo_id"
+  add_foreign_key "games", "ship_combos", column: "winning_combo_id"
+  add_foreign_key "games", "tournaments"
   add_foreign_key "pilots", "factions"
   add_foreign_key "pilots", "ships"
   add_foreign_key "ship_combos_ships", "ship_combos"
@@ -154,5 +185,6 @@ ActiveRecord::Schema.define(version: 20170208000703) do
   add_foreign_key "squadrons", "ship_combos"
   add_foreign_key "squadrons", "tournaments"
   add_foreign_key "tournaments", "tournament_types"
+  add_foreign_key "tournaments", "venues"
   add_foreign_key "upgrades", "upgrade_types"
 end
