@@ -12,7 +12,11 @@ module Importers
     end
 
     def build_ranking_data(tournament_id)
-      print '.'
+      if (tournament_id.to_f / 50) == (tournament_id.to_i / 50)
+        print tournament_id
+      else
+        print '.'
+      end
       tournament          = Tournament.find_by(lists_juggler_id: tournament_id)
       number_of_squadrons = [tournament.num_players, tournament.squadrons.count].compact.max
       number_in_cut       = tournament.squadrons.select { |s| s.elimination_standing.present? }.count
