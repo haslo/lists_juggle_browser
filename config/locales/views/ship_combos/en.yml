@@ -21,7 +21,7 @@ en:
       ships: 'Ships'
       pilots: 'Pilots'
       upgrades: 'Upgrades'
-      counters: 'Possible Counter Archetypes'
+      counters: 'Archetype Matchups'
     edit_modal:
       title: 'Edit List Archetype Data'
       close: 'Close'
