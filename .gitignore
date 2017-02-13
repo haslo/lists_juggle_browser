@@ -6,3 +6,6 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+
+# Ignore db config
+/config/database.yml
