@@ -38,7 +38,10 @@
       %td
         = "#{(pilot.average_percentile * 10000).to_i / 100.0}%"
       %td
-        = "#{(pilot.average_wlr * 10000).to_i / 100.0}%"
+        - if pilot.average_wlr.present?
+          = "#{(pilot.average_wlr * 10000).to_i / 100.0}%"
+        - else
+          &mdash;
       - unless pilots.count <= 1
         %td.magic-column
           = render '/shared/magic_bar', max_weight: pilots.first.weight, weight: pilot.weight

@@ -33,7 +33,10 @@
       %td
         = "#{(ship_combo.average_percentile * 10000).to_i / 100.0}%"
       %td
-        = "#{(ship_combo.average_wlr * 10000).to_i / 100.0}%"
+        - if ship_combo.average_wlr.present?
+          = "#{(ship_combo.average_wlr * 10000).to_i / 100.0}%"
+        - else
+          &mdash;
       - unless ship_combos.count <= 1
         %td.magic-column
           = render '/shared/magic_bar', max_weight: ship_combos.first.weight, weight: ship_combo.weight

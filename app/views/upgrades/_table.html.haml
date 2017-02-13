@@ -34,7 +34,10 @@
       %td
         = "#{(upgrade.average_percentile * 10000).to_i / 100.0}%"
       %td
-        = "#{(upgrade.average_wlr * 10000).to_i / 100.0}%"
+        - if upgrade.average_wlr.present?
+          = "#{(upgrade.average_wlr * 10000).to_i / 100.0}%"
+        - else
+          &mdash;
       - unless upgrades.count <= 1
         %td.magic-column
           = render '/shared/magic_bar', max_weight: upgrades.first.weight, weight: upgrade.weight
