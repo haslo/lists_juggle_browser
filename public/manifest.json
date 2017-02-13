@@ -1,5 +1,5 @@
 {
-    "name": "",
+    "name": "meta-wing",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -12,7 +12,7 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
+    "theme_color": "#71b5ff",
+    "background_color": "#71b5ff",
     "display": "standalone"
 }
