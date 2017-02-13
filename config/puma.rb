@@ -21,7 +21,7 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
 #
-# workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code
@@ -42,6 +42,21 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # on_worker_boot do
 #   ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
 # end
+
+if ENV.fetch("RAILS_ENV") == 'production'
+  app_dir = File.expand_path("../..", __FILE__)
+  shared_dir = "#{app_dir}/shared"
+  bind "unix://#{shared_dir}/sockets/puma.sock"
+  stdout_redirect "#{shared_dir}/log/puma.stdout.log", "#{shared_dir}/log/puma.stderr.log", true
+  pidfile "#{shared_dir}/pids/puma.pid"
+  state_path "#{shared_dir}/pids/puma.state"
+  activate_control_app
+  on_worker_boot do
+    require "active_record"
+    ActiveRecord::Base.connection.disconnect! rescue ActiveRecord::ConnectionNotEstablished
+    ActiveRecord::Base.establish_connection(YAML.load_file("#{app_dir}/config/database.yml")[rails_env])
+  end
+end
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
