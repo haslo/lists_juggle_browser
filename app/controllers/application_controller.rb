@@ -14,6 +14,4 @@ class ApplicationController < ActionController::Base
   end
   helper_method :ranking_configuration
 
-  before_action -> { raise 'arr' if params[:raise].present? }
-
 end
