@@ -9,3 +9,8 @@
 
 # Ignore db config
 /config/database.yml
+
+# Ignore generated assets
+/public/assets
+/shared
+/.rbenv-vars
