@@ -16,7 +16,7 @@ class ShipCombosController < ApplicationController
                                           number_of_tournaments: ship_combos_ranker.number_of_tournaments,
                                           number_of_squadrons:   ship_combos_ranker.number_of_squadrons,
                                           upgrades:              Rankers::UpgradesRanker.new(ranking_configuration, ship_combo_id: params[:id], limit: 15).upgrades,
-                                          counter_combos:        Rankers::CounterComboRanker.new(ranking_configuration, params[:id]).counter_combos,
+                                          counter_combos:        Rankers::CounterCombosRanker.new(ranking_configuration, params[:id]).counter_combos,
                                         })
   end
 

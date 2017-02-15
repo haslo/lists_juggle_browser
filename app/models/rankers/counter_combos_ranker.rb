@@ -1,5 +1,5 @@
 module Rankers
-  class CounterComboRanker
+  class CounterCombosRanker
 
     attr_reader :counter_combos
 
