@@ -1,15 +1,16 @@
-%ul.nav.nav-pills.flex-column
-  - %w[overviews pilots ships upgrades ship_combos].each do |controller|
-    - is_current = controller == params[:controller]
-    - path = controller == 'overviews' ? root_path : __send__("#{controller}_path")
-    %li.nav-item
-      = link_with_filter_to path, class: "nav-link#{is_current ? ' active' : ''}" do
-        = t(".links.#{controller}")
-        - if is_current
-          %span.sr-only= "(#{t('.current')})"
+%nav.col-sm-3.col-md-2.bg-faded.sidebar.hidden-md-down
+  %ul.nav.nav-pills.flex-column
+    - %w[overviews pilots ships upgrades ship_combos].each do |controller|
+      - is_current = controller == params[:controller]
+      - path = controller == 'overviews' ? root_path : __send__("#{controller}_path")
+      %li.nav-item
+        = link_with_filter_to path, class: "nav-link#{is_current ? ' active' : ''}" do
+          = t(".links.#{controller}")
+          - if is_current
+            %span.sr-only= "(#{t('.current')})"
 
-.loading-indicator
-  = image_tag 'spinner.gif'
+  .loading-indicator
+    = image_tag 'spinner.gif'
 
 - content_for :javascript do
   :coffeescript

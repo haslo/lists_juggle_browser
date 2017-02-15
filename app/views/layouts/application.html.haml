@@ -23,9 +23,8 @@
     = render '/layouts/top_navigation'
     .container-fluid
       .row
-        %nav.col-sm-3.col-md-2.hidden-xs-down.bg-faded.sidebar
-          = render '/layouts/side_navigation'
-        %main.col-sm-9.offset-sm-3.col-md-10.offset-md-2.pt-3
+        = render '/layouts/side_navigation'
+        %main.col-lg-10.offset-lg-2.pt-3
           - if show_filter?(params[:controller], params[:action])
             = render '/shared/filter_configurator'
           %h1= yield(:title).presence || t('.title')

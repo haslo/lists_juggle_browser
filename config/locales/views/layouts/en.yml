@@ -7,6 +7,12 @@ en:
     top_navigation:
       title: 'X-Wing Meta Analyzer'
       browser: 'Data Browser'
+      links:
+        overviews: 'Intro'
+        pilots: 'Pilots'
+        ships: 'Ship Types'
+        ship_combos: 'List Archetypes'
+        upgrades: 'Upgrades'
       about: 'About'
       current: 'current'
     side_navigation:
