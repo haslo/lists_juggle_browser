@@ -3,9 +3,10 @@
   - if @view.ship_combo.archetype_name.present?
     = "\"#{@view.ship_combo.archetype_name}\""
 
-.float-md-right
-  %button.btn.btn-primary.btn-sm{data: {target: '#edit-modal', toggle: 'modal'}, type: 'button'}
-    = t('.edit')
+- if params[:admin] == 'true'
+  .float-md-right
+    %button.btn.btn-primary.btn-sm{data: {target: '#edit-modal', toggle: 'modal'}, type: 'button'}
+      = t('.edit')
 %h2= t('.ship_combo')
 = render '/ship_combos/table', ship_combos: @view.ship_combos, ships: @view.ship_combos_ships
 
