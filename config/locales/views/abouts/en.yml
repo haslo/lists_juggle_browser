@@ -9,18 +9,18 @@ en:
               of course</li>
             <li><a href="http://lists.starwarsclubhouse.com/">X-Wing Lists Juggler</a>, sozin who built it, and all the folks
               who contributed data by adding their tournaments</li>
-            <li>The <a href="https://github.com/geordanr/xwing-miniatures-font">X-Wing Miniatures Font</a> for symbols and
-              icons</li>
+            <li>The <a href="https://github.com/geordanr/xwing-miniatures-font">X-Wing Miniatures Font</a> for symbols and icons</li>
             <li>Everybody behind the <a href="https://github.com/elistevens/xws-spec">XWS Spec</a></li>
-            <li>Guido Kessels and his <a href="https://github.com/guidokessels/xwing-data">Data repository</a></li>
+            <li>Guido Kessels and his <a href="https://github.com/guidokessels/xwing-data">xwing-data repository</a></li>
             <li>My X-Wing team, the <a href="http://theflyingdragons.ch/">Krayt Dragons</a>, who helped develop and test this tool</li>
           </ul>
         <h2>Implementation</h2>
           <p>The <a href="https://github.com/haslo/lists_juggle_browser">source is available on GitHub</a> with an MIT license,
             and the application stack uses <a href="https://www.postgresql.org/">PostgreSQL</a>,
             <a href="http://rubyonrails.org/">Ruby on Rails</a>, <a href="https://jquery.com/">jQuery</a> and
-            <a href="http://getbootstrap.com/">Bootstrap</a>.
-          <p>Imports are automatic, and things like list archetypes or ships the DB doesn't know yet are automagically generated,
+            <a href="http://getbootstrap.com/">Bootstrap</a>. The server runs <a href="https://www.nginx.com/solutions/web-server/">nginx</a>
+            in front of <a href="http://puma.io/">puma</a> on <a href="https://www.ubuntu.com/">Ubuntu</a>.
+          <p>Imports are automatic (based on xwing-data), and things like list archetypes the DB doesn't know yet are automagically generated,
             which means they'll never get stale because no human interaction is involved. On the other hand, my database
             has no clue what these things (ships, pilots, upgrades) represent and whether the combinations it gets are legal
             or posible, they're just a name and a number without anything else attached.</p>
