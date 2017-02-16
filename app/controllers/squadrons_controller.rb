@@ -8,10 +8,12 @@ class SquadronsController < ApplicationController
                                                     upgrade_id:    params[:upgrade_id],
                                                     limit:         50)
     @view            = OpenStruct.new({
-                                        squadrons:             squadrons_ranker.squadrons,
-                                        rankers:               get_rankers_from_params,
-                                        number_of_tournaments: squadrons_ranker.number_of_tournaments,
-                                        number_of_squadrons:   squadrons_ranker.number_of_squadrons,
+                                        squadrons:                  squadrons_ranker.squadrons,
+                                        rankers:                    get_rankers_from_params,
+                                        number_of_tournaments:      squadrons_ranker.number_of_tournaments,
+                                        tournaments_with_squadrons: squadrons_ranker.tournaments_with_squadrons,
+                                        number_of_squadrons:        squadrons_ranker.number_of_squadrons,
+                                        empty_squadrons:            squadrons_ranker.empty_squadrons,
                                       })
   end
 

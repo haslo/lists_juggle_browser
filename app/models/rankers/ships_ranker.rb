@@ -1,7 +1,7 @@
 module Rankers
   class ShipsRanker
 
-    attr_reader :ships, :number_of_tournaments, :number_of_squadrons
+    attr_reader :ships, :number_of_tournaments, :tournaments_with_squadrons, :number_of_squadrons, :empty_squadrons
 
     def initialize(ranking_configuration, ship_id: nil, ship_combo_id: nil)
       start_date      = ranking_configuration[:ranking_start]
@@ -45,7 +45,7 @@ module Rankers
       @ships  = Ship.fetch_query(ships_relation, attributes)
       @pilots = Pilot.all.includes(:faction).to_a
 
-      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
+      @number_of_tournaments, @tournaments_with_squadrons, @number_of_squadrons, @empty_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
     end
 
     def ship_pilots

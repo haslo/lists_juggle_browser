@@ -8,4 +8,8 @@ class ShipCombo < ApplicationRecord
 
   has_and_belongs_to_many :ships
 
+  def self.empty_combo
+    left_joins(:ships).where('ships.id is null').first
+  end
+
 end

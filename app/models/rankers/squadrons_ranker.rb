@@ -1,7 +1,7 @@
 module Rankers
   class SquadronsRanker
 
-    attr_reader :squadrons, :number_of_tournaments, :number_of_squadrons
+    attr_reader :squadrons, :number_of_tournaments, :tournaments_with_squadrons, :number_of_squadrons, :empty_squadrons
 
     def initialize(ranking_configuration, ship_id: nil, pilot_id: nil, upgrade_id: nil, ship_combo_id: nil, limit: 2)
       start_date      = ranking_configuration[:ranking_start]
@@ -54,7 +54,7 @@ module Rankers
       SQL
       @squadrons = squadron_query.all.includes({tournament: :tournament_type}, :ship_combo, {ship_configurations: [{pilot: :ship}, {upgrades: :upgrade_type}]}).limit(limit).order(order).group(Squadron.column_names - ['xws'])
 
-      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
+      @number_of_tournaments, @tournaments_with_squadrons, @number_of_squadrons, @empty_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
     end
 
   end

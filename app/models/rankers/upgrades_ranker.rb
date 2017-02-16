@@ -1,7 +1,7 @@
 module Rankers
   class UpgradesRanker
 
-    attr_reader :upgrades, :number_of_tournaments, :number_of_squadrons
+    attr_reader :upgrades, :number_of_tournaments, :tournaments_with_squadrons, :number_of_squadrons, :empty_squadrons
 
     def initialize(ranking_configuration, ship_id: nil, pilot_id: nil, limit: nil, upgrade_id: nil, ship_combo_id: nil)
       start_date      = ranking_configuration[:ranking_start]
@@ -64,7 +64,7 @@ module Rankers
       end
       @upgrades = Upgrade.fetch_query(upgrade_relation, attributes)
 
-      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
+      @number_of_tournaments, @tournaments_with_squadrons, @number_of_squadrons, @empty_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
     end
 
   end
