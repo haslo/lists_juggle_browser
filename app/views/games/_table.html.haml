@@ -19,9 +19,15 @@
       %td
         = game.round_number
       %td.squadron-cell
-        = render '/squadrons/squadron', squadron: game.winning_squadron, show_upgrades: false
+        - if selected_squadron?(game.winning_squadron)
+          %span{style: 'font-size: 40px'}= 'x'
+        - else
+          = render '/squadrons/squadron', squadron: game.winning_squadron, show_upgrades: false
       %td.squadron-cell
-        = render '/squadrons/squadron', squadron: game.losing_squadron, show_upgrades: false
+        - if selected_squadron?(game.losing_squadron)
+          %span{style: 'font-size: 40px'}= 'x'
+        - else
+          = render '/squadrons/squadron', squadron: game.losing_squadron, show_upgrades: false
 
 = render '/squadrons/xws_modal'
 

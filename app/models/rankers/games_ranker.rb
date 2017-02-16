@@ -37,6 +37,14 @@ module Rankers
       if tournament_type.present?
         game_query = game_query.where('tournaments.tournament_type_id = ?', tournament_type)
       end
+      case ranking_configuration[:use_ranking_data]
+        when 'swiss'
+          game_query = game_query.where(round_type: 'swiss')
+        when 'elimination'
+          game_query = game_query.where(round_type: 'elimination')
+        else
+          # noop
+      end
       order = <<-SQL
         tournaments.date asc,
         case when games.round_type = 'swiss' then 0 else 1 end asc,
