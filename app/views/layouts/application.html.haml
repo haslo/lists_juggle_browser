@@ -20,6 +20,9 @@
     %meta{:content => "#71b5ff", :name => "theme-color"}/
 
   %body
+    - if KeyValueStoreRecord.get('syncing')
+      .stamp
+        = t('.currently_importing').html_safe
     = render '/layouts/top_navigation'
     .container-fluid
       .row

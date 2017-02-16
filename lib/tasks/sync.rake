@@ -13,8 +13,18 @@ namespace :sync do
   end
 
   desc 'rankings'
-  task rebuild_rankings: :environment do
-    Importers::Ranking.new.rebuild_all_ranking_data
+  task :rebuild_rankings, [:minimum_id, :start_date] => :environment do |t, args|
+    Importers::Ranking.new.rebuild_all_ranking_data(minimum_id: args[:minimum_id].to_i, start_date: args[:start_date])
+  end
+
+  desc 'enable sync mode'
+  task enable: :environment do
+    KeyValueStoreRecord.set!('syncing', true)
+  end
+
+  desc 'disable sync mode'
+  task disable: :environment do
+    KeyValueStoreRecord.set!('syncing', false)
   end
 
 end
