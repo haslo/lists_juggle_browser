@@ -12,3 +12,6 @@ en:
       round_number: 'Round #'
       winning_squadron: 'Winner'
       losing_squadron: 'Loser'
+      played_by: 'played by <strong>%{player}</strong>'
+      win_loss_ratio_swiss: 'win/loss ratio Swiss: %{ratio}%'
+      win_loss_ratio_elimination: 'win/loss ratio Elimination: %{ratio}%'

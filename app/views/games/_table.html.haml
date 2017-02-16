@@ -20,12 +20,24 @@
         = game.round_number
       %td.game-squad-cell
         - if selected_squadron?(game.winning_squadron)
-          %span{style: 'font-size: 40px'}= 'x'
+          = t('.played_by', player: game.winning_squadron.player_name).html_safe
+          - if game.winning_squadron.win_loss_ratio_swiss.present?
+            %br
+            = t('.win_loss_ratio_swiss', ratio: (game.winning_squadron.win_loss_ratio_swiss * 10000).to_i / 100.0)
+          - if game.winning_squadron.win_loss_ratio_elimination.present?
+            %br
+            = t('.win_loss_ratio_elimination', ratio: (game.winning_squadron.win_loss_ratio_elimination * 10000).to_i / 100.0)
         - else
           = render '/squadrons/squadron', squadron: game.winning_squadron, show_upgrades: true
       %td.game-squad-cell
         - if selected_squadron?(game.losing_squadron)
-          %span{style: 'font-size: 40px'}= 'x'
+          = t('.played_by', player: game.losing_squadron.player_name).html_safe
+          - if game.losing_squadron.win_loss_ratio_swiss.present?
+            %br
+            = t('.win_loss_ratio_swiss', ratio: (game.losing_squadron.win_loss_ratio_swiss * 10000).to_i / 100.0)
+          - if game.losing_squadron.win_loss_ratio_elimination.present?
+            %br
+            = t('.win_loss_ratio_elimination', ratio: (game.losing_squadron.win_loss_ratio_elimination * 10000).to_i / 100.0)
         - else
           = render '/squadrons/squadron', squadron: game.losing_squadron, show_upgrades: true
 

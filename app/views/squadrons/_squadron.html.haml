@@ -37,4 +37,4 @@
     = link_to 'javascript:void(0);', class: 'xws-link', data: {xws: squadron.xws, link: squadron_url(squadron, format: :json)} do
       = t('.download_xws')
 - else
-  &mdash;
+  %small= t('.unknown')
