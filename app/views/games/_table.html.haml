@@ -18,16 +18,16 @@
         = t(".round_types.#{game.round_type}")
       %td
         = game.round_number
-      %td.squadron-cell
+      %td.game-squad-cell
         - if selected_squadron?(game.winning_squadron)
           %span{style: 'font-size: 40px'}= 'x'
         - else
-          = render '/squadrons/squadron', squadron: game.winning_squadron, show_upgrades: false
-      %td.squadron-cell
+          = render '/squadrons/squadron', squadron: game.winning_squadron, show_upgrades: true
+      %td.game-squad-cell
         - if selected_squadron?(game.losing_squadron)
           %span{style: 'font-size: 40px'}= 'x'
         - else
-          = render '/squadrons/squadron', squadron: game.losing_squadron, show_upgrades: false
+          = render '/squadrons/squadron', squadron: game.losing_squadron, show_upgrades: true
 
 = render '/squadrons/xws_modal'
 
