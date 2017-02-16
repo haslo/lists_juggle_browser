@@ -5,6 +5,7 @@ class Squadron < ApplicationRecord
 
   has_many :ship_configurations, dependent: :destroy
   has_many :pilots, through: :ship_configurations
+  has_many :upgrades, through: :ship_configurations
   has_many :ships, through: :pilots
 
   has_many :won_games, class_name: 'Game', foreign_key: :winning_squadron_id, inverse_of: :winning_squadron

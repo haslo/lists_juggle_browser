@@ -37,3 +37,9 @@ en:
         swiss: 'use Swiss ranks'
         elimination: 'use ranks after cut'
         all: 'use all ranks'
+    parameter_rankers:
+      pilot: 'Pilot'
+      ship: 'Ship'
+      ship_combo: 'List Archetype'
+      upgrade: 'Upgrade'
+      squadrons: 'Squadrons'

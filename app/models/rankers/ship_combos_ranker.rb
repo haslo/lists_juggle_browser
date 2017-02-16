@@ -1,7 +1,7 @@
 module Rankers
   class ShipCombosRanker
 
-    attr_reader :ship_combos, :ships, :number_of_tournaments, :number_of_squadrons
+    attr_reader :ship_combos, :ships, :number_of_tournaments, :tournaments_with_squadrons, :number_of_squadrons, :empty_squadrons
 
     def initialize(ranking_configuration, ship_id: nil, ship_combo_id: nil, pilot_id: nil, upgrade_id: nil, limit: nil)
       start_date      = ranking_configuration[:ranking_start]

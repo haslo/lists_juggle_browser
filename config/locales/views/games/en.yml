@@ -1,0 +1,6 @@
+en:
+  games:
+    index:
+      title: 'Games'
+    table:
+      tournament: 'Tournament'

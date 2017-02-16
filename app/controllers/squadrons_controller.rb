@@ -1,4 +1,5 @@
 class SquadronsController < ApplicationController
+  include Concerns::WithParameterRankers
 
   def index
     squadrons_ranker = Rankers::SquadronsRanker.new(ranking_configuration,
@@ -19,20 +20,6 @@ class SquadronsController < ApplicationController
 
   def show
     render json: Squadron.find(params[:id]).xws
-  end
-
-  private
-
-  def get_rankers_from_params
-    [Ship, ShipCombo, Upgrade, Pilot].map do |klass|
-      parameter_name = "#{klass.name.underscore}_id".to_sym
-      if params[parameter_name].present?
-        ranker = "Rankers::#{klass.name.pluralize}Ranker".constantize
-        [klass, ranker.new(ranking_configuration, { parameter_name => params[parameter_name] })]
-      else
-        nil
-      end
-    end.compact
   end
 
 end

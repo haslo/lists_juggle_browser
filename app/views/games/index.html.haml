@@ -1,0 +1,7 @@
+- content_for :title do
+  = t('.title')
+
+= render '/shared/parameter_rankers'
+
+%h2#games= t('.games')
+= render '/games/table', squadrons: @view.squadrons
