@@ -1,1 +1,38 @@
-= @view.games.inspect
+%table.table.table-striped.table-bordered.table-for-search
+  %tr
+    %th.text-nowrap= t('.tournament')
+    %th.text-nowrap= t('.round_type')
+    %th.text-nowrap= t('.round_number')
+    %th.text-nowrap= t('.winning_squadron')
+    %th.text-nowrap= t('.losing_squadron')
+  - games.each do |game|
+    %tr.row-for-search{data: {game_id: game.id}}
+      %td
+        = link_to "http://lists.starwarsclubhouse.com/get_tourney_details?tourney_id=#{game.tournament.lists_juggler_id}" do
+          = game.tournament.name
+        %br
+        = game.tournament.tournament_type.name
+        %br
+        = game.tournament.date
+      %td
+        = t(".round_types.#{game.round_type}")
+      %td
+        = game.round_number
+      %td.squadron-cell
+        = render '/squadrons/squadron', squadron: game.winning_squadron
+      %td.squadron-cell
+        = render '/squadrons/squadron', squadron: game.losing_squadron
+
+= render '/squadrons/xws_modal'
+
+- content_for :javascript do
+  :coffeescript
+    $ ->
+      $('.xws-link').on 'click', (e) ->
+        console.log JSON.stringify($(e.target).data('xws'))
+        $('#xws-text-area').val(JSON.stringify($(e.target).data('xws')))
+        $('#xws-json-link').attr('href', $(e.target).data('link'))
+        $('#xws-modal').modal('show')
+
+      $('#xws-text-area').on 'focus', (e) ->
+        $('#xws-text-area').select()

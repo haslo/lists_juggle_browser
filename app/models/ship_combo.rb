@@ -12,4 +12,8 @@ class ShipCombo < ApplicationRecord
     left_joins(:ships).where('ships.id is null').first
   end
 
+  def is_empty?
+    ships.count == 0
+  end
+
 end

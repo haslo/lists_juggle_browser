@@ -2,5 +2,13 @@ en:
   games:
     index:
       title: 'Games'
+      games: 'Games'
     table:
       tournament: 'Tournament'
+      round_type: 'Round Type'
+      round_types:
+        swiss: 'Swiss'
+        elimination: 'Elimination'
+      round_number: 'Round #'
+      winning_squadron: 'Winner'
+      losing_squadron: 'Loser'

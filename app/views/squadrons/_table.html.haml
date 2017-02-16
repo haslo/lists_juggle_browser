@@ -21,41 +21,7 @@
       %td
         = squadron.elimination_standing
       %td.squadron-cell
-        - squadron.ship_configurations.each do |ship_configuration|
-          - if ship_configuration.pilot.present?
-            %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship_configuration.pilot.ship.font_icon_class}"}
-            %strong
-              = link_with_filter_to pilot_path(ship_configuration.pilot.id), class: 'link-with-hover-image' do
-                = image_tag pilot_image_path(ship_configuration.pilot, format: :png)
-                = ship_configuration.pilot.name
-            %small
-              = link_with_filter_to ship_path(ship_configuration.pilot.ship.id) do
-                = "(#{ship_configuration.pilot.ship.name})"
-              - ship_configuration.upgrades.each do |upgrade|
-                %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{upgrade.upgrade_type.font_icon_class}"}
-                = link_with_filter_to upgrade_path(upgrade.id), class: 'link-with-hover-image' do
-                  = image_tag upgrade_image_path(upgrade, format: :png)
-                  = upgrade.name
-          - else
-            = t('.missing_pilot')
-            %small
-              - ship_configuration.upgrades.each do |upgrade|
-                %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{upgrade.upgrade_type.font_icon_class}"}
-                = link_with_filter_to upgrade_path(upgrade.id), class: 'link-with-hover-image' do
-                  = image_tag upgrade_image_path(upgrade, format: :png)
-                  = upgrade.name
-          %br
-        %small
-          - if squadron.ship_combo.present?
-            = link_with_filter_to ship_combo_path(squadron.ship_combo.id) do
-              = t('.archetype_link')
-              - if squadron.ship_combo.archetype_name.present?
-                = "\"#{squadron.ship_combo.archetype_name}\""
-            = '-'
-          = t('.played_by', player: squadron.player_name)
-          = '-'
-          = link_to 'javascript:void(0);', class: 'xws-link', data: {xws: squadron.xws, link: squadron_url(squadron, format: :json)} do
-            = t('.download_xws')
+        = render '/squadrons/squadron', squadron: squadron
 
 = render '/squadrons/xws_modal'
 
