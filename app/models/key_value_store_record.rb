@@ -1,7 +1,7 @@
 class KeyValueStoreRecord < ApplicationRecord
 
   def self.get(key)
-    find_by(key: key).value
+    find_by(key: key).try(:value)
   end
 
   def self.set!(key, value)

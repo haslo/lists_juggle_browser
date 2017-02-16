@@ -4,6 +4,7 @@ en:
       title: 'X-Wing Meta Analyzer'
       description: 'Meta analysis for the X-Wing Lists Juggler'
       author: 'Guido Gloor Modjib'
+      currently_importing: 'Currently Importing...'
     top_navigation:
       title: 'X-Wing Meta Analyzer'
       browser: 'Data Browser'
