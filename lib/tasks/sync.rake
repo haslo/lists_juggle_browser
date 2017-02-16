@@ -18,12 +18,12 @@ namespace :sync do
   end
 
   desc 'enable sync mode'
-  task enable_sync_mode: :environment do
+  task enable: :environment do
     KeyValueStoreRecord.set!('syncing', true)
   end
 
   desc 'disable sync mode'
-  task disable_sync_mode: :environment do
+  task disable: :environment do
     KeyValueStoreRecord.set!('syncing', false)
   end
 
