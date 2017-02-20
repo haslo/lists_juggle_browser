@@ -1,0 +1,31 @@
+= javascript_include_tag 'turning_test'
+
+%canvas{id: 'test-canvas', width: 1000, height: 800}
+
+- content_for :javascript do
+  :coffeescript
+    $ ->
+      translatorSmall1 = new TranslateRotate(200, 250, 0)
+      translatorSmall2 = new TranslateRotate(500, 250, 0)
+      translatorSmall3 = new TranslateRotate(800, 250, 0)
+      translatorLarge1 = new TranslateRotate(200, 500, 0)
+      translatorLarge2 = new TranslateRotate(500, 500, 0)
+      translatorLarge3 = new TranslateRotate(800, 500, 0)
+      painterSmall1 = new TurningTestPainter($('#test-canvas')[0], translatorSmall1)
+      painterSmall2 = new TurningTestPainter($('#test-canvas')[0], translatorSmall2)
+      painterSmall3 = new TurningTestPainter($('#test-canvas')[0], translatorSmall3)
+      painterLarge1 = new TurningTestPainter($('#test-canvas')[0], translatorLarge1)
+      painterLarge2 = new TurningTestPainter($('#test-canvas')[0], translatorLarge2)
+      painterLarge3 = new TurningTestPainter($('#test-canvas')[0], translatorLarge3)
+
+      paint = (painter, radius, length) ->
+        painter.drawLine(0, -length, 0, 0)
+        painter.drawArc(-radius, 0, radius, 0, Math.PI / 2)
+        painter.drawLine(-radius, radius, -(length + radius), radius)
+
+      paint(painterSmall1, 35, 40)
+      paint(painterSmall2, 63, 40)
+      paint(painterSmall3, 90, 40)
+      paint(painterLarge1, 35, 80)
+      paint(painterLarge2, 63, 80)
+      paint(painterLarge3, 90, 80)

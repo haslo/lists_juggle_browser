@@ -34,6 +34,7 @@
           = yield
 
     = javascript_include_tag '//www.google.com/jsapi', 'chartkick', 'application'
+    = javascript_include_tag 'application'
     = yield :javascript
     - if Rails.env.production?
       = render '/layouts/analytics'

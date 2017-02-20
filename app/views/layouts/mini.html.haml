@@ -1,0 +1,9 @@
+!!!
+%html
+  %head
+    - title = 'Test Bench'
+
+  %body
+    = yield
+    = javascript_include_tag 'application'
+    = yield :javascript
