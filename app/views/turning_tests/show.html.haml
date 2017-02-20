@@ -1,5 +1,10 @@
 = javascript_include_tag 'turning_test'
 
+- values = (0..100).step(5).map{|v|v}
+= select_tag 'percentage', options_for_select(values)
+
+%hr
+
 %canvas{id: 'test-canvas', width: 1000, height: 800}
 
 - content_for :javascript do
@@ -11,6 +16,7 @@
       translatorLarge1 = new TranslateRotate(200, 500, 0)
       translatorLarge2 = new TranslateRotate(500, 500, 0)
       translatorLarge3 = new TranslateRotate(800, 500, 0)
+      clearPainter = new TurningTestPainter($('#test-canvas')[0], null)
       painterSmall1 = new TurningTestPainter($('#test-canvas')[0], translatorSmall1)
       painterSmall2 = new TurningTestPainter($('#test-canvas')[0], translatorSmall2)
       painterSmall3 = new TurningTestPainter($('#test-canvas')[0], translatorSmall3)
@@ -18,14 +24,44 @@
       painterLarge2 = new TurningTestPainter($('#test-canvas')[0], translatorLarge2)
       painterLarge3 = new TurningTestPainter($('#test-canvas')[0], translatorLarge3)
 
-      paint = (painter, radius, length) ->
-        painter.drawLine(0, -length, 0, 0)
-        painter.drawArc(-radius, 0, radius, 0, Math.PI / 2)
-        painter.drawLine(-radius, radius, -(length + radius), radius)
+      paint = (painter, radius, length, percentage) ->
+        # templates
+        painter.color('black')
+        painter.drawLine(radius + 10, -length, radius + 10, 0)
+        painter.drawLine(radius, -length, radius, 0)
+        painter.drawLine(radius - 10, -length, radius - 10, 0)
+        painter.drawArc(0, 0, radius + 10, 0, Math.PI / 2)
+        painter.drawArc(0, 0, radius, 0, Math.PI / 2)
+        painter.drawArc(0, 0, radius - 10, 0, Math.PI / 2)
+        painter.drawLine(0, radius + 10, -length, radius + 10)
+        painter.drawLine(0, radius, -length, radius)
+        painter.drawLine(0, radius - 10, -length, radius - 10)
+        # positions
+        painter.color('red')
+        leftTurnCalculator = new LeftTurnCalculator(radius, length)
+        frontPosition = leftTurnCalculator.frontPosition(percentage)
+        backPosition = leftTurnCalculator.backPosition(percentage)
+        centerPosition = backPosition.centerPoint(frontPosition)
+        angle = backPosition.angleTo(frontPosition)
+        painter.drawCircle(frontPosition.x, frontPosition.y, 4)
+        painter.drawCircle(backPosition.x, backPosition.y, 4)
+        painter.drawCircle(centerPosition.x, centerPosition.y, 4)
+        painter.drawLine(frontPosition.x, frontPosition.y, backPosition.x, backPosition.y)
+        # checks
+        calculatedLength = Math.sqrt((frontPosition.x - backPosition.x)*(frontPosition.x - backPosition.x) + (frontPosition.y - backPosition.y)*(frontPosition.y - backPosition.y))
+        console.log '' + length + ': ' + Math.round((calculatedLength / length) * 100) + '%'
 
-      paint(painterSmall1, 35, 40)
-      paint(painterSmall2, 63, 40)
-      paint(painterSmall3, 90, 40)
-      paint(painterLarge1, 35, 80)
-      paint(painterLarge2, 63, 80)
-      paint(painterLarge3, 90, 80)
+      paintAll = (percentage) ->
+        paint(painterSmall1, 35, 40, percentage)
+        paint(painterSmall2, 63, 40, percentage)
+        paint(painterSmall3, 90, 40, percentage)
+        paint(painterLarge1, 35, 80, percentage)
+        paint(painterLarge2, 63, 80, percentage)
+        paint(painterLarge3, 90, 80, percentage)
+
+      $('#percentage').on 'change', (e) ->
+        console.log '--'
+        clearPainter.clear()
+        paintAll($(e.target).val() / 100)
+
+      paintAll(0)

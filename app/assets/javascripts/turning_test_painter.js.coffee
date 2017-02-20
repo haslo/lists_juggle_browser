@@ -8,8 +8,13 @@ class window.TranslateRotate
 
 class window.TurningTestPainter
   constructor: (canvas, translateRotate) ->
+    @canvas = canvas
     @context = canvas.getContext('2d')
     @translateRotate = translateRotate
+  clear: ->
+    @context.clearRect(0, 0, @canvas.width, @canvas.height)
+  color: (color) ->
+    @context.strokeStyle = color
   drawLine: (x1, y1, x2, y2) ->
     start = @translateRotate.mogrify(x1, y1)
     end = @translateRotate.mogrify(x2, y2)
@@ -22,3 +27,5 @@ class window.TurningTestPainter
     @context.beginPath()
     @context.arc(center.x, center.y, r, start, end, false)
     @context.stroke()
+  drawCircle: (x, y, r) ->
+    @drawArc(x, y, r, 0, 2 * Math.PI)
