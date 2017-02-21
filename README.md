@@ -9,7 +9,8 @@ have.
 The application is written in Ruby on Rails and uses PostgreSQL as its database.
 
 Preferably, use something like RVM to handle your Rubies and Gemsets. Then checkout
-the repository, make sure you're using Ruby 2.4 and have Postgres installed, and...
+the repository (including the submodule), make sure you're using Ruby 2.4 and have
+Postgres installed, and...
 
 ```bash
 bundle
@@ -21,16 +22,16 @@ rake db:create db:migrate
 Importing all the data (takes a while):
 
 ```bash
-rake sync:lists_juggler
-rake sync:rebuild_wikia_images
-rake sync:reset_icons
+rake sync:xwing_data
+rake sync:tournaments
+rake sync:rebuild_rankings
 ```
 
-You'll need to fix some Wikia links afterwards (from detail pages), but
-most should be correct.
-
-For updates later (updates everything, including images and icons, if necessary):
+For updates later (updates everything):
 
 ```bash
-ranke sync:update
+rake sync:tournaments[<min_id>,<min_date>]
+rake sync:rebuild_rankings[<min_id>,<min_date>]
 ```
+Both parameters are optional for both rake tasks, just skip the brackets if you
+don't want to provide them.
