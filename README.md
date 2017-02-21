@@ -13,6 +13,7 @@ the repository (including the submodule), make sure you're using Ruby 2.4 and ha
 Postgres installed, and...
 
 ```bash
+cp config/database.yml.example config/database.yml
 bundle
 rake db:create db:migrate
 ```
