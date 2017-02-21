@@ -1,4 +1,4 @@
-class FontLookup
+module FontHelper
 
   def faction_icon(faction_name)
     case faction_name
