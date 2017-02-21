@@ -50,6 +50,9 @@
         # checks
         calculatedLength = Math.sqrt((frontPosition.x - backPosition.x)*(frontPosition.x - backPosition.x) + (frontPosition.y - backPosition.y)*(frontPosition.y - backPosition.y))
         console.log '' + length + ': ' + Math.round((calculatedLength / length) * 100) + '%'
+        # ship
+        painter.color('blue')
+        painter.drawShip(centerPosition.x, centerPosition.y, angle, length)
 
       paintAll = (percentage) ->
         paint(painterSmall1, 35, 40, percentage)

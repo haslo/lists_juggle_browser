@@ -5,7 +5,7 @@ class window.Vector
   centerPoint: (other) ->
     new Vector((@x + other.x) / 2, (@y + other.y) / 2)
   angleTo: (other) ->
-    if other.x > @x
+    if other.x >= @x
       Math.atan((other.y - @y) / (other.x - @x))
     else
       Math.PI + Math.atan((other.y - @y) / (other.x - @x))
