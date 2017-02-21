@@ -8,7 +8,7 @@
     %th.text-nowrap= t('.squadron_count')
     %th.text-nowrap= t('.tournaments_count')
     %th.text-nowrap= t('.average_percentile')
-    %th.text-nowrap= t('.win_loss_ratio')
+    -#%th.text-nowrap= t('.win_loss_ratio')
     - unless pilots.count <= 1
       %th.text-nowrap.magic-column= t('.weight')
   - pilots.each.with_index do |pilot, index|
@@ -37,11 +37,11 @@
         %small= "#{(pilot.tournaments.to_f / @view.number_of_tournaments.to_f * 10000).to_i / 100.0}%"
       %td
         = "#{(pilot.average_percentile * 10000).to_i / 100.0}%"
-      %td
-        - if pilot.average_wlr.present?
-          = "#{(pilot.average_wlr * 10000).to_i / 100.0}%"
-        - else
-          &mdash;
+      -#%td
+      -#  - if pilot.average_wlr.present?
+      -#    = "#{(pilot.average_wlr * 10000).to_i / 100.0}%"
+      -#  - else
+      -#    &mdash;
       - unless pilots.count <= 1
         %td.magic-column
           = render '/shared/magic_bar', max_weight: pilots.first.weight, weight: pilot.weight
