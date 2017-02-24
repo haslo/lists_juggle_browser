@@ -4,6 +4,7 @@ en:
       title: 'Intro'
       current_status: 'Stats'
       latest_import: 'Latest Import'
+      ago: 'ago'
       number_of_tournaments: 'Number of analyzed Tournaments'
       number_of_squadrons: 'Number of analyzed Squadrons'
       number_of_games: 'Number of analyzed Games'
