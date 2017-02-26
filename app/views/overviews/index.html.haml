@@ -4,7 +4,7 @@
 - if Tournament.all.count > 0
   %h2= t('.current_status')
   %ul
-    %li= "#{t('.latest_import')}: #{time_ago_in_words(Tournament.all.map(&:created_at).max)} #{t('.ago')}"
+    %li= "#{t('.latest_import')}: #{time_ago_in_words(Time.parse(KeyValueStoreRecord.get('last_sync')))} #{t('.ago')}"
     %li= "#{t('.number_of_tournaments')}: #{Tournament.count}"
     %li= "#{t('.number_of_squadrons')}: #{Squadron.count}"
     %li= "#{t('.number_of_games')}: #{Game.count}"

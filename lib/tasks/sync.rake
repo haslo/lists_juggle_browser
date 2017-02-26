@@ -25,6 +25,7 @@ namespace :sync do
   desc 'disable sync mode'
   task disable: :environment do
     KeyValueStoreRecord.set!('syncing', false)
+    KeyValueStoreRecord.set!('last_sync', Time.current.iso8601)
   end
 
 end
