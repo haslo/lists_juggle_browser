@@ -63,7 +63,6 @@
   :coffeescript
     $ ->
       $('.xws-link').on 'click', (e) ->
-        console.log JSON.stringify($(e.target).data('xws'))
         $('#xws-text-area').val(JSON.stringify($(e.target).data('xws')))
         $('.xws-export-data').val(JSON.stringify($(e.target).data('xws')))
         $('#xws-json-link').attr('href', $(e.target).data('link'))
@@ -72,7 +71,12 @@
       $('#xws-text-area').on 'focus', (e) ->
         $('#xws-text-area').select()
 
-      $('.export-form').on 'submit', (e) ->
-        setTimeout(->
-          $('.export-button').prop('disabled', false)
-        , 500)
+      $('.yasb-export-link').on 'click', (e) ->
+        $.ajax
+          type: 'POST'
+          url: 'https://yasb-xws.herokuapp.com/'
+          dataType: 'json'
+          contentType: 'application/json'
+          data: $('#yasb-xws').val()
+          success: (data) ->
+            window.location = data.url
