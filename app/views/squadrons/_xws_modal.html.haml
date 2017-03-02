@@ -9,10 +9,10 @@
         %p= t('.explanation')
         = text_area_tag 'xws-text-area', '', id: 'xws-text-area', class: 'form-control'
         %br
+        = link_to t('.open_in_yasb'), 'javascript:void(0)', class: 'export-button btn btn-secondary btn-sm yasb-export-link'
         = form_tag 'http://xwing-builder.co.uk/import', method: :post, authenticity_token: false, class: 'export-form' do
           = hidden_field_tag :data, '', class: 'xws-export-data'
           = submit_tag t('.open_in_xwing_builder'), class: 'export-button btn btn-secondary btn-sm'
-        = link_to t('.open_in_yasb'), 'javascript:void(0)', class: 'export-button btn btn-secondary btn-sm yasb-export-link'
         = form_tag 'http://x-wing.fabpsb.net/loadxws_process.php', method: :post, authenticity_token: false, class: 'export-form' do
           = hidden_field_tag :'sq', '', class: 'xws-export-data'
           = submit_tag t('.open_in_fabs'), class: 'export-button btn btn-secondary btn-sm'
