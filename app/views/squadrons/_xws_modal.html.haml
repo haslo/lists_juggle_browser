@@ -8,8 +8,20 @@
       .modal-body
         %p= t('.explanation')
         = text_area_tag 'xws-text-area', '', id: 'xws-text-area', class: 'form-control'
-        %p
-          %small
+        %br
+        = form_tag 'http://xwing-builder.co.uk/import', method: :post, target: '_blank', authenticity_token: false, class: 'export-form' do
+          = hidden_field_tag :data, '', class: 'xws-export-data'
+          = submit_tag t('.open_in_xwing_builder'), class: 'export-button btn btn-secondary btn-sm'
+        = form_tag 'https://geordanr.github.io/xwing', method: :post, target: '_blank', authenticity_token: false, class: 'export-form' do
+          = hidden_field_tag :'xws-content', '', class: 'xws-export-data'
+          -#= submit_tag t('.open_in_yasb'), class: 'export-button btn btn-secondary btn-sm'
+        = form_tag 'http://x-wing.fabpsb.net/loadxws_process.php', method: :post, target: '_blank', authenticity_token: false, class: 'export-form' do
+          = hidden_field_tag :'sq', '', class: 'xws-export-data'
+          = submit_tag t('.open_in_fabs'), class: 'export-button btn btn-secondary btn-sm'
+        %br
+        %br
+        %small
+          %p
             = link_to 'javascript:void(0);', id: 'xws-json-link', target: '_blank' do
               = t('.link_to_xws')
             = '-'

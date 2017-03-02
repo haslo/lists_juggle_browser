@@ -21,6 +21,9 @@
       %td
         = squadron.elimination_standing
       %td.squadron-cell
+        .float-md-right
+          = link_to 'javascript:void(0);', class: 'xws-link btn btn-sm btn-secondary', data: {xws: squadron.xws, link: squadron_url(squadron, format: :json)} do
+            = t('.export')
         - squadron.ship_configurations.each do |ship_configuration|
           - if ship_configuration.pilot.present?
             %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship_configuration.pilot.ship.font_icon_class}"}
@@ -53,9 +56,6 @@
                 = "\"#{squadron.ship_combo.archetype_name}\""
             = '-'
           = t('.played_by', player: squadron.player_name)
-          = '-'
-          = link_to 'javascript:void(0);', class: 'xws-link', data: {xws: squadron.xws, link: squadron_url(squadron, format: :json)} do
-            = t('.download_xws')
 
 = render '/squadrons/xws_modal'
 
@@ -65,8 +65,14 @@
       $('.xws-link').on 'click', (e) ->
         console.log JSON.stringify($(e.target).data('xws'))
         $('#xws-text-area').val(JSON.stringify($(e.target).data('xws')))
+        $('.xws-export-data').val(JSON.stringify($(e.target).data('xws')))
         $('#xws-json-link').attr('href', $(e.target).data('link'))
         $('#xws-modal').modal('show')
 
       $('#xws-text-area').on 'focus', (e) ->
         $('#xws-text-area').select()
+
+      $('.export-form').on 'submit', (e) ->
+        setTimeout(->
+          $('.export-button').prop('disabled', false)
+        , 500)
