@@ -22,7 +22,7 @@ en:
       explanation: 'The content below is a representation of this squadron. You can copy it and then paste it into the import dialog of your favourite squad builder. Experimental.'
       link_to_xws: 'Link to XWS as JSON'
       xws_link_explanation: 'can be used for direct import of this list into Vassal'
-      open_in_xwing_builder: 'Open in X-Wing Builder'
+      open_in_voidstate: 'Open in Voidstate'
       open_in_yasb: 'Open in YASB'
       open_in_fabs: "Open in Fab's"
       close: 'Close Dialog'
