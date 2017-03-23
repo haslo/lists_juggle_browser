@@ -27,6 +27,8 @@ gem 'nokogiri'
 gem 'chartkick'
 gem 'groupdate', require: 'groupdate'
 
+gem 'turbolinks'
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
 end
