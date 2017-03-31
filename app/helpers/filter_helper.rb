@@ -21,7 +21,7 @@ module FilterHelper
       [I18n.t('shared.filter_configurator.dates.imperial_veterans'), Date.new(2016, 6, 30)],
       [I18n.t('shared.filter_configurator.dates.deadeye_nerf'), Date.new(2016, 10, 17)],
       [I18n.t('shared.filter_configurator.dates.heroes_resistance'), Date.new(2016, 10, 27)],
-      [I18n.t('shared.filter_configurator.dates.wave_9'), Date.new(2016, 09, 22)],
+      [I18n.t('shared.filter_configurator.dates.wave_9'), Date.new(2016, 9, 22)],
       [I18n.t('shared.filter_configurator.dates.rogue_one'), Date.new(2016, 12, 15)],
       [I18n.t('shared.filter_configurator.dates.wave_10'), Date.new(2017, 2, 2)],
       [I18n.t('shared.filter_configurator.dates.grand_nerfbat'), Date.new(2017, 3, 17)],
