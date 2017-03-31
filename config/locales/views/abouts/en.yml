@@ -37,7 +37,7 @@ en:
             that are prevalent in the meta. Logarithms in both places because they're both easy to calculate and just make sense,
             mathematically: They emphasize larger values without squashing lower ones completely.</p>
           <p>If you want more precise information, then you can always
-            <a href="https://github.com/haslo/lists_juggle_browser/blob/master/app/services/weight_query_builder.rb">Use
+            <a href="https://github.com/haslo/lists_juggle_browser/blob/master/app/models/rankers/weight_query_builder.rb">Use
             the Source</a>. Maybe I'll change the algorithm to something more founded in statistics some time, but for now, it appears to
             bring the squads one would expect to the top.</p>
         <h2>Editing Contents</h2>
