@@ -64,6 +64,8 @@ GEM
       activesupport (>= 4.0, < 6)
     execjs (2.7.0)
     ffi (1.9.17)
+    font-awesome-rails (4.7.0.2)
+      railties (>= 3.2, < 5.2)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     groupdate (3.2.0)
@@ -194,6 +196,7 @@ DEPENDENCIES
   coffee-rails
   exception_notification
   execjs
+  font-awesome-rails
   groupdate
   haml
   jbuilder

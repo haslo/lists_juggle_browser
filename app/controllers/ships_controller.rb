@@ -1,7 +1,61 @@
+require 'csv'
+
 class ShipsController < ApplicationController
 
   def index
     @view = Rankers::ShipsRanker.new(ranking_configuration)
+    respond_to do |format|
+      format.html do
+        # standard render pipeline
+      end
+      format.csv do
+        csv_string = CSV.generate do |csv|
+          csv << [
+            t('.csv.position'),
+            t('.csv.ship_name'),
+            t('.csv.link'),
+            t('.csv.pilot_names'),
+            t('.csv.squadron_count'),
+            t('.csv.tournaments_count'),
+            t('.csv.average_percentile'),
+            t('.csv.weight'),
+          ]
+          @view.ships.each_with_index do |ship, index|
+            csv << [
+              index + 1,
+              ship.name,
+              ship_url(ship.id),
+              @view.ship_pilots[ship.id].map { |p| p.name }.join(', '),
+              ship.squadrons,
+              ship.tournaments,
+              (ship.average_percentile * 10000).to_i / 100.0,
+              ship.weight,
+            ]
+          end
+        end
+        render text: csv_string
+      end
+      format.json do
+        ships = @view.ships.map.with_index do |ship, index|
+          {
+            position:           index + 1,
+            ship_name:          ship.name,
+            link:               ship_url(ship.id, format: :json),
+            pilots:        @view.ship_pilots[ship.id].map do |pilot|
+              {
+                name: pilot.name,
+                link: pilot_url(pilot.id, format: :json),
+              }
+            end,
+            squadron_count:     ship.squadrons,
+            tournaments_count:  ship.tournaments,
+            average_percentile: (ship.average_percentile * 10000).to_i / 100.0,
+            weight:             ship.weight,
+          }
+        end
+        render json: ships
+      end
+    end
   end
 
   def show

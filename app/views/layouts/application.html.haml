@@ -30,6 +30,7 @@
         %main.col-lg-10.offset-lg-2.pt-3
           - if show_filter?(params[:controller], params[:action])
             = render '/shared/filter_configurator'
+          = yield(:export_button)
           %h1= yield(:title).presence || t('.title')
           = yield
 

@@ -13,6 +13,7 @@ gem 'uglifier'
 gem 'coffee-rails'
 gem 'haml'
 gem 'bootstrap'
+gem 'font-awesome-rails'
 
 # core libs
 
