@@ -19,6 +19,7 @@ gem 'bootstrap'
 gem 'jquery-rails'
 gem 'jbuilder'
 gem 'exception_notification'
+gem 'webpacker'
 
 # additional libs
 

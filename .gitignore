@@ -14,3 +14,6 @@
 /public/assets
 /shared
 /.rbenv-vars
+/public/packs
+/elm-stuff
+/node_modules
