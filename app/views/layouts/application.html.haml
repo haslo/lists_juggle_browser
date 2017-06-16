@@ -18,6 +18,7 @@
     %meta{:content => "meta-wing", :name => "apple-mobile-web-app-title"}/
     %meta{:content => "meta-wing", :name => "application-name"}/
     %meta{:content => "#71b5ff", :name => "theme-color"}/
+    = yield :elm
 
   %body
     - if KeyValueStoreRecord.get('syncing')
