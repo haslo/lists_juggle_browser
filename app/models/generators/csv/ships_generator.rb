@@ -5,7 +5,7 @@ module Generators
     class ShipsGenerator
       class << self
 
-        def generate_ships(context, ships, ship_pilots)
+        def generate_ships(context, ships, ship_pilots, ids = [])
           ::CSV.generate do |csv|
             csv << [
               context.t('.csv.position'),
@@ -18,16 +18,18 @@ module Generators
               context.t('.csv.weight'),
             ]
             ships.each_with_index do |ship, index|
-              csv << [
-                index + 1,
-                ship.name,
-                context.ship_url(ship.id),
-                ship_pilots[ship.id].map { |p| p.name }.join(', '),
-                ship.squadrons,
-                ship.tournaments,
-                (ship.average_percentile * 10000).to_i / 100.0,
-                ship.weight,
-              ]
+              if ids.empty? || ids.include?(ship.id)
+                csv << [
+                  index + 1,
+                  ship.name,
+                  context.ship_url(ship.id),
+                  ship_pilots[ship.id].map { |p| p.name }.join(', '),
+                  ship.squadrons,
+                  ship.tournaments,
+                  (ship.average_percentile * 10000).to_i / 100.0,
+                  ship.weight,
+                ]
+              end
             end
           end
         end

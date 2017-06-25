@@ -31,6 +31,18 @@ class ShipsController < ApplicationController
                                           number_of_tournaments: ships_ranker.number_of_tournaments,
                                           number_of_squadrons:   ships_ranker.number_of_squadrons,
                                         })
+
+    respond_to do |format|
+      format.html do
+        # standard render pipeline
+      end
+      format.csv do
+        render text: Generators::CSV::ShipsGenerator.generate_ships(self, @view.ships, @view.ship_pilots, [params[:id]])
+      end
+      format.json do
+        render json: Generators::JSON::ShipsGenerator.generate_ships(self, @view.ships, @view.ship_pilots, [params[:id]]).first
+      end
+    end
   end
 
   def update

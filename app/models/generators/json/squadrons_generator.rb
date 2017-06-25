@@ -3,7 +3,7 @@ module Generators
     class SquadronsGenerator
       class << self
 
-        def generate_ships(context, ships, ship_pilots)
+        def generate_ships(context, ships, ship_pilots, ids = [])
           ships.map.with_index do |ship, index|
             # TODO
           end

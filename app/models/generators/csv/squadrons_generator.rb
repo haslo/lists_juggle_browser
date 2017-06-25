@@ -5,7 +5,7 @@ module Generators
     class SquadronsGenerator
       class << self
 
-        def generate_ships(context, ships, ship_pilots)
+        def generate_ships(context, ships, ship_pilots, ids = [])
           ::CSV.generate do |csv|
             # TODO generate
           end
