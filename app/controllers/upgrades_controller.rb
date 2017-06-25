@@ -2,6 +2,18 @@ class UpgradesController < ApplicationController
 
   def index
     @view = Rankers::UpgradesRanker.new(ranking_configuration)
+
+    respond_to do |format|
+      format.html do
+        # standard render pipeline
+      end
+      format.csv do
+        render plain: Generators::CSV::UpgradesGenerator.generate_upgrades(self, @view.upgrades)
+      end
+      format.json do
+        render json: Generators::JSON::UpgradesGenerator.generate_upgrades(self, @view.upgrades)
+      end
+    end
   end
 
   def show
@@ -17,6 +29,18 @@ class UpgradesController < ApplicationController
                                           number_of_tournaments: upgrades_ranker.number_of_tournaments,
                                           number_of_squadrons:   upgrades_ranker.number_of_squadrons,
                                         })
+
+    respond_to do |format|
+      format.html do
+        # standard render pipeline
+      end
+      format.csv do
+        render plain: Generators::CSV::UpgradesGenerator.generate_upgrades(self, @view.upgrades, [params[:id]])
+      end
+      format.json do
+        render json: Generators::JSON::UpgradesGenerator.generate_upgrades(self, @view.upgrades, [params[:id]]).first
+      end
+    end
   end
 
   def update

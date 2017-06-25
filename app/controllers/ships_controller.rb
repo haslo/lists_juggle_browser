@@ -8,7 +8,7 @@ class ShipsController < ApplicationController
         # standard render pipeline
       end
       format.csv do
-        render text: Generators::CSV::ShipsGenerator.generate_ships(self, @view.ships, @view.ship_pilots)
+        render plain: Generators::CSV::ShipsGenerator.generate_ships(self, @view.ships, @view.ship_pilots)
       end
       format.json do
         render json: Generators::JSON::ShipsGenerator.generate_ships(self, @view.ships, @view.ship_pilots)
@@ -37,7 +37,7 @@ class ShipsController < ApplicationController
         # standard render pipeline
       end
       format.csv do
-        render text: Generators::CSV::ShipsGenerator.generate_ships(self, @view.ships, @view.ship_pilots, [params[:id]])
+        render plain: Generators::CSV::ShipsGenerator.generate_ships(self, @view.ships, @view.ship_pilots, [params[:id]])
       end
       format.json do
         render json: Generators::JSON::ShipsGenerator.generate_ships(self, @view.ships, @view.ship_pilots, [params[:id]]).first

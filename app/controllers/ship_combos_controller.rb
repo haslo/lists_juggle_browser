@@ -8,7 +8,7 @@ class ShipCombosController < ApplicationController
         # standard render pipeline
       end
       format.csv do
-        render text: Generators::CSV::ShipCombosGenerator.generate_ship_combos(self, @view.ship_combos, @view.ships)
+        render plain: Generators::CSV::ShipCombosGenerator.generate_ship_combos(self, @view.ship_combos, @view.ships)
       end
       format.json do
         render json: Generators::JSON::ShipCombosGenerator.generate_ship_combos(self, @view.ship_combos, @view.ships)
@@ -36,7 +36,7 @@ class ShipCombosController < ApplicationController
         # standard render pipeline
       end
       format.csv do
-        render text: Generators::CSV::ShipCombosGenerator.generate_ship_combos(self, @view.ship_combos, @view.ship_combos_ships, [params[:id]])
+        render plain: Generators::CSV::ShipCombosGenerator.generate_ship_combos(self, @view.ship_combos, @view.ship_combos_ships, [params[:id]])
       end
       format.json do
         render json: Generators::JSON::ShipCombosGenerator.generate_ship_combos(self, @view.ship_combos, @view.ship_combos_ships, [params[:id]]).first

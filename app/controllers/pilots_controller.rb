@@ -8,7 +8,7 @@ class PilotsController < ApplicationController
         # standard render pipeline
       end
       format.csv do
-        render text: Generators::CSV::PilotsGenerator.generate_pilots(self, @view.pilots)
+        render plain: Generators::CSV::PilotsGenerator.generate_pilots(self, @view.pilots)
       end
       format.json do
         render json: Generators::JSON::PilotsGenerator.generate_pilots(self, @view.pilots)
@@ -35,7 +35,7 @@ class PilotsController < ApplicationController
         # standard render pipeline
       end
       format.csv do
-        render text: Generators::CSV::PilotsGenerator.generate_pilots(self, @view.pilots, [params[:id]])
+        render plain: Generators::CSV::PilotsGenerator.generate_pilots(self, @view.pilots, [params[:id]])
       end
       format.json do
         render json: Generators::JSON::PilotsGenerator.generate_pilots(self, @view.pilots, [params[:id]]).first
