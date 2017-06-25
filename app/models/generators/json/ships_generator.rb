@@ -6,15 +6,16 @@ module Generators
         def generate_ships(context, ships, ship_pilots, ids = [])
           ships.map.with_index do |ship, index|
             if ids.empty? || ids.map(&:to_i).include?(ship.id)
-              generate_ship(context, ship, ship_pilots).merge({ position: index + 1 })
+              generate_ship(context, ship, ship_pilots, index + 1)
             end
           end
         end
 
         private
 
-        def generate_ship(context, ship, ship_pilots)
+        def generate_ship(context, ship, ship_pilots, position)
           {
+            position:           position,
             id:                 ship.id,
             name:               ship.name,
             link:               context.ship_url(ship.id, format: :json),

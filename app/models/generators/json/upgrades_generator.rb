@@ -6,7 +6,7 @@ module Generators
         def generate_upgrades(context, upgrades, ids = [])
           upgrades.map.with_index do |upgrade, index|
             if ids.empty? || ids.map(&:to_i).include?(upgrade.id)
-              generate_upgrade(context, upgrade).merge({ position: index + 1 })
+              generate_upgrade(context, upgrade, index + 1)
             end
           end
         end
@@ -15,6 +15,7 @@ module Generators
 
         def generate_upgrade(context, upgrade)
           {
+            position:           position,
             id:                 upgrade.id,
             name:               upgrade.name,
             link:               context.upgrade_url(upgrade.id, format: :json),

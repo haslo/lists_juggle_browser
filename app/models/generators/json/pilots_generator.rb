@@ -6,16 +6,17 @@ module Generators
         def generate_pilots(context, pilots, ids = [])
           pilots.map.with_index do |pilot, index|
             if ids.empty? || ids.map(&:to_i).include?(pilot.id)
-              generate_pilot(context, pilot).merge({ position: index + 1 })
+              generate_pilot(context, pilot, index + 1)
             end
           end
         end
 
         private
 
-        def generate_pilot(context, pilot)
+        def generate_pilot(context, pilot, position)
           ship = Ship.find(pilot.ship_id)
           {
+            position:           position,
             id:                 pilot.id,
             name:               pilot.name,
             link:               context.pilot_url(pilot.id, format: :json),

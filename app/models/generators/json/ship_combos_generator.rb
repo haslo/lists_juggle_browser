@@ -6,15 +6,16 @@ module Generators
         def generate_ship_combos(context, ship_combos, ships, ids = [])
           ship_combos.map.with_index do |ship_combo, index|
             if ids.empty? || ids.map(&:to_i).include?(ship_combo.id)
-              generate_ship_combo(context, ship_combo, ships).merge({ position: index + 1 })
+              generate_ship_combo(context, ship_combo, ships, index + 1)
             end
           end
         end
 
         private
 
-        def generate_ship_combo(context, ship_combo, ships)
+        def generate_ship_combo(context, ship_combo, ships, position)
           {
+            position:           position,
             id:                 ship_combo.id,
             name:               ship_combo.archetype_name,
             link:               context.ship_combo_url(ship_combo.id, format: :json),
