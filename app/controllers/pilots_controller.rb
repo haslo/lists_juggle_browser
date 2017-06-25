@@ -2,6 +2,18 @@ class PilotsController < ApplicationController
 
   def index
     @view = Rankers::PilotsRanker.new(ranking_configuration)
+
+    respond_to do |format|
+      format.html do
+        # standard render pipeline
+      end
+      format.csv do
+        render text: Generators::CSV::PilotsGenerator.generate_pilots(self, @view.pilots)
+      end
+      format.json do
+        render json: Generators::JSON::PilotsGenerator.generate_pilots(self, @view.pilots)
+      end
+    end
   end
 
   def show
@@ -17,6 +29,18 @@ class PilotsController < ApplicationController
                                           number_of_tournaments: pilots_ranker.number_of_tournaments,
                                           number_of_squadrons:   pilots_ranker.number_of_squadrons,
                                         })
+
+    respond_to do |format|
+      format.html do
+        # standard render pipeline
+      end
+      format.csv do
+        render text: Generators::CSV::PilotsGenerator.generate_pilots(self, @view.pilots, [params[:id]])
+      end
+      format.json do
+        render json: Generators::JSON::PilotsGenerator.generate_pilots(self, @view.pilots, [params[:id]]).first
+      end
+    end
   end
 
   def update

@@ -33,3 +33,13 @@ en:
       ship_names: 'Ship Types'
       games_wins_losses: 'Games: W/L'
       win_loss_ratio: 'Win-Loss Ratio'
+    csv:
+      position: 'Position'
+      archetype_name: 'Archetype Type'
+      link: 'Link'
+      ship_names: 'Ship Names'
+      squadron_count: '# Squadrons'
+      tournaments_count: '# Tournaments'
+      average_percentile: 'avg Percentile'
+      win_loss_ratio: 'Win/Loss Ratio'
+      weight: 'Magic'

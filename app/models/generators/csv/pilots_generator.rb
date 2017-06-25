@@ -8,23 +8,21 @@ module Generators
         def generate_pilots(context, pilots, ids = [])
           ::CSV.generate do |csv|
             csv << [
-              context.t('.csv.position'),
-              context.t('.csv.pilot_name'),
-              context.t('.csv.link'),
-              context.t('.csv.ship_id'),
-              context.t('.csv.ship_name'),
-              context.t('.csv.squadron_count'),
-              context.t('.csv.tournaments_count'),
-              context.t('.csv.average_percentile'),
-              context.t('.csv.weight'),
+              context.t('pilots.csv.position'),
+              context.t('pilots.csv.pilot_name'),
+              context.t('pilots.csv.link'),
+              context.t('pilots.csv.ship_name'),
+              context.t('pilots.csv.squadron_count'),
+              context.t('pilots.csv.tournaments_count'),
+              context.t('pilots.csv.average_percentile'),
+              context.t('pilots.csv.weight'),
             ]
             pilots.each_with_index do |pilot, index|
-              if ids.empty? || ids.include?(pilot.id)
+              if ids.empty? || ids.map(&:to_i).include?(pilot.id)
                 csv << [
                   index + 1,
                   pilot.name,
                   context.pilot_url(pilot.id),
-                  pilot.ship.id,
                   pilot.ship.name,
                   pilot.squadrons,
                   pilot.tournaments,
