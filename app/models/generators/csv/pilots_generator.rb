@@ -19,11 +19,12 @@ module Generators
             ]
             pilots.each_with_index do |pilot, index|
               if ids.empty? || ids.map(&:to_i).include?(pilot.id)
+                ship = Ship.find(pilot.ship_id)
                 csv << [
                   index + 1,
                   pilot.name,
                   context.pilot_url(pilot.id),
-                  pilot.ship.name,
+                  ship.name,
                   pilot.squadrons,
                   pilot.tournaments,
                   (pilot.average_percentile * 10000).to_i / 100.0,

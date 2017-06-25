@@ -9,6 +9,7 @@
     = link_with_filter_to ships_path(format: :csv), target: '_blank', class: 'btn btn-primary btn-sm' do
       = fa_icon 'table'
       = t('.export_csv')
+    &nbsp;
     = link_with_filter_to ships_path(format: :json), target: '_blank', class: 'btn btn-primary btn-sm' do
       = fa_icon 'cloud-download'
       = t('.export_json')

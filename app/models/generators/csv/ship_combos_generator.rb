@@ -21,9 +21,9 @@ module Generators
               if ids.empty? || ids.map(&:to_i).include?(pilot.id)
                 csv << [
                   index + 1,
-                  ship_combo.name,
+                  ship_combo.archetype_name,
                   context.ship_combo_url(ship_combo.id),
-                  ships[ship_combo.id].map { |s| s.name }.join(', '),
+                  ships[ship_combo.id].map { |s| s[:name] }.join(', '),
                   ship_combo.squadrons,
                   ship_combo.tournaments,
                   (ship_combo.average_percentile * 10000).to_i / 100.0,

@@ -13,7 +13,7 @@ module Generators
 
         private
 
-        def generate_upgrade(context, upgrade)
+        def generate_upgrade(context, upgrade, position)
           {
             position:           position,
             id:                 upgrade.id,
