@@ -11,8 +11,9 @@ module Generators
               link:               context.ship_url(ship.id, format: :json),
               pilots:             ship_pilots[ship.id].map do |pilot|
                 {
-                  name: pilot.name,
-                  link: context.pilot_url(pilot.id, format: :json),
+                  name:  pilot.name,
+                  link:  context.pilot_url(pilot.id, format: :json),
+                  image: context.pilot_image_path(pilot, format: :png)
                 }
               end,
               squadron_count:     ship.squadrons,
