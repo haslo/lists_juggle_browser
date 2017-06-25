@@ -22,6 +22,7 @@ module Rankers
       weight_query_builder = WeightQueryBuilder.new(ranking_configuration)
       attributes           = {
         id:                   'pilots.id',
+        xws:                  'pilots.xws',
         name:                 'pilots.name',
         faction:              'factions.name',
         ship_id:              'ships.id',

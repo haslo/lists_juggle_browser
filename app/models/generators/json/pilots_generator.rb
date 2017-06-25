@@ -18,6 +18,7 @@ module Generators
           {
             position:           position,
             id:                 pilot.id,
+            xws:                pilot.xws,
             name:               pilot.name,
             link:               context.pilot_url(pilot.id, format: :json),
             image:              context.pilot_image_url(pilot.id, format: :png),

@@ -20,6 +20,7 @@ module Rankers
       weight_query_builder = WeightQueryBuilder.new(ranking_configuration)
       attributes           = {
         id:                 'ships.id',
+        xws:                'ships.xws',
         name:               'ships.name',
         weight:             weight_query_builder.build_weight_query,
         font_icon_class:    'ships.font_icon_class',

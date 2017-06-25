@@ -17,6 +17,7 @@ module Generators
           {
             position:           position,
             id:                 ship.id,
+            xws:                ship.xws,
             name:               ship.name,
             link:               context.ship_url(ship.id, format: :json),
             pilots:             ship_pilots[ship.id].map do |pilot|

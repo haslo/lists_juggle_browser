@@ -26,6 +26,7 @@ module Rankers
       weight_query_builder = WeightQueryBuilder.new(ranking_configuration)
       attributes           = {
         id:                           'upgrades.id',
+        xws:                          'upgrades.xws',
         name:                         'upgrades.name',
         upgrade_type:                 'upgrade_types.name',
         upgrade_type_font_icon_class: 'upgrade_types.font_icon_class',

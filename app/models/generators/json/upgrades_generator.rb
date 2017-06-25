@@ -17,6 +17,7 @@ module Generators
           {
             position:           position,
             id:                 upgrade.id,
+            xws:                upgrade.xws,
             name:               upgrade.name,
             link:               context.upgrade_url(upgrade.id, format: :json),
             image:              context.upgrade_image_url(upgrade.id, format: :png),
