@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # core
 
-gem 'rails', '~> 5.0.1'
+gem 'rails', '~> 5.1.1'
 gem 'pg'
 gem 'puma'
 
@@ -13,12 +13,14 @@ gem 'uglifier'
 gem 'coffee-rails'
 gem 'haml'
 gem 'bootstrap'
+gem 'font-awesome-rails'
 
 # core libs
 
 gem 'jquery-rails'
 gem 'jbuilder'
 gem 'exception_notification'
+gem 'webpacker'
 
 # additional libs
 

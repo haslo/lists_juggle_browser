@@ -1,4 +1,14 @@
 - content_for :title do
   = t('.title')
 
+- content_for :export_button do
+  .float-md-right
+    = link_with_filter_to ship_combos_path(format: :csv), target: '_blank', class: 'btn btn-primary btn-sm' do
+      = fa_icon 'table'
+      = t('.export_csv')
+    &nbsp;
+    = link_with_filter_to ship_combos_path(format: :json), target: '_blank', class: 'btn btn-primary btn-sm' do
+      = fa_icon 'cloud-download'
+      = t('.export_json')
+
 = render '/ship_combos/table', ship_combos: @view.ship_combos, ships: @view.ships

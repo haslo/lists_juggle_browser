@@ -2,6 +2,18 @@ class ShipCombosController < ApplicationController
 
   def index
     @view = Rankers::ShipCombosRanker.new(ranking_configuration, limit: 120)
+
+    respond_to do |format|
+      format.html do
+        # standard render pipeline
+      end
+      format.csv do
+        render plain: Generators::CSV::ShipCombosGenerator.generate_ship_combos(self, @view.ship_combos, @view.ships)
+      end
+      format.json do
+        render json: Generators::JSON::ShipCombosGenerator.generate_ship_combos(self, @view.ship_combos, @view.ships)
+      end
+    end
   end
 
   def show
@@ -18,6 +30,18 @@ class ShipCombosController < ApplicationController
                                           upgrades:              Rankers::UpgradesRanker.new(ranking_configuration, ship_combo_id: params[:id], limit: 15).upgrades,
                                           counter_combos:        Rankers::CounterComboRanker.new(ranking_configuration, params[:id]).counter_combos,
                                         })
+
+    respond_to do |format|
+      format.html do
+        # standard render pipeline
+      end
+      format.csv do
+        render plain: Generators::CSV::ShipCombosGenerator.generate_ship_combos(self, @view.ship_combos, @view.ship_combos_ships, [params[:id]])
+      end
+      format.json do
+        render json: Generators::JSON::ShipCombosGenerator.generate_ship_combos(self, @view.ship_combos, @view.ship_combos_ships, [params[:id]]).first
+      end
+    end
   end
 
   def update

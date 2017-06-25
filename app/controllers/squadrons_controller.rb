@@ -13,6 +13,15 @@ class SquadronsController < ApplicationController
                                         number_of_tournaments: squadrons_ranker.number_of_tournaments,
                                         number_of_squadrons:   squadrons_ranker.number_of_squadrons,
                                       })
+
+    respond_to do |format|
+      format.html do
+        # Standard Render Pipeline
+      end
+      format.json do
+        render json: Generators::JSON::SquadronsGenerator.generate_squadrons(self, @view.squadrons)
+      end
+    end
   end
 
   def show
