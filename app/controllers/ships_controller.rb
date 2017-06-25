@@ -2,6 +2,18 @@ class ShipsController < ApplicationController
 
   def index
     @view = Rankers::ShipsRanker.new(ranking_configuration)
+
+    respond_to do |format|
+      format.html do
+        # standard render pipeline
+      end
+      format.csv do
+        render text: Generators::CSV::ShipsGenerator.generate_ships(self, @view.ships, @view.ship_pilots)
+      end
+      format.json do
+        render json: Generators::JSON::ShipsGenerator.generate_ships(self, @view.ships, @view.ship_pilots)
+      end
+    end
   end
 
   def show

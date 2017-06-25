@@ -4,4 +4,13 @@
 - content_for :title do
   = t('.title')
 
+- content_for :export_button do
+  .float-md-right
+    = link_with_filter_to ships_path(format: :csv), target: '_blank', class: 'btn btn-primary btn-sm' do
+      = fa_icon 'table'
+      = t('.export_csv')
+    = link_with_filter_to ships_path(format: :json), target: '_blank', class: 'btn btn-primary btn-sm' do
+      = fa_icon 'cloud-download'
+      = t('.export_json')
+
 = render '/ships/table', ships: @view.ships, ship_pilots: @view.ship_pilots
