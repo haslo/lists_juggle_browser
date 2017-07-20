@@ -20,7 +20,7 @@ gem 'font-awesome-rails'
 gem 'jquery-rails'
 gem 'jbuilder'
 gem 'exception_notification'
-gem 'webpacker'
+#gem 'webpacker'
 
 # additional libs
 
