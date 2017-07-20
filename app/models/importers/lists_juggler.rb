@@ -128,6 +128,8 @@ module Importers
         'Deathrain'        => 'deathrain',
         'yt2400freighter'  => 'yt2400',
         'ltlorrir'         => 'lieutenantlorrir',
+        'wookieliberator'  => 'wookieeliberator',
+        'Lowhhrick'        => 'lowhhrick',
       }.each do |original, substitute|
         key = key.gsub(original, substitute)
       end
