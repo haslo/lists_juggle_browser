@@ -22,23 +22,10 @@
         %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship.font_icon_class}"}
         = link_with_filter_to ship_path(ship.id) do
           = ship.name
-      - if defined?(show_faction) && show_faction
-        %td.pilots-cell
-          - pilots = ship_pilots[ship.id]
-          - pilots.each.with_index do |pilot, index|
-            - if pilot.faction.name == ship.faction_name
-              %span.text-nowrap
-                %small
-                  %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{faction_icon(pilot.faction.name)}"}
-                = link_with_filter_to pilot_path(pilot.id), class: 'link-with-hover-image' do
-                  = image_tag pilot_image_path(pilot, format: :png)
-                  = pilot.name
-                - if index < pilots.count - 1
-                  = ' - '
-      - else
-        %td.pilots-cell
-          - pilots = ship_pilots[ship.id]
-          - pilots.each.with_index do |pilot, index|
+      %td.pilots-cell
+        - pilots = ship_pilots[ship.id]
+        - pilots.each.with_index do |pilot, index|
+          - if !(defined?(show_faction) && show_faction) || (pilot.faction.name == ship.faction_name)
             %span.text-nowrap
               %small
                 %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{faction_icon(pilot.faction.name)}"}
