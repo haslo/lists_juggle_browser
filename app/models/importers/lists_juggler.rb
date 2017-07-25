@@ -11,8 +11,20 @@ module Importers
       tournaments.sort.each do |lists_juggler_id|
         if minimum_id.nil? || lists_juggler_id >= minimum_id
           puts "[#{lists_juggler_id}]"
-          tournament = Tournament.find_by(lists_juggler_id: lists_juggler_id)
-          if (add_missing && tournament.nil?) || (start_date.present? && (tournament.date.nil? || tournament.date >= DateTime.parse(start_date.to_s)))
+          tournament      = Tournament.find_by(lists_juggler_id: lists_juggler_id)
+          tournament_date = if tournament.nil?
+                              begin
+                                uri      = URI.parse("http://lists.starwarsclubhouse.com/api/v1/tournament/#{tournament.lists_juggler_id}")
+                                response = Net::HTTP.get_response(uri)
+                                tournament_data = JSON.parse(response.body).try(:[], 'tournament')
+                                Date.parse(tournament_data['date'])
+                              rescue
+                                nil
+                              end
+                            else
+                              tournament.date
+                            end
+          if (add_missing && tournament.nil?) || start_date.nil? || (tournament_date.nil? || tournament_date >= DateTime.parse(start_date.to_s))
             tournament ||= Tournament.new(lists_juggler_id: lists_juggler_id)
             sync_tournament(tournament)
           end
