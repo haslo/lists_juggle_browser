@@ -21,8 +21,8 @@ module Importers
     end
 
     def sync_tournament(tournament)
-      uri              = URI.parse("http://lists.starwarsclubhouse.com/api/v1/tournament/#{tournament.lists_juggler_id}")
-      response         = Net::HTTP.get_response(uri)
+      uri      = URI.parse("http://lists.starwarsclubhouse.com/api/v1/tournament/#{tournament.lists_juggler_id}")
+      response = Net::HTTP.get_response(uri)
       begin
         tournament_data  = JSON.parse(response.body).try(:[], 'tournament')
         venue_attributes = {
@@ -54,8 +54,8 @@ module Importers
         else
           raise InvalidTournament
         end
-      rescue => e
-        puts e.message
+        #rescue => e
+        #  puts e.message
       end
     end
 
@@ -88,18 +88,21 @@ module Importers
     end
 
     def sync_squadron(tournament, squadron_data)
-      squadron = Squadron.create!({
-                                    tournament:           tournament,
-                                    player_name:          squadron_data['name'],
-                                    xws:                  squadron_data['list'],
-                                    mov:                  squadron_data['mov'],
-                                    points:               squadron_data['score'],
-                                    elimination_standing: squadron_data['rank']['elimination'],
-                                    swiss_standing:       squadron_data['rank']['swiss'],
-                                  })
+      faction_xws = squadron_data['list'].try(:[], 'faction')
+      faction     = Faction.find_by(xws: faction_xws, is_subfaction: false)
+      squadron    = Squadron.create!({
+                                       tournament:           tournament,
+                                       player_name:          squadron_data['name'],
+                                       xws:                  squadron_data['list'],
+                                       mov:                  squadron_data['mov'],
+                                       points:               squadron_data['score'],
+                                       elimination_standing: squadron_data['rank']['elimination'],
+                                       swiss_standing:       squadron_data['rank']['swiss'],
+                                       faction_id:           faction.try(:id),
+                                     })
       (squadron_data['list'].try(:[], 'pilots') || []).each do |ship_configuration_data|
         ship          = find_with_key(Ship, ship_configuration_data['ship'])
-        pilot         = find_with_key(ship.pilots, ship_configuration_data['name'])
+        pilot         = find_with_key(ship.pilots, ship_configuration_data['name'], faction_xws)
         configuration = ShipConfiguration.create!({
                                                     squadron: squadron,
                                                     pilot:    pilot,
@@ -116,10 +119,14 @@ module Importers
       squadron
     end
 
-    def find_with_key(relation, key)
-      model = relation.find_by(xws: key)
+    def find_with_key(relation, key, faction_xws = nil)
+      if faction_xws.present?
+        model = relation.where(xws: key).where(faction_id: Faction.where(xws: faction_xws)).first
+      else
+        model = relation.find_by(xws: key)
+      end
       return model if model.present?
-      puts "-> looking again for #{relation.name} #{key} <-"
+      puts "-> looking again for #{relation.name} #{key} - #{faction.try(:id).inspect} <-"
       {
         'adv'              => 'advanced',
         'ketsupnyo'        => 'ketsuonyo',

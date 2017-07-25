@@ -37,10 +37,10 @@ module Importers
       pilots_hash = parse_json('pilots')
       pilots_hash.each do |pilot_data|
         ship             = Ship.find_by(name: pilot_data['ship'])
-        pilot            = Pilot.find_or_initialize_by(ship: ship, xws: pilot_data['xws'])
+        faction          = Faction.find_or_create_by(name: pilot_data['faction'])
+        pilot            = Pilot.find_or_initialize_by(ship: ship, xws: pilot_data['xws'], faction_id: faction.id)
         pilot.name       = pilot_data['name']
         pilot.image_path = pilot_data['image']
-        pilot.faction    = Faction.find_or_initialize_by(name: pilot_data['faction'])
         if pilot_data['conditions'].present?
           pilot_data['conditions'].each do |condition_name|
             pilot.conditions << Condition.find_by(name: condition_name)
