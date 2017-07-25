@@ -1,7 +1,7 @@
 class Tournament < ApplicationRecord
 
   belongs_to :tournament_type
-  belongs_to :venue
+  belongs_to :venue, optional: true
 
   has_many :squadrons
   has_many :games

@@ -15,7 +15,7 @@ Postgres installed, and...
 ```bash
 cp config/database.yml.example config/database.yml
 bundle
-rake db:create db:migrate
+rake db:create db:migrate db:seed
 ```
 
 ...and done. It might not work as easily on Windows, because Windows.
@@ -23,9 +23,7 @@ rake db:create db:migrate
 Importing all the data (takes a while):
 
 ```bash
-rake sync:xwing_data
-rake sync:tournaments
-rake sync:rebuild_rankings
+rake sync:enable sync:xwing_data sync:tournaments sync:rebuild_rankings sync:disable
 ```
 
 For updates later (updates everything):

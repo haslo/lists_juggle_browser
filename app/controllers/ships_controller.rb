@@ -1,7 +1,7 @@
 class ShipsController < ApplicationController
 
   def index
-    @view = Rankers::ShipsRanker.new(ranking_configuration)
+    @view = Rankers::ShipsRanker.new(ranking_configuration, group_by_faction: true)
 
     respond_to do |format|
       format.html do
@@ -17,7 +17,7 @@ class ShipsController < ApplicationController
   end
 
   def show
-    ships_ranker       = Rankers::ShipsRanker.new(ranking_configuration, ship_id: params[:id])
+    ships_ranker       = Rankers::ShipsRanker.new(ranking_configuration, ship_id: params[:id], group_by_faction: true, faction_id: params[:faction_id])
     ship_combos_ranker = Rankers::ShipCombosRanker.new(ranking_configuration, ship_id: params[:id], limit: 10)
     @view              = OpenStruct.new({
                                           ship:                  Ship.find(params[:id]),

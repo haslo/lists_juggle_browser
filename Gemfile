@@ -38,6 +38,7 @@ end
 group :development, :test do
   gem 'pry', require: false
   gem 'rspec-rails'
+  gem 'seed_dump'
 end
 
 group :development do
