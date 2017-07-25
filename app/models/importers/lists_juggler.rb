@@ -4,7 +4,7 @@ module Importers
     class InvalidTournament < StandardError
     end
 
-    def sync_tournaments(minimum_id: nil, start_date: nil)
+    def sync_tournaments(minimum_id: nil, start_date: nil, add_missing: false)
       uri         = URI.parse('http://lists.starwarsclubhouse.com/api/v1/tournaments')
       response    = Net::HTTP.get_response(uri)
       tournaments = JSON.parse(response.body).try(:[], 'tournaments') || []
@@ -12,7 +12,7 @@ module Importers
         if minimum_id.nil? || lists_juggler_id >= minimum_id
           puts "[#{lists_juggler_id}]"
           tournament = Tournament.find_by(lists_juggler_id: lists_juggler_id)
-          if start_date.nil? || tournament.nil? || tournament.date.nil? || tournament.date >= DateTime.parse(start_date.to_s)
+          if (add_missing && tournament.nil?) || (start_date.present? && (tournament.date.nil? || tournament.date >= DateTime.parse(start_date.to_s)))
             tournament ||= Tournament.new(lists_juggler_id: lists_juggler_id)
             sync_tournament(tournament)
           end
