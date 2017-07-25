@@ -17,15 +17,18 @@ module Importers
 
     def build_ranking_data(tournament_id)
       if (tournament_id.to_f / 50) == (tournament_id.to_i / 50)
-        print tournament_id
+        print "#{tournament_id}."
       else
         print '.'
       end
       tournament          = Tournament.find_by(lists_juggler_id: tournament_id)
       number_of_squadrons = [tournament.num_players, tournament.squadrons.count].compact.max
-      ignore_cut          = tournament.squadrons.select { |s| s.elimination_standing.present? }.count == number_of_squadrons
+      ignore_cut          = tournament.squadrons.select { |s| s.elimination_standing.present? }.count.in?([0, number_of_squadrons])
       number_in_cut       = tournament.squadrons.map { |s| s.elimination_standing }.compact.max
-      number_in_cut       = 2**(Math.log(number_in_cut, 2).ceil(0)) # round up to the next power of two
+      ignore_cut          ||= number_in_cut == 0
+      unless ignore_cut
+        number_in_cut = 2**(Math.log(number_in_cut, 2).ceil(0)) # round up to the next power of two
+      end
       tournament.squadrons.each do |squadron|
         if squadron.swiss_standing.present? && squadron.swiss_standing > 0
           squadron.swiss_percentile = (number_of_squadrons.to_f - squadron.swiss_standing.to_f + 1) / number_of_squadrons.to_f
