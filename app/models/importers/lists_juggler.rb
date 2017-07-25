@@ -37,14 +37,18 @@ module Importers
       response = Net::HTTP.get_response(uri)
       begin
         tournament_data  = JSON.parse(response.body).try(:[], 'tournament')
-        venue_attributes = {
-          name:    tournament_data['venue']['name'],
-          city:    tournament_data['venue']['city'],
-          state:   tournament_data['venue']['state'],
-          country: tournament_data['venue']['country'],
-          lat:     tournament_data['venue']['lat'],
-          lon:     tournament_data['venue']['lon'],
-        }
+        venue_attributes = if tournament_data['venue'].present?
+                             {
+                               name:    tournament_data['venue']['name'],
+                               city:    tournament_data['venue']['city'],
+                               state:   tournament_data['venue']['state'],
+                               country: tournament_data['venue']['country'],
+                               lat:     tournament_data['venue']['lat'],
+                               lon:     tournament_data['venue']['lon'],
+                             }
+                           else
+                             nil
+                           end
         if tournament_data.present?
           squadron_container = {}
           tournament.assign_attributes({
@@ -54,7 +58,7 @@ module Importers
                                          round_length:    tournament_data['round_length'],
                                          num_players:     tournament_data['players'].length,
                                          tournament_type: TournamentType.find_or_initialize_by(name: tournament_data['type']),
-                                         venue:           Venue.find_or_initialize_by(venue_attributes),
+                                         venue:           venue_attributes.present? ? Venue.find_or_initialize_by(venue_attributes) : nil,
                                        })
           tournament.save!
           tournament.games.destroy_all
