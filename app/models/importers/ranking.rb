@@ -23,12 +23,14 @@ module Importers
       end
       tournament          = Tournament.find_by(lists_juggler_id: tournament_id)
       number_of_squadrons = [tournament.num_players, tournament.squadrons.count].compact.max
-      number_in_cut       = tournament.squadrons.select { |s| s.elimination_standing.present? }.count
+      ignore_cut          = tournament.squadrons.select { |s| s.elimination_standing.present? }.count == number_of_squadrons
+      number_in_cut       = tournament.squadrons.map { |s| s.elimination_standing }.compact.max
+      number_in_cut       = 2**(Math.log(number_in_cut, 2).ceil(0)) # round up to the next power of two
       tournament.squadrons.each do |squadron|
         if squadron.swiss_standing.present? && squadron.swiss_standing > 0
           squadron.swiss_percentile = (number_of_squadrons.to_f - squadron.swiss_standing.to_f + 1) / number_of_squadrons.to_f
         end
-        if squadron.elimination_standing.present? && squadron.elimination_standing > 0 && number_in_cut > 0
+        if !ignore_cut && squadron.elimination_standing.present? && squadron.elimination_standing > 0 && number_in_cut > 0
           squadron.elimination_percentile = (number_in_cut.to_f - squadron.elimination_standing.to_f + 1) / number_in_cut.to_f
         end
         ship_combo = find_or_create_ship_combo(squadron.ships)
@@ -39,11 +41,11 @@ module Importers
         [squadron, { swiss_wins: 0, swiss_losses: 0, elimination_wins: 0, elimination_losses: 0 }]
       end]
       tournament.games.each do |game|
+        game.round_type = 'swiss' unless %w[swiss elimination].include?(game.round_type)
         game.update({
                       winning_combo: game.winning_squadron.ship_combo,
                       losing_combo:  game.losing_squadron.ship_combo,
                     })
-        game.round_type = 'swiss' unless %w[swiss elimination].include?(game.round_type)
         squadron_win_loss_rations[game.winning_squadron]["#{game.round_type}_wins".to_sym]  += 1
         squadron_win_loss_rations[game.losing_squadron]["#{game.round_type}_losses".to_sym] += 1
       end

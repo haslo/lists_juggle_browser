@@ -14,8 +14,8 @@ module Importers
           tournament      = Tournament.find_by(lists_juggler_id: lists_juggler_id)
           tournament_date = if tournament.nil?
                               begin
-                                uri      = URI.parse("http://lists.starwarsclubhouse.com/api/v1/tournament/#{tournament.lists_juggler_id}")
-                                response = Net::HTTP.get_response(uri)
+                                uri             = URI.parse("http://lists.starwarsclubhouse.com/api/v1/tournament/#{tournament.lists_juggler_id}")
+                                response        = Net::HTTP.get_response(uri)
                                 tournament_data = JSON.parse(response.body).try(:[], 'tournament')
                                 Date.parse(tournament_data['date'])
                               rescue
@@ -78,21 +78,21 @@ module Importers
         round_data['matches'].each do |game_data|
           if game_data['result'] == 'win'
             if game_data['player1points'].to_i > game_data['player2points'].to_i
-              Game.create!({
-                             tournament:       tournament,
-                             winning_squadron: squadron_container[game_data['player1']],
-                             losing_squadron:  squadron_container[game_data['player2']],
-                             round_number:     round_number,
-                             round_type:       round_type,
-                           })
+              Game.create({
+                            tournament:       tournament,
+                            winning_squadron: squadron_container[game_data['player1']],
+                            losing_squadron:  squadron_container[game_data['player2']],
+                            round_number:     round_number,
+                            round_type:       round_type,
+                          })
             elsif game_data['player2points'].to_i > game_data['player1points'].to_i
-              Game.create!({
-                             tournament:       tournament,
-                             winning_squadron: squadron_container[game_data['player2']],
-                             losing_squadron:  squadron_container[game_data['player1']],
-                             round_number:     round_number,
-                             round_type:       round_type,
-                           })
+              Game.create({
+                            tournament:       tournament,
+                            winning_squadron: squadron_container[game_data['player2']],
+                            losing_squadron:  squadron_container[game_data['player1']],
+                            round_number:     round_number,
+                            round_type:       round_type,
+                          })
             end
           end
         end
