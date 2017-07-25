@@ -3,13 +3,15 @@ module Rankers
 
     attr_reader :ships, :number_of_tournaments, :number_of_squadrons
 
-    def initialize(ranking_configuration, ship_id: nil, ship_combo_id: nil)
+    def initialize(ranking_configuration, ship_id: nil, ship_combo_id: nil, group_by_faction: false, faction_id: nil)
       start_date      = ranking_configuration[:ranking_start]
       end_date        = ranking_configuration[:ranking_end]
       tournament_type = ranking_configuration[:tournament_type]
       joins           = <<-SQL
         inner join pilots
           on ships.id = pilots.ship_id
+        inner join factions
+          on pilots.faction_id = factions.id
         inner join ship_configurations
           on ship_configurations.pilot_id = pilots.id
         inner join squadrons
@@ -34,6 +36,14 @@ module Rankers
                                .group('ships.id, ships.name')
                                .order('weight desc')
                                .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
+      if group_by_faction
+        ships_relation            = ships_relation.group('factions.id, factions.name')
+        attributes[:faction_id]   = 'factions.id'
+        attributes[:faction_name] = 'factions.name'
+      end
+      if faction_id.present?
+        ships_relation = ships_relation.where('factions.id = ?', faction_id)
+      end
       if ship_id.present?
         ships_relation = ships_relation.where('ships.id = ?', ship_id)
       end

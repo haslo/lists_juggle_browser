@@ -15,6 +15,7 @@ en:
       export_json: 'JSON'
     table:
       position: 'Position'
+      faction: 'Faction'
       images: 'Card Images'
       ship_name: 'Ship Type'
       pilot_names: 'Pilot Names'
