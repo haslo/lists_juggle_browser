@@ -11,8 +11,8 @@ module Importers
     def sync_conditions
       conditions_hash = parse_json('conditions')
       conditions_hash.each do |condition_data|
-        condition            = Condition.find_or_initialize_by(xws:           condition_data['xws'],
-                                                               xwing_data_id: condition_data['id'])
+        condition            = Condition.find_or_initialize_by(xws: condition_data['xws'],
+                                                               id:  condition_data['id'])
         condition.name       = condition_data['name']
         condition.image_path = condition_data['image']
         condition.save!
@@ -22,8 +22,8 @@ module Importers
     def sync_ships
       ships_hash = parse_json('ships')
       ships_hash.each do |ship_data|
-        ship                 = Ship.find_or_initialize_by(xws:           ship_data['xws'],
-                                                          xwing_data_id: ship_data['id'])
+        ship                 = Ship.find_or_initialize_by(xws: ship_data['xws'],
+                                                          id:  ship_data['id'])
         ship.font_icon_class = ship_data['xws']
         ship.name            = ship_data['name']
         if ship_data['size'].present?
@@ -40,10 +40,10 @@ module Importers
       pilots_hash.each do |pilot_data|
         ship             = Ship.find_by(name: pilot_data['ship'])
         faction          = Faction.find_or_create_by(name: pilot_data['faction'])
-        pilot            = Pilot.find_or_initialize_by(ship:          ship,
-                                                       xws:           pilot_data['xws'],
-                                                       faction_id:    faction.id,
-                                                       xwing_data_id: pilot_data['id'])
+        pilot            = Pilot.find_or_initialize_by(ship:       ship,
+                                                       xws:        pilot_data['xws'],
+                                                       faction_id: faction.id,
+                                                       id:         pilot_data['id'])
         pilot.name       = pilot_data['name']
         pilot.image_path = pilot_data['image']
         if pilot_data['conditions'].present?
@@ -58,14 +58,13 @@ module Importers
     def sync_upgrades
       upgrades_hash = parse_json('upgrades')
       upgrades_hash.each do |upgrade_data|
-        upgrade               = Upgrade.find_or_initialize_by(xws: upgrade_data['xws'])
-        upgrade.xwing_data_id = upgrade_data['id']
-        upgrade.name          = upgrade_data['name']
-        upgrade_type_data     = upgrade_type_for(upgrade_data['slot'])
-        upgrade.upgrade_type  = UpgradeType.find_or_initialize_by(name:            upgrade_type_data[1],
-                                                                  xws:             upgrade_type_data[2],
-                                                                  font_icon_class: upgrade_type_data[3])
-        upgrade.image_path    = upgrade_data['image']
+        upgrade              = Upgrade.find_or_initialize_by(xws: upgrade_data['xws'], id: upgrade_data['id'])
+        upgrade.name         = upgrade_data['name']
+        upgrade_type_data    = upgrade_type_for(upgrade_data['slot'])
+        upgrade.upgrade_type = UpgradeType.find_or_initialize_by(name:            upgrade_type_data[1],
+                                                                 xws:             upgrade_type_data[2],
+                                                                 font_icon_class: upgrade_type_data[3])
+        upgrade.image_path   = upgrade_data['image']
         if upgrade_data['conditions'].present?
           upgrade_data['conditions'].each do |condition_name|
             upgrade.conditions << Condition.find_by(name: condition_name)

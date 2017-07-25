@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170725162505) do
+ActiveRecord::Schema.define(version: 20170725115237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20170725162505) do
     t.string "xws"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "xwing_data_id"
     t.index ["pilot_id"], name: "index_conditions_on_pilot_id"
     t.index ["upgrade_id"], name: "index_conditions_on_upgrade_id"
   end
@@ -68,7 +67,6 @@ ActiveRecord::Schema.define(version: 20170725162505) do
     t.datetime "updated_at", null: false
     t.string "xws"
     t.string "image_path"
-    t.integer "xwing_data_id"
     t.index ["faction_id"], name: "index_pilots_on_faction_id"
     t.index ["ship_id"], name: "index_pilots_on_ship_id"
   end
@@ -109,7 +107,6 @@ ActiveRecord::Schema.define(version: 20170725162505) do
     t.string "font_icon_class"
     t.string "xws"
     t.string "size"
-    t.integer "xwing_data_id"
     t.index ["size"], name: "index_ships_on_size"
   end
 
@@ -172,7 +169,6 @@ ActiveRecord::Schema.define(version: 20170725162505) do
     t.datetime "updated_at", null: false
     t.string "xws"
     t.string "image_path"
-    t.integer "xwing_data_id"
     t.index ["upgrade_type_id"], name: "index_upgrades_on_upgrade_type_id"
   end
 
