@@ -3,3 +3,4 @@ en:
     show:
       title: 'Squadron Visualizer'
       no_squadron: 'Invalid squadron data or empty squadron. Please try another squadron instead.'
+      explanation: "Below, you find the squadron represented as an image of its cards. This feature does only partially work on IE and Safari."

@@ -2,3 +2,4 @@
 Rails.application.config.assets.version = '1.0'
 
 Rails.application.config.assets.precompile += %w( turning_test.js )
+Rails.application.config.assets.precompile += %w( dom-to-image.min.js )

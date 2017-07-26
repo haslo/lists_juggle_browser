@@ -1,12 +1,28 @@
 - content_for :title do
   = [t('.title'), @squadron.name].reject(&:blank?).join(' - ')
 
+%p= t('.explanation')
+
 - if @squadron.ship_configurations.to_a.count > 0
-  %table
-    - @squadron.ship_configurations.each do |ship_configuration|
-      %tr
-        %td= image_tag pilot_image_path(ship_configuration.pilot.id, format: :png)
-        - ship_configuration.upgrades.each do |upgrade|
-          %td{style: 'vertical-align: top'}= image_tag upgrade_image_path(upgrade.id, format: :png)
+  #squadron-container
+    %table#squadron-table
+      - @squadron.ship_configurations.each do |ship_configuration|
+        %tr
+          %td= image_tag pilot_image_path(ship_configuration.pilot.id, format: :png)
+          - ship_configuration.upgrades.each do |upgrade|
+            %td{style: 'vertical-align: top'}= image_tag upgrade_image_path(upgrade.id, format: :png)
 - else
-  = t('.no_squadron')
+  %p= t('.no_squadron')
+
+- content_for :javascript do
+  :coffeescript
+    $ ->
+      node = document.getElementById('squadron-table')
+      setTimeout(->
+        domtoimage.toPng(node).then((dataUrl) ->
+          img = new Image
+          img.src = dataUrl
+          $('#squadron-container').html(img)
+        ).catch (error) ->
+          console.error 'oops, something went wrong!', error
+      , 500)

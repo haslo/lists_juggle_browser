@@ -19,7 +19,8 @@ en:
             and the application stack uses <a href="https://www.postgresql.org/">PostgreSQL</a>,
             <a href="http://rubyonrails.org/">Ruby on Rails</a>, <a href="https://jquery.com/">jQuery</a> and
             <a href="http://getbootstrap.com/">Bootstrap</a>. The server runs <a href="https://www.nginx.com/solutions/web-server/">nginx</a>
-            in front of <a href="http://puma.io/">puma</a> on <a href="https://www.ubuntu.com/">Ubuntu</a>.
+            in front of <a href="http://puma.io/">puma</a> on <a href="https://www.ubuntu.com/">Ubuntu</a>. The image export uses
+            <a href="https://github.com/tsayen/dom-to-image">dom-to-image</a>.
           <p>Imports are automatic (based on xwing-data), and things like list archetypes the DB doesn't know yet are automagically generated,
             which means they'll never get stale because no human interaction is involved. On the other hand, my database
             has no clue what these things (ships, pilots, upgrades) represent and whether the combinations it gets are legal
