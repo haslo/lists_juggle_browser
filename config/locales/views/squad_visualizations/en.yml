@@ -1,6 +1,10 @@
 en:
   squad_visualizations:
+    new:
+      title: 'Squadron Visualizer'
+      explanation: 'The visualizer can generate card images from any XWS string. Feel free to export to XWS from your favorite squad builder and paste the resulting code here.'
+      submit: 'Generate image'
     show:
       title: 'Squadron Visualizer'
+      download_image: 'Download image'
       no_squadron: 'Invalid squadron data or empty squadron. Please try another squadron instead.'
-      explanation: "Below, you find the squadron represented as an image of its cards. This feature does only partially work on IE and Safari."

@@ -1,0 +1,9 @@
+- content_for :title do
+  = t('.title')
+
+
+%p= t('.explanation')
+
+= form_tag squad_visualizations_path(format: :png), method: :post do
+  = text_area_tag :xws
+  = submit_tag t('.submit')
