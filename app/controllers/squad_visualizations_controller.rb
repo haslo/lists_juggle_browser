@@ -4,6 +4,10 @@ class SquadVisualizationsController < ApplicationController
     @squadron = Squadron.find(params[:id])
   end
 
+  def new
+    # noop
+  end
+
   def create
     @squadron = Importers::SquadronFromXws.build_squadron(params[:xws])
     require 'pry'; binding.pry

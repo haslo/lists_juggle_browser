@@ -7,10 +7,16 @@
     %ul.navbar-nav.mr-auto
       - active = :browser
       - active = :about if %w[abouts].include?(params[:controller])
+      - active = :squad_visualizations if %w[squad_visualizations].include?(params[:controller])
       %li.nav-item{class: active == :browser ? 'active' : ''}
         = link_with_filter_to root_path, class: 'nav-link' do
           = t('.browser')
           - if active == :browser
+            %span.sr-only= "(#{t('.current')})"
+      %li.nav-item{class: active == :squad_visualizations ? 'active' : ''}
+        = link_with_filter_to new_squad_visualization_path, class: 'nav-link' do
+          = t('.squad_visualizations')
+          - if active == :squad_visualizations
             %span.sr-only= "(#{t('.current')})"
       %li.nav-item{class: active == :about ? 'active' : ''}
         = link_with_filter_to about_path, class: 'nav-link' do

@@ -8,6 +8,7 @@ en:
     top_navigation:
       title: 'meta-wing'
       browser: 'Data Browser'
+      squad_visualizations: 'Squad Visualization'
       links:
         overviews: 'Intro'
         pilots: 'Pilots'
