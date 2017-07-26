@@ -1,0 +1,5 @@
+en:
+  squad_visualizations:
+    show:
+      title: 'Squadron Visualizer'
+      no_squadron: 'Invalid squadron data or empty squadron. Please try another squadron instead.'

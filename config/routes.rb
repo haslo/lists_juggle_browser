@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   resources :squadrons, only: [:show]
   resource :about, only: [:show]
 
+  resources :squad_visualizations, only: [:show, :create]
+
   resource :turning_test, only: [:show]
 
 end

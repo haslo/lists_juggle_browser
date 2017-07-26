@@ -1,0 +1,12 @@
+- content_for :title do
+  = [t('.title'), @squadron.name].reject(&:blank?).join(' - ')
+
+- if @squadron.ship_configurations.to_a.count > 0
+  %table
+    - @squadron.ship_configurations.each do |ship_configuration|
+      %tr
+        %td= image_tag pilot_image_path(ship_configuration.pilot.id, format: :png)
+        - ship_configuration.upgrades.each do |upgrade|
+          %td{style: 'vertical-align: top'}= image_tag upgrade_image_path(upgrade.id, format: :png)
+- else
+  = t('.no_squadron')

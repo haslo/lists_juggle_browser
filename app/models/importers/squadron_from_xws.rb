@@ -7,7 +7,8 @@ module Importers
         faction_xws  = squadron_xws.try(:[], 'faction')
         faction      = Faction.find_by(xws: faction_xws, is_subfaction: false)
         squadron     = Squadron.new({
-                                      xws:        squadron_xws['list'],
+                                      xws:        squadron_xws.try(:[], 'list'),
+                                      name:       squadron_xws.try(:[], 'name'),
                                       faction_id: faction.try(:id),
                                     })
         (squadron_xws.try(:[], 'pilots') || []).each do |pilot_xws|

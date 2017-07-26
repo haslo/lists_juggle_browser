@@ -1,12 +1,12 @@
 en:
   layouts:
     application:
-      title: 'X-Wing Meta Analyzer'
+      title: 'meta-wing'
       description: 'Meta analysis for the X-Wing Lists Juggler'
       author: 'Guido Gloor Modjib'
       currently_importing: 'Currently Importing...'
     top_navigation:
-      title: 'X-Wing Meta Analyzer'
+      title: 'meta-wing'
       browser: 'Data Browser'
       links:
         overviews: 'Intro'
