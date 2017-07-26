@@ -12,6 +12,8 @@ module Rankers
           on ships.id = pilots.ship_id
         inner join factions
           on pilots.faction_id = factions.id
+        inner join factions as primary_factions
+          on primary_factions.id = factions.primary_faction_id
         inner join ship_configurations
           on ship_configurations.pilot_id = pilots.id
         inner join squadrons
@@ -37,9 +39,9 @@ module Rankers
                                .order('weight desc')
                                .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       if group_by_faction
-        ships_relation            = ships_relation.group('factions.id, factions.name')
-        attributes[:faction_id]   = 'factions.id'
-        attributes[:faction_name] = 'factions.name'
+        ships_relation            = ships_relation.group('primary_factions.id, primary_factions.name')
+        attributes[:faction_id]   = 'primary_factions.id'
+        attributes[:faction_name] = 'primary_factions.name'
       end
       if faction_id.present?
         ships_relation = ships_relation.where('factions.id = ?', faction_id)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170725115237) do
+ActiveRecord::Schema.define(version: 20170726085937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20170725115237) do
     t.datetime "updated_at", null: false
     t.string "xws"
     t.boolean "is_subfaction"
+    t.integer "primary_faction_id"
   end
 
   create_table "games", id: :serial, force: :cascade do |t|
@@ -188,6 +189,7 @@ ActiveRecord::Schema.define(version: 20170725115237) do
 
   add_foreign_key "conditions", "pilots"
   add_foreign_key "conditions", "upgrades"
+  add_foreign_key "factions", "factions", column: "primary_faction_id"
   add_foreign_key "games", "ship_combos", column: "losing_combo_id"
   add_foreign_key "games", "ship_combos", column: "winning_combo_id"
   add_foreign_key "games", "squadrons", column: "losing_squadron_id"
