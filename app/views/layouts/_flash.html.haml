@@ -1,0 +1,5 @@
+- if flash.count > 0
+  .flash-messages.fixed-width
+    - flash.each do |name, msg|
+      = content_tag :div, msg, class: "alert alert-#{name}", role: 'alert'
+    - flash.discard

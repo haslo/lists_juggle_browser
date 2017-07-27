@@ -21,6 +21,7 @@ gem 'jquery-rails'
 gem 'jbuilder'
 gem 'exception_notification'
 #gem 'webpacker'
+gem 'devise'
 
 # additional libs
 

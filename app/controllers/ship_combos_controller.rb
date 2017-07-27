@@ -45,12 +45,9 @@ class ShipCombosController < ApplicationController
   end
 
   def update
-    ShipCombo.find(params[:id]).update(ship_combo_attributes)
+    ShipCombo.find(params[:id]).suggest_archetype_name!(request.remote_ip, params)
+    flash[:notice] = t('.name_suggested')
     redirect_to action: :show
-  end
-
-  def ship_combo_attributes
-    params.require(:ship_combo).permit(:archetype_name)
   end
 
 end

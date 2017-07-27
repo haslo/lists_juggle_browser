@@ -32,6 +32,7 @@
           - if show_filter?(params[:controller], params[:action])
             = render '/shared/filter_configurator'
           = yield(:export_button)
+          = render '/layouts/flash'
           %h1= yield(:title).presence || t('.title')
           = yield
 

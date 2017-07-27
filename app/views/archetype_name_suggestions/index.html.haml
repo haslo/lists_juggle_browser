@@ -1,0 +1,48 @@
+- content_for :title do
+  = t('.title')
+%table.table.table-striped.table-bordered.table-for-search
+  %tr
+    %th.text-nowrap= t('.ship_combo_id')
+    %th.text-nowrap= t('.timestamp')
+    %th.text-nowrap= t('.ip_address')
+    %th.text-nowrap= t('.suggested_name')
+    %th.text-nowrap= t('.current_name')
+    %th.text-nowrap= t('.alternate_names')
+    %th.text-nowrap= t('.comment')
+    %th.text-nowrap= t('.ship_names')
+    %th.text-nowrap= t('.actions')
+  - @suggestions.each do |suggestion|
+    %tr
+      %td
+        = link_to ship_combo_path(suggestion.ship_combo), target: '_blank' do
+          = suggestion.ship_combo.id
+      %td{style: 'white-space: nowrap'}
+        = suggestion.created_at.strftime('%Y-%m-%d')
+        %br
+        = suggestion.created_at.strftime('%H:%M:%S')
+      %td= suggestion.ip_address
+      %td= suggestion.name_suggestion
+      %td= suggestion.ship_combo.archetype_name.presence || '-'
+      %td
+        - if (suggestion.ship_combo.alternate_names || []).count > 0
+          - (suggestion.ship_combo.alternate_names || []).each do |alternate_name|
+            = alternate_name
+            %br
+        - else
+          = '-'
+      %td= suggestion.comment.presence || '-'
+      %td.ship-combo-cell
+        - suggestion.ship_combo.ships.each do |ship|
+          %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship.font_icon_class}"}
+          = ship.name
+          %br
+      %td{style: 'white-space: nowrap'}
+        .btn-group-vertical
+          = link_to archetype_name_suggestion_path(suggestion, mod_action: 'accept_replace'), method: :patch, class: 'btn btn-primary btn-xs' do
+            = t('.accept_replace')
+          = link_to archetype_name_suggestion_path(suggestion, mod_action: 'accept_bump'), method: :patch, class: 'btn btn-primary btn-xs' do
+            = t('.accept_bump')
+          = link_to archetype_name_suggestion_path(suggestion, mod_action: 'accept_alternate'), method: :patch, class: 'btn btn-primary btn-xs' do
+            = t('.accept_alternate')
+          = link_to archetype_name_suggestion_path(suggestion, mod_action: 'reject'), method: :patch, class: 'btn btn-primary btn-xs' do
+            = t('.reject')
