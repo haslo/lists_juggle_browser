@@ -2,3 +2,13 @@
   height: 6px;
   background-color: #0275d8;
 }
+
+.alert { margin: 10px 0 10px 0; }
+
+.alert-alert {
+  @extend .alert-danger;
+}
+
+.alert-notice {
+  @extend .alert-success;
+}

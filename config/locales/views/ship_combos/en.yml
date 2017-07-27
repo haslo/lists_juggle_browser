@@ -17,7 +17,8 @@ en:
     show:
       title: 'List Archetype'
       ship_combo: 'Overview'
-      edit: 'Edit List Archetype'
+      alternate_names: 'Also known as: '
+      edit: 'Suggest Archetype Name'
       more_squadrons: 'More Squadrons'
       notable_squadrons: 'Some Notable Squadrons'
       ships: 'Ships'
@@ -29,6 +30,8 @@ en:
       close: 'Close'
       explanation: 'This will only suggest the archetype name and not directly edit it, the new name will not show up until after moderation. This process could take a few days.'
       save: 'Save'
+    update:
+      name_suggested: 'Thanks for your suggestion. It has entered the moderation queue.'
     counter_table:
       position: 'Position'
       archetype_name: 'Archetype Name'

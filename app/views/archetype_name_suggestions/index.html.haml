@@ -25,7 +25,7 @@
       %td= suggestion.ship_combo.archetype_name.presence || '-'
       %td
         - if (suggestion.ship_combo.alternate_names || []).count > 0
-          = (suggestion.ship_combo.alternate_names || []).each do |alternate_name|
+          - (suggestion.ship_combo.alternate_names || []).each do |alternate_name|
             = alternate_name
             %br
         - else
@@ -37,9 +37,12 @@
           = ship.name
           %br
       %td{style: 'white-space: nowrap'}
-        %ul
-          %li= t('.accept_replace')
-          %li= t('.accept_bump')
-          %li= t('.accept_alternate')
-          %li= t('.accept_alternate')
-          %li= t('.reject')
+        .btn-group-vertical
+          = link_to archetype_name_suggestion_path(suggestion, mod_action: 'accept_replace'), method: :patch, class: 'btn btn-primary btn-xs' do
+            = t('.accept_replace')
+          = link_to archetype_name_suggestion_path(suggestion, mod_action: 'accept_bump'), method: :patch, class: 'btn btn-primary btn-xs' do
+            = t('.accept_bump')
+          = link_to archetype_name_suggestion_path(suggestion, mod_action: 'accept_alternate'), method: :patch, class: 'btn btn-primary btn-xs' do
+            = t('.accept_alternate')
+          = link_to archetype_name_suggestion_path(suggestion, mod_action: 'reject'), method: :patch, class: 'btn btn-primary btn-xs' do
+            = t('.reject')

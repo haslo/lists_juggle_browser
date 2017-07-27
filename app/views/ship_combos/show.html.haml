@@ -6,6 +6,11 @@
 .float-md-right
   %button.btn.btn-primary.btn-sm{data: {target: '#edit-modal', toggle: 'modal'}, type: 'button'}
     = t('.edit')
+- if (@view.ship_combo.alternate_names || []).count > 0
+  %p
+    = t('.alternate_names')
+    = @view.ship_combo.alternate_names.join(', ')
+
 %h2= t('.ship_combo')
 = render '/ship_combos/table', ship_combos: @view.ship_combos, ships: @view.ship_combos_ships
 
