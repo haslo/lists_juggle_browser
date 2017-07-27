@@ -5,6 +5,6 @@
   %p
     = link_to squad_visualization_path(@squadron.id, format: :png) do
       = t('.download_image')
-  = image_tag squad_visualization_path(@squadron.id, format: :png), style: 'max-width: 100%'
+  = image_tag squad_visualization_path(@squadron.id, format: :png), style: 'max-width: 100%; max-height: 1300px;'
 - else
   %p= t('.no_squadron')
