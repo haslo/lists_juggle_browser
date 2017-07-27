@@ -22,6 +22,7 @@ gem 'jbuilder'
 gem 'exception_notification'
 #gem 'webpacker'
 gem 'devise'
+gem 'select2-rails'
 
 # additional libs
 

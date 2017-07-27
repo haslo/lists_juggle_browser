@@ -178,6 +178,8 @@ GEM
     seed_dump (3.2.4)
       activerecord (>= 4)
       activesupport (>= 4)
+    select2-rails (4.0.3)
+      thor (~> 0.14)
     slop (3.6.0)
     sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
@@ -235,6 +237,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails
   seed_dump
+  select2-rails
   turbolinks
   uglifier
   web-console
