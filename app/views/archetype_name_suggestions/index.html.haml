@@ -5,8 +5,9 @@
     %th.text-nowrap= t('.ship_combo_id')
     %th.text-nowrap= t('.timestamp')
     %th.text-nowrap= t('.ip_address')
-    %th.text-nowrap= t('.current_name')
     %th.text-nowrap= t('.suggested_name')
+    %th.text-nowrap= t('.current_name')
+    %th.text-nowrap= t('.alternate_names')
     %th.text-nowrap= t('.comment')
     %th.text-nowrap= t('.ship_names')
     %th.text-nowrap= t('.actions')
@@ -15,14 +16,21 @@
       %td
         = link_to ship_combo_path(suggestion.ship_combo), target: '_blank' do
           = suggestion.ship_combo.id
-      %td= I18n.l(suggestion.created_at)
-      %td= 'TODO'
-      %td
-        %strong= suggestion.ship_combo.archetype_name.presence || '-'
+      %td{style: 'white-space: nowrap'}
+        = suggestion.created_at.strftime('%Y-%m-%d')
         %br
-        = (suggestion.ship_combo.alternate_names || []).join(', ')
+        = suggestion.created_at.strftime('%H:%M:%S')
+      %td= suggestion.ip_address
       %td= suggestion.name_suggestion
-      %td= suggestion.comment
+      %td= suggestion.ship_combo.archetype_name.presence || '-'
+      %td
+        - if (suggestion.ship_combo.alternate_names || []).count > 0
+          = (suggestion.ship_combo.alternate_names || []).each do |alternate_name|
+            = alternate_name
+            %br
+        - else
+          = '-'
+      %td= suggestion.comment.presence || '-'
       %td.ship-combo-cell
         - suggestion.ship_combo.ships.each do |ship|
           %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship.font_icon_class}"}

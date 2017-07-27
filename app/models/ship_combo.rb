@@ -10,9 +10,10 @@ class ShipCombo < ApplicationRecord
 
   has_and_belongs_to_many :ships
 
-  def suggest_archetype_name!(attributes)
+  def suggest_archetype_name!(ip_address, attributes)
     ArchetypeNameSuggestion.create!({
                                       ship_combo:      self,
+                                      ip_address:      ip_address,
                                       name_suggestion: attributes[:name_suggestion],
                                       comment:         attributes[:comment],
                                     })

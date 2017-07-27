@@ -3,6 +3,7 @@ class AddArchetypeNameSuggestions < ActiveRecord::Migration[5.1]
 
     create_table :archetype_name_suggestions do |t|
       t.references :ship_combo, index: true
+      t.string :ip_address
       t.string :name_suggestion, null: false
       t.text :comment
       t.string :status, default: 'new'

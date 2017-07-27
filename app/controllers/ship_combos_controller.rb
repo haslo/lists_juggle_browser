@@ -45,7 +45,7 @@ class ShipCombosController < ApplicationController
   end
 
   def update
-    ShipCombo.find(params[:id]).suggest_archetype_name!(params)
+    ShipCombo.find(params[:id]).suggest_archetype_name!(request.remote_ip, params)
     redirect_to action: :show
   end
 

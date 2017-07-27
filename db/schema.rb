@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20170727120211) do
 
   create_table "archetype_name_suggestions", force: :cascade do |t|
     t.bigint "ship_combo_id"
+    t.string "ip_address"
     t.string "name_suggestion", null: false
     t.text "comment"
     t.string "status", default: "new"
