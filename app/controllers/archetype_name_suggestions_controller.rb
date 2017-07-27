@@ -1,5 +1,7 @@
 class ArchetypeNameSuggestionsController < ApplicationController
 
+  before_action :authenticate_user!
+
   def index
     @suggestions = ArchetypeNameSuggestion.pending.includes(ship_combo: :ships)
   end

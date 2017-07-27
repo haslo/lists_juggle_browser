@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   root 'overviews#index'
 
+  devise_for :users
+
   resources :pilots, only: [:index, :show] do
     resources :squadrons, only: [:index]
     resource :image, only: [:show]
