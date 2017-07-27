@@ -2,10 +2,36 @@
   = t('.title')
 %table.table.table-striped.table-bordered.table-for-search
   %tr
-    %th.text-nowrap= t('.position')
-    %th.text-nowrap= t('.archetype_name')
+    %th.text-nowrap= t('.ship_combo_id')
+    %th.text-nowrap= t('.timestamp')
+    %th.text-nowrap= t('.ip_address')
+    %th.text-nowrap= t('.current_name')
+    %th.text-nowrap= t('.suggested_name')
+    %th.text-nowrap= t('.comment')
     %th.text-nowrap= t('.ship_names')
-    %th.text-nowrap= t('.squadron_count')
+    %th.text-nowrap= t('.actions')
   - @suggestions.each do |suggestion|
     %tr
-      %td= suggestion.inspect
+      %td
+        = link_to ship_combo_path(suggestion.ship_combo), target: '_blank' do
+          = suggestion.ship_combo.id
+      %td= I18n.l(suggestion.created_at)
+      %td= 'TODO'
+      %td
+        %strong= suggestion.ship_combo.archetype_name.presence || '-'
+        %br
+        = (suggestion.ship_combo.alternate_names || []).join(', ')
+      %td= suggestion.name_suggestion
+      %td= suggestion.comment
+      %td.ship-combo-cell
+        - suggestion.ship_combo.ships.each do |ship|
+          %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship.font_icon_class}"}
+          = ship.name
+          %br
+      %td{style: 'white-space: nowrap'}
+        %ul
+          %li= t('.accept_replace')
+          %li= t('.accept_bump')
+          %li= t('.accept_alternate')
+          %li= t('.accept_alternate')
+          %li= t('.reject')
