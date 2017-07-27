@@ -27,6 +27,7 @@ en:
     edit_modal:
       title: 'Edit List Archetype Data'
       close: 'Close'
+      explanation: 'This will only suggest the archetype name and not directly edit it, the new name will not show up until after moderation. This process could take a few days.'
       save: 'Save'
     counter_table:
       position: 'Position'

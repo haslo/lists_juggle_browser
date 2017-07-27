@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726111928) do
+ActiveRecord::Schema.define(version: 20170727120211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "archetype_name_suggestions", force: :cascade do |t|
+    t.bigint "ship_combo_id"
+    t.string "name_suggestion", null: false
+    t.text "comment"
+    t.string "status", default: "new"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ship_combo_id"], name: "index_archetype_name_suggestions_on_ship_combo_id"
+  end
 
   create_table "conditions", id: :serial, force: :cascade do |t|
     t.integer "pilot_id"
@@ -76,6 +86,7 @@ ActiveRecord::Schema.define(version: 20170726111928) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "archetype_name"
+    t.string "alternate_names", array: true
   end
 
   create_table "ship_combos_ships", id: false, force: :cascade do |t|
