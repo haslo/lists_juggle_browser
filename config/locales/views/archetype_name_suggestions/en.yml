@@ -2,3 +2,16 @@ en:
   archetype_name_suggestions:
     index:
       title: 'Archetype Name Suggestions'
+      ship_combo_id: 'Combo'
+      timestamp: 'Time'
+      ip_address: 'IP'
+      suggested_name: 'Suggested Name'
+      current_name: 'Current Name'
+      alternate_names: 'Alternate Names'
+      comment: 'Comment'
+      ship_names: 'Ships'
+      actions: 'Actions'
+      accept_replace: '✔ Replace'
+      accept_bump: '✔ Bump'
+      accept_alternate: '✔ Alternate'
+      reject: '✘ Reject'
