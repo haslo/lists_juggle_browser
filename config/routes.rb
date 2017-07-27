@@ -26,4 +26,6 @@ Rails.application.routes.draw do
 
   resource :turning_test, only: [:show]
 
+  resources :archetype_name_suggestions, only: [:index, :update]
+
 end

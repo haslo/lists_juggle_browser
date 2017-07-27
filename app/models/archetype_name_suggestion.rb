@@ -4,4 +4,6 @@ class ArchetypeNameSuggestion < ApplicationRecord
 
   validates :status, inclusion: { in: %w[new approved approved_alternate rejected] }
 
+  scope :pending, -> { where(status: 'new') }
+
 end
