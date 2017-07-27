@@ -1,1 +1,11 @@
-= @suggestions.inspect
+- content_for :title do
+  = t('.title')
+%table.table.table-striped.table-bordered.table-for-search
+  %tr
+    %th.text-nowrap= t('.position')
+    %th.text-nowrap= t('.archetype_name')
+    %th.text-nowrap= t('.ship_names')
+    %th.text-nowrap= t('.squadron_count')
+  - @suggestions.each do |suggestion|
+    %tr
+      %td= suggestion.inspect
