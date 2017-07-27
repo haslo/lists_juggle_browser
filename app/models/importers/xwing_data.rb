@@ -46,7 +46,7 @@ module Importers
             pilot.conditions << Condition.find_by(name: condition_name)
           end
         end
-        pilot.save!
+        pilot.save
       end
     end
 
@@ -65,7 +65,7 @@ module Importers
             upgrade.conditions << Condition.find_by(name: condition_name)
           end
         end
-        upgrade.save!
+        upgrade.save
       end
     end
 
