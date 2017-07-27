@@ -12,3 +12,9 @@
 .alert-notice {
   @extend .alert-success;
 }
+
+#filter-content {
+  .select2-search__field {
+    height: 36px !important;
+  }
+}

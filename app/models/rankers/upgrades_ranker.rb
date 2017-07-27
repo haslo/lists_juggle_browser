@@ -61,7 +61,7 @@ module Rankers
         upgrade_relation = upgrade_relation.limit(limit)
       end
       if tournament_type.present?
-        upgrade_relation = upgrade_relation.where('tournaments.tournament_type_id = ?', tournament_type)
+        upgrade_relation = upgrade_relation.where("tournaments.tournament_type_id in (#{tournament_type.join(',')})")
       end
       @upgrades = Upgrade.fetch_query(upgrade_relation, attributes)
 

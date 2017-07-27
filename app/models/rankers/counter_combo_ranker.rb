@@ -16,7 +16,7 @@ module Rankers
       counter_combo_query = ShipCombo.where(id: ship_combo_id).joins(joins)
       counter_combo_query = counter_combo_query.where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       if tournament_type.present?
-        counter_combo_query = counter_combo_query.where('tournaments.tournament_type_id = ?', tournament_type)
+        counter_combo_query = counter_combo_query.where("tournaments.tournament_type_id in (#{tournament_type.join(',')})")
       end
       won             = won_games(counter_combo_query)
       lost            = lost_games(counter_combo_query)

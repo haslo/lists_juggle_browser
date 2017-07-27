@@ -12,7 +12,7 @@ module Rankers
     def numbers
       tournaments = Tournament.where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       if tournament_type.present?
-        tournaments = tournaments.where('tournaments.tournament_type_id = ?', tournament_type)
+        tournaments = tournaments.where(("tournaments.tournament_type_id in (#{tournament_type.join(',')})"))
       end
       squadrons = Squadron.joins(:tournament).merge(tournaments)
       return tournaments.count, squadrons.count

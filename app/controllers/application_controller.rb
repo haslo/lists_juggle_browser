@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
         use_ranking_data:            params['use_ranking_data'].nil?            ? 'all'                : params['use_ranking_data'],
         ranking_start:               params['ranking_start'].nil?               ? 1.month.ago.to_date  : params['ranking_start'],
         ranking_end:                 params['ranking_end'].nil?                 ? Time.current.to_date : params['ranking_end'],
-        tournament_type:             params['tournament_type'].nil?             ? nil                  : params['tournament_type'],
+        tournament_type:             params['tournament_type'].nil?             ? []                   : params['tournament_type'].split(',').reject{|t| !(t.to_s =~ /[0-9]+/)},
     }
   end
   helper_method :ranking_configuration

@@ -62,7 +62,7 @@ module Rankers
         ship_combos_relation = ship_combos_relation.joins(upgrade_join).where('ship_configurations_upgrades.upgrade_id = ?', upgrade_id)
       end
       if tournament_type.present?
-        ship_combos_relation = ship_combos_relation.where('tournaments.tournament_type_id = ?', tournament_type)
+        ship_combos_relation = ship_combos_relation.where(("tournaments.tournament_type_id in (#{tournament_type.join(',')})"))
       end
       @ship_combos = ShipCombo.fetch_query(ship_combos_relation, attributes)
       @ships       = Hash[ShipCombo.where(id: @ship_combos.map(&:id)).includes(:ships).map { |c| [c.id, c.ships.map { |s| { id: s.id, name: s.name, font_icon_class: s.font_icon_class } }] }]

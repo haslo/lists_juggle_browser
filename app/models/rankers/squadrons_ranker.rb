@@ -41,7 +41,7 @@ module Rankers
         squadron_query = squadron_query.where('squadrons.ship_combo_id = ?', ship_combo_id)
       end
       if tournament_type.present?
-        squadron_query = squadron_query.where('tournaments.tournament_type_id = ?', tournament_type)
+        squadron_query = squadron_query.where(("tournaments.tournament_type_id in (#{tournament_type.join(',')})"))
       end
       order = <<-SQL
         case when squadrons.elimination_standing is null

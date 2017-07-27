@@ -56,7 +56,7 @@ module Rankers
         pilot_relation = pilot_relation.where('pilots.id = ?', pilot_id)
       end
       if tournament_type.present?
-        pilot_relation = pilot_relation.where('tournaments.tournament_type_id = ?', tournament_type)
+        pilot_relation = pilot_relation.where(("tournaments.tournament_type_id in (#{tournament_type.join(',')})"))
       end
       @pilots = Pilot.fetch_query(pilot_relation, attributes)
 

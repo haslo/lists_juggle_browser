@@ -53,7 +53,7 @@ module Rankers
         ships_relation = ships_relation.where('squadrons.ship_combo_id = ?', ship_combo_id)
       end
       if tournament_type.present?
-        ships_relation = ships_relation.where('tournaments.tournament_type_id = ?', tournament_type)
+        ships_relation = ships_relation.where(("tournaments.tournament_type_id in (#{tournament_type.join(',')})"))
       end
       @ships  = Ship.fetch_query(ships_relation, attributes)
       @pilots = Pilot.all.includes(:faction).to_a
