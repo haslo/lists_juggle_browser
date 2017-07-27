@@ -70,8 +70,8 @@ module Importers
         else
           raise InvalidTournament
         end
-        #rescue => e
-        #  puts e.message
+      rescue => e
+        puts e.message
       end
     end
 
@@ -104,65 +104,19 @@ module Importers
     end
 
     def sync_squadron(tournament, squadron_data)
-      faction_xws = squadron_data['list'].try(:[], 'faction')
-      faction     = Faction.find_by(xws: faction_xws, is_subfaction: false)
-      squadron    = Squadron.create!({
-                                       tournament:           tournament,
-                                       player_name:          squadron_data['name'],
-                                       xws:                  squadron_data['list'],
-                                       mov:                  squadron_data['mov'],
-                                       points:               squadron_data['score'],
-                                       elimination_standing: squadron_data['rank']['elimination'],
-                                       swiss_standing:       squadron_data['rank']['swiss'],
-                                       faction_id:           faction.try(:id),
-                                     })
-      (squadron_data['list'].try(:[], 'pilots') || []).each do |ship_configuration_data|
-        ship          = find_with_key(Ship, ship_configuration_data['ship'])
-        pilot         = find_with_key(ship.pilots, ship_configuration_data['name'], faction_xws)
-        configuration = ShipConfiguration.create!({
-                                                    squadron: squadron,
-                                                    pilot:    pilot,
-                                                  })
-        (ship_configuration_data['upgrades'] || []).each do |upgrade_type_key, upgrade_keys|
-          upgrade_type = find_with_key(UpgradeType, upgrade_type_key)
-          upgrade_keys.each do |upgrade_key|
-            upgrade = find_with_key(upgrade_type.upgrades, upgrade_key)
-            configuration.upgrades << upgrade
-            upgrade.save!
-          end
-        end
-      end
+      squadron = SquadronFromXws.build_squadron(squadron_data['list'])
+      squadron.assign_attributes({
+                                   tournament:           tournament,
+                                   player_name:          squadron_data['name'],
+                                   xws:                  squadron_data['list'],
+                                   mov:                  squadron_data['mov'],
+                                   points:               squadron_data['score'],
+                                   elimination_standing: squadron_data['rank']['elimination'],
+                                   swiss_standing:       squadron_data['rank']['swiss'],
+                                   faction_id:           faction.try(:id),
+                                 })
+      squadron.save!
       squadron
-    end
-
-    def find_with_key(relation, key, faction_xws = nil)
-      if faction_xws.present?
-        model = relation.where(xws: key).where(faction_id: Faction.where(xws: faction_xws)).first
-      else
-        model = relation.find_by(xws: key)
-      end
-      return model if model.present?
-      puts "-> looking again for #{relation.name} #{key} - #{faction.try(:id).inspect} <-"
-      {
-        'adv'              => 'advanced',
-        'ketsupnyo'        => 'ketsuonyo',
-        'pivotwing'        => 'pivotwinglanding',
-        'sabinewren-swx56' => 'sabinewren',
-        'Deathrain'        => 'deathrain',
-        'yt2400freighter'  => 'yt2400',
-        'ltlorrir'         => 'lieutenantlorrir',
-        'wookieliberator'  => 'wookieeliberator',
-        'Lowhhrick'        => 'lowhhrick',
-      }.each do |original, substitute|
-        key = key.gsub(original, substitute)
-      end
-      model = relation.find_by(xws: key)
-      if model.present?
-        puts "-> found with #{key} <-"
-        model
-      else
-        raise "=> #{relation.name} not found for #{key} <="
-      end
     end
 
   end

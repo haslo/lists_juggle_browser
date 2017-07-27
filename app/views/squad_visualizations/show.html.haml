@@ -1,0 +1,10 @@
+- content_for :title do
+  = [t('.title'), @squadron.name].reject(&:blank?).join(' - ')
+
+- if @squadron.ship_configurations.to_a.count > 0
+  %p
+    = link_to squad_visualization_path(@squadron.id, format: :png) do
+      = t('.download_image')
+  = image_tag squad_visualization_path(@squadron.id, format: :png), style: 'max-width: 100%'
+- else
+  %p= t('.no_squadron')

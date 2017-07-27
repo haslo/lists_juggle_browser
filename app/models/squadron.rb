@@ -1,6 +1,6 @@
 class Squadron < ApplicationRecord
 
-  belongs_to :tournament
+  belongs_to :tournament, optional: true
   belongs_to :ship_combo, optional: true
 
   has_many :ship_configurations, dependent: :destroy

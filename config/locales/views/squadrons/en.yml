@@ -17,11 +17,13 @@ en:
       archetype_link: 'Visit Archetype'
       played_by: 'played by %{player}'
       export: 'Export'
+      visualize: 'Visualize'
     xws_modal:
       title: 'XWS Data'
       explanation: 'The content below is a representation of this squadron. You can copy it and then paste it into the import dialog of your favourite squad builder. Experimental.'
       link_to_xws: 'Link to XWS as JSON'
       xws_link_explanation: 'can be used for direct import of this list into Vassal'
+      visualize: 'Visualize'
       open_in_voidstate: 'Open in Voidstate'
       open_in_yasb: 'Open in YASB'
       open_in_fabs: "Open in Fab's"

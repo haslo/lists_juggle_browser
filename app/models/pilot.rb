@@ -10,8 +10,4 @@ class Pilot < ApplicationRecord
 
   validates :xws, uniqueness: { scope: [:ship_id, :faction_id] }
 
-  def wikia_search_string
-    name
-  end
-
 end

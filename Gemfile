@@ -28,6 +28,8 @@ gem 'execjs'
 gem 'nokogiri'
 gem 'chartkick'
 gem 'groupdate', require: 'groupdate'
+gem 'chunky_png', :require => false
+gem 'oily_png'
 
 gem 'turbolinks'
 
