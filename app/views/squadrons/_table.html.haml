@@ -75,6 +75,7 @@
         $('#xws-text-area').select()
 
       $('.yasb-export-link').on 'click', (e) ->
+        console.log $('#yasb-xws').val()
         $.ajax
           type: 'POST'
           url: 'https://yasb-xws.herokuapp.com/'
@@ -82,4 +83,8 @@
           contentType: 'application/json'
           data: $('#yasb-xws').val()
           success: (data) ->
-            window.location = data.url
+            console.log data
+            #window.location = data.url
+          error: (data) ->
+            console.log 'error'
+            console.log data
