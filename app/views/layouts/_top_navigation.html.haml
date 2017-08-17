@@ -7,6 +7,7 @@
     %ul.navbar-nav.mr-auto
       - active = :browser
       - active = :about if %w[abouts].include?(params[:controller])
+      - active = :news if %w[news].include?(params[:controller])
       - active = :squad_visualizations if %w[squad_visualizations].include?(params[:controller])
       %li.nav-item{class: active == :browser ? 'active' : ''}
         = link_with_filter_to root_path, class: 'nav-link' do
@@ -22,6 +23,11 @@
         = link_with_filter_to about_path, class: 'nav-link' do
           = t('.about')
           - if active == :about
+            %span.sr-only= "(#{t('.current')})"
+      %li.nav-item{class: active == :news ? 'active' : ''}
+        = link_with_filter_to news_index_path, class: 'nav-link' do
+          = t('.news')
+          - if active == :news
             %span.sr-only= "(#{t('.current')})"
       .hidden-lg-up
         - %w[overviews pilots ships upgrades ship_combos].each do |controller|

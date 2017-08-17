@@ -31,6 +31,7 @@ gem 'chartkick'
 gem 'groupdate', require: 'groupdate'
 gem 'chunky_png', :require => false
 gem 'oily_png'
+gem 'redcarpet'
 
 gem 'turbolinks'
 

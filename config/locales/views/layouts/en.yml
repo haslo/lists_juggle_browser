@@ -16,6 +16,7 @@ en:
         ship_combos: 'List Archetypes'
         upgrades: 'Upgrades'
       about: 'About'
+      news: 'Changelog'
       current: 'current'
     side_navigation:
       links:

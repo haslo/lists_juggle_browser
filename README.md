@@ -36,3 +36,5 @@ rake sync:rebuild_rankings[<min_id>,<min_date>]
 ```
 Both parameters are optional for both rake tasks, just skip the brackets if you
 don't want to provide them.
+
+Also see, [the Changelog](CHANGELOG.md) (which is also displayed in the online application)
