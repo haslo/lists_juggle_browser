@@ -104,7 +104,9 @@ module Importers
     end
 
     def sync_squadron(tournament, squadron_data)
-      squadron = SquadronFromXws.build_squadron(squadron_data['list'])
+      squadron    = SquadronFromXws.build_squadron(squadron_data['list'])
+      faction_xws = squadron_data['list'].try(:[], 'faction')
+      faction     = Faction.find_by(xws: faction_xws, is_subfaction: false)
       squadron.assign_attributes({
                                    tournament:           tournament,
                                    player_name:          squadron_data['name'],
