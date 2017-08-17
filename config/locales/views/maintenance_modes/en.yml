@@ -1,0 +1,11 @@
+en:
+  maintenance_modes:
+    show:
+      title: Maintenance Mode
+      maintenance_mode: |
+        <p>
+          This site is currently in maintenance mode.
+        </p>
+        <p>
+          Please come back later.
+        </p>

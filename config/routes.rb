@@ -30,4 +30,6 @@ Rails.application.routes.draw do
 
   resources :archetype_name_suggestions, only: [:index, :update]
 
+  resource :maintenance_mode, only: [:show]
+
 end

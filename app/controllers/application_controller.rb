@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
 
+  before_action :check_maintenance_mode
+
   def ranking_configuration
     {
         large_tournament_multiplier: params['large_tournament_multiplier'].nil? ? true                 : (params['large_tournament_multiplier'] == 'true'),
@@ -31,5 +33,13 @@ class ApplicationController < ActionController::Base
     }.reject{|_k, v| v.nil?}]
   end
   helper_method :raw_ranking_configuration
+
+  private
+
+  def check_maintenance_mode
+    if KeyValueStoreRecord.get('maintenance')
+      redirect_to maintenance_mode_path
+    end
+  end
 
 end
