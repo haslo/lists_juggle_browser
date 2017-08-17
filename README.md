@@ -1,5 +1,7 @@
 # Lists Juggle Browser
 
+[![Code Climate](https://codeclimate.com/github/haslo/lists_juggle_browser.png)](https://codeclimate.com/github/haslo/lists_juggle_browser)
+
 An application that takes the wealth of data from Lists Juggler, and tries to
 distill it down into a number of reports that answer questions the community might
 have.
