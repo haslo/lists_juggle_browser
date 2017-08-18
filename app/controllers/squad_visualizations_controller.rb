@@ -19,15 +19,20 @@ class SquadVisualizationsController < ApplicationController
   end
 
   def create
-    @squadron = Importers::SquadronFromXws.build_squadron(params[:xws])
-    respond_to do |format|
-      format.html do
-        @squadron.save!
-        render :show
+    begin
+      @squadron = Importers::SquadronFromXws.build_squadron(params[:xws])
+      respond_to do |format|
+        format.html do
+          @squadron.save!
+          render :show
+        end
+        format.png do
+          send_data compose_visualization(@squadron), content_type: 'image/png', disposition: 'inline'
+        end
       end
-      format.png do
-        send_data compose_visualization(@squadron), content_type: 'image/png', disposition: 'inline'
-      end
+    rescue JSON::ParserError => e
+      flash[:alert] = t('flash.alert.invalid_xws')
+      redirect_to new_squad_visualization_path
     end
   end
 
