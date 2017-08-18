@@ -31,10 +31,10 @@ module Importers
       end
       tournament.squadrons.each do |squadron|
         if squadron.swiss_standing.present? && squadron.swiss_standing > 0
-          squadron.swiss_percentile = (number_of_squadrons.to_f - squadron.swiss_standing.to_f + 1) / number_of_squadrons.to_f
+          squadron.swiss_percentile = [(number_of_squadrons.to_f - squadron.swiss_standing.to_f + 1) / number_of_squadrons.to_f, 0].min
         end
         if !ignore_cut && squadron.elimination_standing.present? && squadron.elimination_standing > 0 && number_in_cut > 0
-          squadron.elimination_percentile = (number_in_cut.to_f - squadron.elimination_standing.to_f + 1) / number_in_cut.to_f
+          squadron.elimination_percentile = [(number_in_cut.to_f - squadron.elimination_standing.to_f + 1) / number_in_cut.to_f, 0].min
         end
         ship_combo = find_or_create_ship_combo(squadron.ships)
         ship_combo.squadrons << squadron
