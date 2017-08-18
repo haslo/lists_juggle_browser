@@ -8,7 +8,7 @@ module Importers
     def rebuild_all_ranking_data(minimum_id: nil, start_date: nil)
       Tournament.includes(:squadrons).all.each do |tournament|
         if minimum_id.nil? || tournament.lists_juggler_id >= minimum_id
-          if start_date.nil? || tournament.date.nil? || tournament.date >= DateTime.parse(start_date.to_s)
+          if start_date.nil? || tournament.date.nil? || tournament.date >= DateTime.parse(start_date.to_s).beginning_of_day
             build_ranking_data(tournament.lists_juggler_id)
           end
         end
