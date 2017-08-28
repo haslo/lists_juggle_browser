@@ -1,6 +1,6 @@
 ### Minor News
 
-* 2017-08-28: Factions in Archetype Names, moved About from I18n to Repository
+* 2017-08-28: Factions in Archetypes
 
 ### 2017-08-17: Version 1.1
 
