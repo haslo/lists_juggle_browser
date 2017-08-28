@@ -18,6 +18,7 @@ module Generators
             position:           position,
             id:                 ship_combo.id,
             name:               ship_combo.archetype_name,
+            faction:            ship_combo.faction,
             link:               context.ship_combo_url(ship_combo.id, format: :json),
             ships:              ships[ship_combo.id].map do |ship|
               {

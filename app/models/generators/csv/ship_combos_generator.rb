@@ -10,6 +10,7 @@ module Generators
             csv << [
               context.t('ship_combos.csv.position'),
               context.t('ship_combos.csv.archetype_name'),
+              context.t('ship_combos.csv.faction'),
               context.t('ship_combos.csv.link'),
               context.t('ship_combos.csv.ship_names'),
               context.t('ship_combos.csv.squadron_count'),
@@ -22,6 +23,7 @@ module Generators
                 csv << [
                   index + 1,
                   ship_combo.archetype_name,
+                  ship_combo.faction,
                   context.ship_combo_url(ship_combo.id),
                   ships[ship_combo.id].map { |s| s[:name] }.join(', '),
                   ship_combo.squadrons,

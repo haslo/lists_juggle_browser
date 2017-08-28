@@ -14,6 +14,10 @@ module Rankers
           on ship_combos_ships.ship_combo_id = ship_combos.id
         inner join tournaments
           on squadrons.tournament_id = tournaments.id
+        inner join factions
+          on squadrons.faction_id = factions.id
+        inner join factions as primary_factions
+          on factions.primary_faction_id = primary_factions.id
       SQL
       weight_query_builder = WeightQueryBuilder.new(ranking_configuration)
       attributes           = {
@@ -22,12 +26,13 @@ module Rankers
         weight:             weight_query_builder.build_weight_query,
         squadrons:          'count(distinct squadrons.id)',
         tournaments:        'count(distinct tournaments.id)',
+        faction:            'primary_factions.name',
         average_percentile: weight_query_builder.build_average_query,
         average_wlr:        weight_query_builder.build_win_loss_query,
       }
       ship_combos_relation = ShipCombo
                                .joins(joins)
-                               .group('ship_combos.id, ship_combos.archetype_name')
+                               .group('ship_combos.id, ship_combos.archetype_name, primary_factions.name')
                                .order('weight desc')
                                .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       if ship_id.present?

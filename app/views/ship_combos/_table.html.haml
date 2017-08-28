@@ -2,6 +2,7 @@
   %tr
     %th.text-nowrap= t('.position')
     %th.text-nowrap= t('.archetype_name')
+    %th.text-nowrap= t('.faction')
     %th.text-nowrap= t('.ship_names')
     %th.text-nowrap= t('.squadron_count')
     %th.text-nowrap= t('.tournaments_count')
@@ -16,6 +17,8 @@
       %td
         = link_with_filter_to ship_combo_path(ship_combo.id) do
           = ship_combo.archetype_name.presence || t('.unnamed_archetype')
+      %td
+        %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{faction_icon(ship_combo.faction)}"}
       %td.ship-combo-cell
         - ships[ship_combo.id].each do |ship_info|
           %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship_info[:font_icon_class]}"}

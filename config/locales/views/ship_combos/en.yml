@@ -7,6 +7,7 @@ en:
     table:
       position: 'Position'
       archetype_name: 'Archetype Name'
+      faction: 'Faction'
       unnamed_archetype: '(unnamed)'
       ship_names: 'Ship Types'
       squadron_count: '# Squadrons'
@@ -42,6 +43,7 @@ en:
     csv:
       position: 'Position'
       archetype_name: 'Archetype Type'
+      faction: 'Faction'
       link: 'Link'
       ship_names: 'Ship Names'
       squadron_count: '# Squadrons'
