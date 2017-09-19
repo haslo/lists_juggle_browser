@@ -15,7 +15,7 @@ The [source is available on GitHub](https://github.com/haslo/lists_juggle_browse
 and the application stack uses [PostgreSQL](https://www.postgresql.org/), [Ruby on Rails](http://rubyonrails.org/),
 [jQuery](https://jquery.com/) and [Bootstrap](http://getbootstrap.com/). The server runs
 [nginx](https://www.nginx.com/solutions/web-server/) in front of [puma](http://puma.io/) on
-[Ubuntu](https://www.ubuntu.com/). The image export uses [dom-to-image](https://github.com/tsayen/dom-to-image).
+[Ubuntu](https://www.ubuntu.com/). The image export uses [ChunkyPNG](http://chunkypng.com/) with [OilyPNG](https://github.com/wvanbergen/oily_png).
 
 Imports are automatic (based on xwing-data), and things like list archetypes the DB doesn't know yet are automagically
 generated, which means they'll never get stale because no human interaction is involved. On the other hand, my database
