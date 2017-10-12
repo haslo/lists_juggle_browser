@@ -14,7 +14,7 @@ module Importers
           tournament      = Tournament.find_by(lists_juggler_id: lists_juggler_id)
           tournament_date = if tournament.nil?
                               begin
-                                uri             = URI.parse("http://lists.starwarsclubhouse.com/api/v1/tournament/#{tournament.lists_juggler_id}")
+                                uri             = URI.parse("http://lists.starwarsclubhouse.com/api/v2/tournament/#{tournament.lists_juggler_id}")
                                 response        = Net::HTTP.get_response(uri)
                                 tournament_data = JSON.parse(response.body).try(:[], 'tournament')
                                 Date.parse(tournament_data['date'])
@@ -33,7 +33,7 @@ module Importers
     end
 
     def sync_tournament(tournament)
-      uri      = URI.parse("http://lists.starwarsclubhouse.com/api/v1/tournament/#{tournament.lists_juggler_id}")
+      uri      = URI.parse("http://lists.starwarsclubhouse.com/api/v2/tournament/#{tournament.lists_juggler_id}")
       response = Net::HTTP.get_response(uri)
       begin
         tournament_data  = JSON.parse(response.body).try(:[], 'tournament')

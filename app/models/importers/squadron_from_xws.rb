@@ -19,8 +19,16 @@ module Importers
                                                   pilot:    pilot,
                                                 })
           squadron.association(:ship_configurations).add_to_target(configuration)
-          (pilot_xws['upgrades'] || []).each do |upgrade_type_key, upgrade_keys|
+          (pilot_xws['upgrades'] || []).each do |upgrade_type_key, upgrade_definitions|
             upgrade_type = find_with_key(UpgradeType, upgrade_type_key)
+            upgrade_keys = upgrade_definitions.map do |upgrade_definition|
+              if upgrade_definition.is_a?(Hash)
+                # handle deviation from XWS spec that Lists Juggler uses to send meta-wing all the points data
+                upgrade_definition['name']
+              else
+                upgrade_definition
+              end
+            end
             upgrade_keys.each do |upgrade_key|
               upgrade = find_with_key(upgrade_type.upgrades, upgrade_key)
               configuration.association(:upgrades).add_to_target(upgrade)
