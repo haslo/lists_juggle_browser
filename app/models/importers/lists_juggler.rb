@@ -5,9 +5,9 @@ module Importers
     end
 
     def sync_tournaments(minimum_id: nil, start_date: nil, add_missing: false)
-      uri         = URI.parse('http://lists.starwarsclubhouse.com/api/v1/tournaments')
-      response    = Net::HTTP.get_response(uri)
-      tournaments = JSON.parse(response.body).try(:[], 'tournaments') || []
+      uri         = ::URI.parse('http://lists.starwarsclubhouse.com/api/v1/tournaments')
+      response    = ::Net::HTTP.get_response(uri)
+      tournaments = ::JSON.parse(response.body).try(:[], 'tournaments') || []
       tournaments.sort.each do |lists_juggler_id|
         if minimum_id.nil? || lists_juggler_id >= minimum_id
           puts "[#{lists_juggler_id}]"
