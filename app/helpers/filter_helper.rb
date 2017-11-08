@@ -27,6 +27,8 @@ module FilterHelper
       [I18n.t('shared.filter_configurator.dates.grand_nerfbat'), Date.new(2017, 3, 17)],
       [I18n.t('shared.filter_configurator.dates.c_roc'), Date.new(2017, 6, 8)],
       [I18n.t('shared.filter_configurator.dates.wave_11'), Date.new(2017, 7, 13)],
+      [I18n.t('shared.filter_configurator.dates.guns_for_hire'), Date.new(2017, 10, 26)],
+      [I18n.t('shared.filter_configurator.dates.grand_nerfbat_ii'), Date.new(2017, 11, 6)],
       [I18n.t('shared.filter_configurator.dates.today'), Date.today],
     ]
   end
