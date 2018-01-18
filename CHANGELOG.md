@@ -1,7 +1,7 @@
 ### Minor News
 
 * 2018-01-18: Fonts updated for ship icons etc.
-* 2017-12-01: Added ships from waves 12 and 13
+* 2017-12-06: Added ships from waves 12 and 13
 * 2017-11-08: JSON export fix for XWS
 * 2017-08-28: Factions in Archetypes
 
