@@ -439,7 +439,7 @@ i.xwing-miniatures-font-unique-outline:before {
  */
 @font-face {
   font-family: XWingShip;
-  src: url("xwing-miniatures-ships-xiii.ttf"); }
+  src: url("/fonts/xwing-miniatures-ships-xiii.ttf"); }
 
 i.xwing-miniatures-ship {
   font-family: XWingShip;
