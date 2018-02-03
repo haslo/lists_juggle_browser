@@ -46,6 +46,8 @@ module Importers
                                                        id:         pilot_data['id'])
         pilot.name       = pilot_data['name']
         pilot.image_path = pilot_data['image']
+        pilot.points     = pilot_data['points']
+        pilot.skill     = pilot_data['skill']
         if pilot_data['conditions'].present?
           pilot_data['conditions'].each do |condition_name|
             pilot.conditions << Condition.find_by(name: condition_name)
@@ -65,6 +67,7 @@ module Importers
                                                                  xws:             upgrade_type_data[2],
                                                                  font_icon_class: upgrade_type_data[3])
         upgrade.image_path   = upgrade_data['image']
+        upgrade.points     = upgrade_data['points']
         if upgrade_data['conditions'].present?
           upgrade_data['conditions'].each do |condition_name|
             upgrade.conditions << Condition.find_by(name: condition_name)
