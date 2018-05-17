@@ -45,7 +45,7 @@ module Importers
           model = relation.find_by(xws: key)
         end
         return model if model.present?
-        puts "-> looking again for #{relation.name} #{key} - #{faction.try(:id).inspect} <-"
+        puts "-> looking again for #{relation.name} #{key} - #{Faction.where(xws: faction_xws).try(:id).inspect} <-"
         {
           'adv'              => 'advanced',
           'ketsupnyo'        => 'ketsuonyo',
