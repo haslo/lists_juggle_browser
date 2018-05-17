@@ -12,7 +12,7 @@ class Squadron < ApplicationRecord
 
   def xws
     # remove proprietary XWS format extensions for export - if you need the raw proprietary format, use attributes['xws'] instead
-    JSON.parse(attributes['xws'].to_json.gsub(/{"name":"([^"]+)","points":[\d]+}/, '"\1"'))
+    JSON.parse(attributes['xws'].to_json.gsub(/{"name":"([^"]+)","points":-?[\d]+}/, '"\1"'))
   end
 
 end
