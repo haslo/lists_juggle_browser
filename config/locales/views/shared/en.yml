@@ -28,8 +28,9 @@ en:
         c_roc: 'C-ROC'
         wave_11: 'Wave 11'
         guns_for_hire: 'Guns for Hire'
-        grand_nerfbat_ii: 'Jumpmaster/SLAM/Biggs Nerf'
+        grand_nerfbat_ii: 'Jumpmaster/SLAM/Biggs/Attanni Nerf'
         wave_12_13: 'Waves 12/13'
+        faq_4_4_1: 'FAQ 4.4.1 (Harpooned, Trajectory Simulator)'
         today: 'Today'
       multipliers:
         large_tournament_multiplier:
