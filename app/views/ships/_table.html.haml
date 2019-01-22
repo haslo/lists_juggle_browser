@@ -25,7 +25,7 @@
       %td.pilots-cell
         - pilots = ship_pilots[ship.id]
         - pilots.each.with_index do |pilot, index|
-          - if !(defined?(show_faction) && show_faction) || (pilot.faction.primary_faction.name == ship.faction_name)
+          - if !(defined?(show_faction) && show_faction) || (pilot.faction.name == ship.faction_name)
             %span.text-nowrap
               %small
                 %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{faction_icon(pilot.faction.name)}"}

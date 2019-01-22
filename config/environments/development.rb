@@ -45,6 +45,8 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet                  = true
 
+  config.x.listfortress.uri = 'http://127.0.0.1:3000'
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
@@ -53,9 +55,9 @@ Rails.application.configure do
   config.file_watcher                  = ActiveSupport::EventedFileUpdateChecker
 
   Rails.application.config.middleware.use ExceptionNotification::Rack, email: {
-    email_prefix:         '[META_WING] ',
+    email_prefix:         '[META_WING2] ',
     sender_address:       %{"Exception Notifier" <notifier@meta-wing.com>},
-    exception_recipients: %w{haslo@haslo.ch},
+    exception_recipients: %w{matthew.whited@gmail.com},
   }
 
 end

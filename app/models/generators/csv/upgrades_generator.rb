@@ -23,7 +23,7 @@ module Generators
                   index + 1,
                   upgrade.name,
                   context.upgrade_url(upgrade.id),
-                  upgrade.upgrade_type,
+                  upgrade.upgrade_sides.first.upgrade_type, #modified
                   upgrade.squadrons,
                   upgrade.tournaments,
                   (upgrade.average_percentile * 10000).to_i / 100.0,

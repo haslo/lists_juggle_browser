@@ -27,7 +27,7 @@ module Rankers
         faction:              'factions.name',
         ship_id:              'ships.id',
         ship_name:            'ships.name',
-        ship_font_icon_class: 'ships.font_icon_class',
+        ship_font_icon_class: 'ships.icon',
         weight:               weight_query_builder.build_weight_query,
         squadrons:            'count(distinct squadrons.id)',
         tournaments:          'count(distinct tournaments.id)',

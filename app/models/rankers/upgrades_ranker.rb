@@ -8,8 +8,8 @@ module Rankers
       end_date        = ranking_configuration[:ranking_end]
       tournament_type = ranking_configuration[:tournament_type]
       joins           = <<-SQL
-        inner join upgrade_types
-          on upgrade_types.id = upgrades.upgrade_type_id
+        inner join upgrade_sides
+          on upgrade_sides.upgrade_id = upgrades.id
         inner join ship_configurations_upgrades
           on ship_configurations_upgrades.upgrade_id = upgrades.id
         inner join ship_configurations
@@ -28,8 +28,8 @@ module Rankers
         id:                           'upgrades.id',
         xws:                          'upgrades.xws',
         name:                         'upgrades.name',
-        upgrade_type:                 'upgrade_types.name',
-        upgrade_type_font_icon_class: 'upgrade_types.font_icon_class',
+        upgrade_type:                 'upgrade_sides.upgrade_type',
+        #upgrade_type_font_icon_class: nil,
         weight:                       weight_query_builder.build_weight_query,
         squadrons:                    'count(distinct squadrons.id)',
         tournaments:                  'count(distinct tournaments.id)',
@@ -38,7 +38,7 @@ module Rankers
       }
       upgrade_relation     = Upgrade
                                .joins(joins)
-                               .group('upgrades.id, upgrades.name, upgrade_types.name, upgrade_types.font_icon_class')
+                               .group('upgrades.id, upgrades.name, upgrade_sides.upgrade_type') #, upgrade_types.font_icon_class
                                .order('weight desc')
                                .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       if ship_id.present?

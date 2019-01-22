@@ -52,7 +52,7 @@ module Rankers
         case when sum(tournaments.num_players) is null or sum(tournaments.num_players) = 0 then 1000 else sum(tournaments.num_players) end desc,
         max(tournaments.date) desc
       SQL
-      @squadrons = squadron_query.all.includes({tournament: :tournament_type}, :ship_combo, {ship_configurations: [{pilot: :ship}, {upgrades: :upgrade_type}]}).limit(limit).order(order).group(Squadron.column_names - ['xws'])
+      @squadrons = squadron_query.all.includes({tournament: :tournament_type}, :ship_combo, {ship_configurations: [{pilot: :ship}, {upgrades: :upgrade_sides}]}).limit(limit).order(order).group(Squadron.column_names - ['xws'])
 
       @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
     end

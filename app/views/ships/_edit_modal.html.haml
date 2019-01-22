@@ -7,8 +7,6 @@
           %button.close{'aria-label' => t('.close'), 'data-dismiss' => 'modal', :type => 'button'}
             %span{'aria-hidden' => 'true'} ×
         .modal-body
-          = f.label :font_icon_class
-          = f.text_field :font_icon_class, class: 'form-control'
         .modal-footer
           %button.btn.btn-secondary{'data-dismiss' => 'modal', :type => 'button'}= t('.close')
           = f.submit t('.save'), class: 'btn btn-primary'
