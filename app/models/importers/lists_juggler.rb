@@ -115,8 +115,10 @@ module Importers
     def sync_squadron(tournament, squadron_data)
       if squadron_data['list_json'].present? 
         squadron    = SquadronFromXws.build_squadron(squadron_data['list_json'])
-        faction_xws = squadron_data['list_json'].try(:[], 'faction')
-        faction     = Faction.find_by(xws: faction_xws)
+        #faction_xws = squadron_data['list_json']['faction']
+        #p faction_xws
+        #faction     = Faction.find_by(xws: faction_xws)
+        #p faction.id
         squadron.assign_attributes({
                                      tournament:           tournament,
                                      player_name:          squadron_data['id'],
@@ -125,7 +127,7 @@ module Importers
                                      points:               squadron_data['score'],
                                      elimination_standing: squadron_data['top_cut_rank'],
                                      swiss_standing:       squadron_data['swiss_rank'],
-                                     faction_id:           faction.try(:id),
+                                     faction_id:           squadron.faction_id,
                                    })
         squadron.save!
         squadron
