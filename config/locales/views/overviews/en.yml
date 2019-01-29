@@ -11,7 +11,7 @@ en:
       intro_title: 'What is this?'
       intro_text: |
         <p>What this tool is trying to do is a bit of meta analysis. It uses the data from the
-          <a href="http://lists.starwarsclubhouse.com/">X-Wing Lists Juggler</a> and slices and dices it in a
+          <a href="http://listfortress.com/">X-Wing ListFortress</a> and slices and dices it in a
           variety of ways.</p>
         <p>On the surface, you can use it to answer simple questions like this, with a bit of drilldown:</p>
         <ul>
@@ -33,10 +33,8 @@ en:
         <ul>
           <li><a href="/ship_combos?ranking_start=%{release}">Which list archetypes have been performing most consistently
             since release?</a></li>
-          <li><a href="/ship_combos?ranking_start=%{weeks_ago}&tournament_type=%{regional_type}&widespread_use_multiplier=false&use_ranking_data=elimination">Which
-            lists have been performing surprisingly well at Regionals in the last two weeks?</a></li>
-          <li><a href="/ships?ranking_start=2016-03-17&ranking_end=2016-10-17">Which ships were able to stand up to the
-            U-Boats before the Deadeye nerf?</a></li>
+          <li><a href="/ship_combos?ranking_start=%{weeks_ago}&tournament_type=%{hyperspace_trail}&widespread_use_multiplier=false&use_ranking_data=elimination">Which
+            lists have been performing surprisingly well at Hyperspace Trials in the last two weeks?</a></li>
         </ul>
         <p>You'll find technical details of both implementation and algorithms on the <a href="/about">About page</a>.</p>
         <p>Have fun, and <strong>Fly Casual</strong>.</p>

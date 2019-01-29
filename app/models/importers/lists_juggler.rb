@@ -8,14 +8,26 @@ module Importers
     class InvalidTournament < StandardError
     end
 
-    def sync_tournaments(minimum_id: nil, start_date: nil, add_missing: false)
+    def sync_tournaments(minimum_id: nil, start_date: nil, add_missing: false, use_updated: false)
+      latest_update = KeyValueStoreRecord.get('latest_tourney_update')
       baseuri = Rails.configuration.x.listfortress.uri
-      uri         = URI.parse(baseuri + '/tournaments')
-      req = Net::HTTP::Get.new(uri.path, {'Accept' => 'application/json'})
+      uri = nil
+      if latest_update.present? && use_updated==true
+        latest_update = Time.iso8601(latest_update)
+        p latest_update
+        uri         = URI.parse(baseuri + '/tournaments?updatedafter='+latest_update.in_time_zone('UTC').iso8601)
+      else
+        uri         = URI.parse(baseuri + '/tournaments')
+      end
+      p uri
+      p uri.to_s
+      req = Net::HTTP::Get.new(uri.to_s, {'Accept' => 'application/json'})
       response = Net::HTTP.new(uri.host, uri.port).request(req)
+      p response
       cleaned = response.body.encode("UTF-8", {:invalid => :replace, :undef => :replace})
       tournaments = ExecJS.eval(cleaned)
       tournaments = tournaments.sort_by { |hash| hash['id'].to_i || 0}
+      latest_update = nil
       tournaments.each do |t|
         if minimum_id.nil? || t['id']>= minimum_id
           puts "[#{t['id']}]"
@@ -35,11 +47,21 @@ module Importers
                             end
           if (add_missing && tournament.nil?) || start_date.nil? || (tournament_date.nil? || tournament_date >= DateTime.parse(start_date.to_s))
             tournament ||= Tournament.new(lists_juggler_id: t['id'])
-            sync_tournament(tournament)
+            tournament = sync_tournament(tournament)
+            if latest_update.nil? && tournament.updated_at.present?
+              latest_update = tournament.updated_at
+            end
+            if tournament.present? && tournament.id.present?
+              if tournament.updated_at > latest_update
+                latest_update = tournament.updated_at
+              end
+            end
           end
         end
       end
-      
+      if latest_update.present?
+        KeyValueStoreRecord.set!('latest_tourney_update',latest_update.in_time_zone('UTC').iso8601)
+      end
     end
 
     def sync_tournament(tournament)
@@ -82,6 +104,7 @@ module Importers
         puts "ERROR " + e.message
         #puts e.backtrace
       end
+      tournament
     end
 
     def sync_games(tournament, rounds_data, squadron_container)

@@ -8,6 +8,10 @@ module Importers
       ExecJS.eval(js_string)
     end
 
+    def reset_pilots
+      PilotSlot.destroy_all
+    end
+
     def sync_all
       @dataroot = Rails.root+'vendor'+'xwing-data2'
       @manifest = parse_json('data/' + "manifest.json")

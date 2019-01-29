@@ -10,7 +10,7 @@
     %li= "#{t('.number_of_games')}: #{Game.count}"
 
 %h2= t('.intro_title')
-= t('.intro_text', release: Date.new(2012, 9, 14).iso8601,
+= t('.intro_text', release: Date.new(2018, 9, 13).iso8601,
                    weeks_ago: 2.week.ago.to_date.iso8601,
                    guri: Pilot.find_by(name: 'Guri').try(:id),
-                   regional_type: TournamentType.find_by(name: 'Regional').try(:id)).html_safe
+                   hyperspace_trail: TournamentType.find_by(name: 'Hyperspace Trial').try(:id)).html_safe

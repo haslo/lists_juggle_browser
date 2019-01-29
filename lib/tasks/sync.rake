@@ -2,6 +2,11 @@ require 'csv'
 
 namespace :sync do
 
+  desc 'reset_pilots'
+  task reset_pilots: :environment do
+    Importers::XwingData2.new.reset_pilots
+  end
+
   desc 'xwing-data2'
   task xwing_data2: :environment do
     Importers::XwingData2.new.sync_all
@@ -9,7 +14,12 @@ namespace :sync do
 
   desc 'lists fortress'
   task :tournaments, [:minimum_id] => :environment do |_t, args|
-    Importers::ListsJuggler.new.sync_tournaments(minimum_id: args[:minimum_id].to_i, add_missing: false)
+    Importers::ListsJuggler.new.sync_tournaments(minimum_id: args[:minimum_id].to_i, add_missing: false, use_updated: false)
+  end
+
+  desc 'lists fortress'
+  task :tournaments_updated, [:minimum_id] => :environment do |_t, args|
+    Importers::ListsJuggler.new.sync_tournaments(minimum_id: args[:minimum_id].to_i, add_missing: false, use_updated: true)
   end
 
   desc 'lists fortress, last month'

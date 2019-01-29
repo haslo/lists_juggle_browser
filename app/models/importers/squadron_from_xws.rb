@@ -91,7 +91,8 @@ module Importers
           'Lowhhrick'         => 'lowhhrick',
           'tieinterceptor'    => 'tieininterceptor',
           'niennumb-t70xwing' => 'niennunb',
-          'tiesilencer'       => 'tievnsilencer'
+          'tiesilencer'       => 'tievnsilencer',
+          'scavengedyt1300lightfreighter' => 'scavengedyt1300'
         }.each do |original, substitute|
           key = key.gsub(original, substitute)
         end
