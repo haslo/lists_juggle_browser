@@ -38,7 +38,7 @@ module Importers
       req = Net::HTTP::Get.new(uri.path, 'Accept' => 'application/json')
       response = Net::HTTP.new(uri.host, uri.port).request(req)
       begin
-        tournament_data  = ExecJS.eval(response.body)
+        tournament_data  = ExecJS.eval(encode(response.body))
         venue_attributes = if tournament_data['name'].present? && tournament_data['location'].present? && tournament_data['country'].present?
                              {
                                name:    tournament_data['name'],
@@ -136,9 +136,17 @@ module Importers
         end
         req = Net::HTTP::Get.new(uri.to_s, {'Accept' => 'application/json'})
         response = Net::HTTP.new(uri.host, uri.port).request(req)
-        cleaned = response.body.encode("UTF-8", {:invalid => :replace, :undef => :replace})
+        cleaned = encode(response.body)
         tournaments = ExecJS.eval(cleaned)
         return tournaments
+      end
+
+      def encode str
+        encoded = str.force_encoding('UTF-8')
+        unless encoded.valid_encoding?
+          encoded = str.encode("utf-8", invalid: :replace, undef: :replace, replace: '?')
+        end
+        encoded
       end
 
       def get_tournament_date(tournament)
