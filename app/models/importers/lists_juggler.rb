@@ -10,52 +10,20 @@ module Importers
 
     def sync_tournaments(minimum_id: nil, start_date: nil, add_missing: false, use_updated: false)
       latest_update = KeyValueStoreRecord.get('latest_tourney_update')
-      baseuri = Rails.configuration.x.listfortress.uri
-      uri = nil
-      if latest_update.present? && use_updated==true
+      if latest_update.present?
         latest_update = Time.iso8601(latest_update)
-        p latest_update
-        uri         = URI.parse(baseuri + '/tournaments?updatedafter='+latest_update.in_time_zone('UTC').iso8601)
-      else
-        uri         = URI.parse(baseuri + '/tournaments')
       end
-      p uri
-      p uri.to_s
-      req = Net::HTTP::Get.new(uri.to_s, {'Accept' => 'application/json'})
-      response = Net::HTTP.new(uri.host, uri.port).request(req)
-      p response
-      cleaned = response.body.encode("UTF-8", {:invalid => :replace, :undef => :replace})
-      tournaments = ExecJS.eval(cleaned)
+      tournaments = get_tournaments(latest_update,use_updated)
       tournaments = tournaments.sort_by { |hash| hash['id'].to_i || 0}
-      latest_update = nil
       tournaments.each do |t|
         if minimum_id.nil? || t['id']>= minimum_id
           puts "[#{t['id']}]"
           tournament      = Tournament.find_by(lists_juggler_id: t['id'])
-          tournament_date = if tournament.nil?
-                              begin
-                                uri             = URI.parse(baseuri+"/tournament/#{tournament.lists_juggler_id}")
-                                req = Net::HTTP::Get.new(uri.path, 'Content-Type' => 'application/json')
-                                response = Net::HTTP.new(uri.host, uri.port).request(req)
-                                tournament_data = JSON.parse(response.body)
-                                Date.parse(tournament_data['date'])
-                              rescue
-                                nil
-                              end
-                            else
-                              tournament.date
-                            end
+          tournament_date = get_tournament_date(tournament)
           if (add_missing && tournament.nil?) || start_date.nil? || (tournament_date.nil? || tournament_date >= DateTime.parse(start_date.to_s))
             tournament ||= Tournament.new(lists_juggler_id: t['id'])
             tournament = sync_tournament(tournament)
-            if latest_update.nil? && tournament.updated_at.present?
-              latest_update = tournament.updated_at
-            end
-            if tournament.present? && tournament.id.present?
-              if tournament.updated_at > latest_update
-                latest_update = tournament.updated_at
-              end
-            end
+            latest_update = update_latest_update(latest_update,tournament)
           end
         end
       end
@@ -157,5 +125,49 @@ module Importers
       end
     end
 
+    private
+      def get_tournaments(latest_update,use_updated)
+        baseuri = Rails.configuration.x.listfortress.uri
+        uri = nil
+        if latest_update.present? && use_updated==true
+          uri         = URI.parse(baseuri + '/tournaments?updatedafter='+latest_update.in_time_zone('UTC').iso8601)
+        else
+          uri         = URI.parse(baseuri + '/tournaments')
+        end
+        req = Net::HTTP::Get.new(uri.to_s, {'Accept' => 'application/json'})
+        response = Net::HTTP.new(uri.host, uri.port).request(req)
+        cleaned = response.body.encode("UTF-8", {:invalid => :replace, :undef => :replace})
+        tournaments = ExecJS.eval(cleaned)
+        return tournaments
+      end
+
+      def get_tournament_date(tournament)
+        baseuri = Rails.configuration.x.listfortress.uri
+        if tournament.nil?
+          begin
+            uri             = URI.parse(baseuri+"/tournament/#{tournament.lists_juggler_id}")
+            req = Net::HTTP::Get.new(uri.path, 'Content-Type' => 'application/json')
+            response = Net::HTTP.new(uri.host, uri.port).request(req)
+            tournament_data = JSON.parse(response.body)
+            Date.parse(tournament_data['date'])
+          rescue
+            nil
+          end
+        else
+          tournament.date
+        end
+      end
+
+      def update_latest_update(latest_update,tournament)
+        if latest_update.nil? && tournament.updated_at.present?
+          latest_update = tournament.updated_at
+        end
+        if tournament.present? && tournament.id.present?
+          if tournament.updated_at > latest_update
+            latest_update = tournament.updated_at
+          end
+        end
+        return latest_update
+      end
   end
 end
