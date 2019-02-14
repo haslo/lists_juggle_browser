@@ -16,12 +16,14 @@
           .col-sm-2
             = text_field_tag :ranking_start, ranking_configuration[:ranking_start], class: 'form-control filter-input', id: 'ranking-start'
             = text_field_tag :ranking_end, ranking_configuration[:ranking_end], class: 'form-control filter-input', id: 'ranking-end'
-          .col-sm-4
+          .col-sm-3
             = select_tag :large_tournament_multiplier, options_for_select([[t('.multipliers.large_tournament_multiplier.multiply'), 'true'], [t('.multipliers.large_tournament_multiplier.do_not_multiply'), 'false']], ranking_configuration[:large_tournament_multiplier].to_s), class: 'form-control filter-input'
             = select_tag :widespread_use_multiplier, options_for_select([[t('.multipliers.widespread_use_multiplier.multiply_high'), 'true'], [t('.multipliers.widespread_use_multiplier.do_not_multiply'), 'false']], ranking_configuration[:widespread_use_multiplier].to_s), class: 'form-control filter-input'
-          .col-sm-4
+          .col-sm-3
             = select_tag :use_ranking_data, options_for_select(preset_ranking_data, ranking_configuration[:use_ranking_data]), class: 'form-control filter-input', id: 'use-ranking-data'
             = select_tag :tournament_type, options_from_collection_for_select(TournamentType.all, :id, :name, ranking_configuration[:tournament_type]), include_blank: t('.all_types'), class: 'form-control filter-input', id: 'tournament-type'
+          .col-sm-2
+            = select_tag :format_id, options_from_collection_for_select(Format.all, :id, :name, ranking_configuration[:format_id]), include_blank: t('.all_formats'), class: 'form-control filter-input', id: 'format_id'
 
 - content_for :javascript do
   :coffeescript

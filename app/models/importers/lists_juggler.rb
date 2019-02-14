@@ -53,7 +53,7 @@ module Importers
           tournament.assign_attributes({
                                          name:            tournament_data['name'],
                                          date:            tournament_data['date'],
-                                         format:          tournament_data['format_id'],
+                                         format_id:       Format.find_or_create_by(id: tournament_data['format_id']).id,
                                          num_players:     tournament_data['participants'].length,
                                          tournament_type: TournamentType.find_or_initialize_by(id: tournament_data['tournament_type_id']),
                                          venue:           venue_attributes.present? ? Venue.find_or_initialize_by(venue_attributes) : nil,

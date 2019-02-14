@@ -7,6 +7,7 @@ module Rankers
       start_date      = ranking_configuration[:ranking_start]
       end_date        = ranking_configuration[:ranking_end]
       tournament_type = ranking_configuration[:tournament_type]
+      game_format = ranking_configuration[:format_id]
       joins           = <<-SQL
         inner join squadrons
           on squadrons.ship_combo_id = ship_combos.id
@@ -67,10 +68,13 @@ module Rankers
       if tournament_type.present?
         ship_combos_relation = ship_combos_relation.where('tournaments.tournament_type_id = ?', tournament_type)
       end
+      if game_format.present?
+        ship_combos_relation = ship_combos_relation.where('tournaments.format_id = ?', game_format)
+      end
       @ship_combos = ShipCombo.fetch_query(ship_combos_relation, attributes)
       @ships       = Hash[ShipCombo.where(id: @ship_combos.map(&:id)).includes(:ships).map { |c| [c.id, c.ships.map { |s| { id: s.id, name: s.name} }] }]
 
-      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
+      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type, game_format).numbers
     end
 
   end

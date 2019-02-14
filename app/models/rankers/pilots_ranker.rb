@@ -7,6 +7,7 @@ module Rankers
       start_date      = ranking_configuration[:ranking_start]
       end_date        = ranking_configuration[:ranking_end]
       tournament_type = ranking_configuration[:tournament_type]
+      game_format = ranking_configuration[:format_id]
       joins           = <<-SQL
         inner join ships
           on ships.id = pilots.ship_id
@@ -58,9 +59,12 @@ module Rankers
       if tournament_type.present?
         pilot_relation = pilot_relation.where('tournaments.tournament_type_id = ?', tournament_type)
       end
+      if game_format.present?
+        pilot_relation = pilot_relation.where('tournaments.format_id = ?', game_format)
+      end
       @pilots = Pilot.fetch_query(pilot_relation, attributes)
 
-      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
+      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type, game_format).numbers
     end
 
   end

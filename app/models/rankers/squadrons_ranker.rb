@@ -7,6 +7,7 @@ module Rankers
       start_date      = ranking_configuration[:ranking_start]
       end_date        = ranking_configuration[:ranking_end]
       tournament_type = ranking_configuration[:tournament_type]
+      game_format = ranking_configuration[:format_id]
       joins           = <<-SQL
         inner join tournaments
           on tournaments.id = squadrons.tournament_id
@@ -43,6 +44,9 @@ module Rankers
       if tournament_type.present?
         squadron_query = squadron_query.where('tournaments.tournament_type_id = ?', tournament_type)
       end
+      if game_format.present?
+        squadron_query = squadron_query.where('tournaments.format_id = ?', game_format)
+      end
       order = <<-SQL
         case when squadrons.elimination_standing is null
           or squadrons.elimination_standing = 0
@@ -54,7 +58,7 @@ module Rankers
       SQL
       @squadrons = squadron_query.all.includes({tournament: :tournament_type}, :ship_combo, {ship_configurations: [{pilot: :ship}, {upgrades: :upgrade_sides}]}).limit(limit).order(order).group(Squadron.column_names - ['xws'])
 
-      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
+      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type, game_format).numbers
     end
 
   end

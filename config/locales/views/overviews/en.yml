@@ -27,7 +27,8 @@ en:
           <li>Whether having many players with a list should weigh the results higher or not</li>
           <li>Whether rankings from before the cut, after the cut, or both should be used (if both,
             results that have only a Swiss ranking will suffer because their ranking after the cut is "none")</li>
-          <li>There's also a filter for tournament types (Regionals, Store Champs, etc.)</li>
+          <li>There's a filter for tournament types (Regionals, Store Champs, etc.)</li>
+          <li>And new to 2.0 is a filter based on tournament format (Extended, Hyperspace, etc)</li>
         </ul>
         <p>Together, these filters can be used to answer questions like...</p>
         <ul>

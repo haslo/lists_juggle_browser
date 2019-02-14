@@ -50,6 +50,7 @@ module Importers
         {
           'force' => 'Force Power',
           'force-power' => 'Force Power',
+          'forcepower' => 'Force Power',
           'ept'   => 'Talent',
           'amd'   => 'Astromech',
           'mod'   => 'Modification'
@@ -92,7 +93,8 @@ module Importers
           'tieinterceptor'    => 'tieininterceptor',
           'niennumb-t70xwing' => 'niennunb',
           'tiesilencer'       => 'tievnsilencer',
-          'scavengedyt1300lightfreighter' => 'scavengedyt1300'
+          'scavengedyt1300lightfreighter' => 'scavengedyt1300',
+          'upsilonclasscommandshuttle' => 'upsilonclassshuttle'
         }.each do |original, substitute|
           key = key.gsub(original, substitute)
         end
