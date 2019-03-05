@@ -72,7 +72,7 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.x.listfortress.uri = 'http://listfortress.com/api/v1'
+  config.x.listfortress.uri = 'https://listfortress.com/api/v1'
 
   # Use a different logger for distributed setups.
   # require 'syslog/logger'

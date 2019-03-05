@@ -37,8 +37,9 @@ module Importers
     def sync_tournament(tournament)
       baseuri = Rails.configuration.x.listfortress.uri
       uri      = URI.parse(baseuri+"/tournaments/#{tournament.lists_juggler_id}")
-      req = Net::HTTP::Get.new(uri.path, 'Accept' => 'application/json')
-      response = Net::HTTP.new(uri.host, uri.port).request(req)
+      response = Net::HTTP.get_response(uri)
+      #req = Net::HTTP::Get.new(uri.path, 'Accept' => 'application/json')
+      #response = Net::HTTP.new(uri.host, uri.port).request(req)
       case response
       when Net::HTTPRedirection then
         location = response['location']
@@ -142,8 +143,9 @@ module Importers
         else
           uri         = URI.parse(baseuri + '/tournaments')
         end
-        req = Net::HTTP::Get.new(uri.to_s, {'Accept' => 'application/json'})
-        response = Net::HTTP.new(uri.host, uri.port).request(req)
+        response = Net::HTTP.get_response(uri)
+        #req = Net::HTTP::Get.new(uri.to_s, {'Accept' => 'application/json'})
+        #response = Net::HTTP.new(uri.host, uri.port).request(req)
         case response
           when Net::HTTPRedirection then
             location = response['location']
