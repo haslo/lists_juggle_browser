@@ -24,7 +24,7 @@ module Importers
             if (add_missing && tournament.nil?) || start_date.nil? || (tournament_date.nil? || tournament_date >= DateTime.parse(start_date.to_s))
               tournament ||= Tournament.new(lists_juggler_id: t['id'])
               tournament = sync_tournament(tournament)
-              latest_update = update_latest_update(latest_update,tournament)
+              latest_update = update_latest_update(latest_update,t)
             end
           end
         end
@@ -200,12 +200,14 @@ module Importers
       end
 
       def update_latest_update(latest_update,tournament)
-        if latest_update.nil? && tournament.updated_at.present?
-          latest_update = tournament.updated_at
+        if latest_update.nil? && tournament['updated_at'].present?
+          tupdate = Time.iso8601(tournament['updated_at'])
+          latest_update = tupdate
         end
-        if tournament.present? && tournament.id.present?
-          if tournament.updated_at > latest_update
-            latest_update = tournament.updated_at
+        if tournament.present? && tournament['id'].present?
+          tupdate = Time.iso8601(tournament['updated_at'])
+          if tupdate > latest_update
+            latest_update = tupdate
           end
         end
         return latest_update
