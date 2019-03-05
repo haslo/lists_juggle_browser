@@ -14,16 +14,18 @@ module Importers
         latest_update = Time.iso8601(latest_update)
       end
       tournaments = get_tournaments(latest_update,use_updated)
-      tournaments = tournaments.sort_by { |hash| hash['id'].to_i || 0}
-      tournaments.each do |t|
-        if minimum_id.nil? || t['id']>= minimum_id
-          puts "[#{t['id']}]"
-          tournament      = Tournament.find_by(lists_juggler_id: t['id'])
-          tournament_date = get_tournament_date(tournament)
-          if (add_missing && tournament.nil?) || start_date.nil? || (tournament_date.nil? || tournament_date >= DateTime.parse(start_date.to_s))
-            tournament ||= Tournament.new(lists_juggler_id: t['id'])
-            tournament = sync_tournament(tournament)
-            latest_update = update_latest_update(latest_update,tournament)
+      if tournaments.present?
+        tournaments = tournaments.sort_by { |hash| hash['id'].to_i || 0}
+        tournaments.each do |t|
+          if minimum_id.nil? || t['id']>= minimum_id
+            puts "[#{t['id']}]"
+            tournament      = Tournament.find_by(lists_juggler_id: t['id'])
+            tournament_date = get_tournament_date(tournament)
+            if (add_missing && tournament.nil?) || start_date.nil? || (tournament_date.nil? || tournament_date >= DateTime.parse(start_date.to_s))
+              tournament ||= Tournament.new(lists_juggler_id: t['id'])
+              tournament = sync_tournament(tournament)
+              latest_update = update_latest_update(latest_update,tournament)
+            end
           end
         end
       end
@@ -37,6 +39,12 @@ module Importers
       uri      = URI.parse(baseuri+"/tournaments/#{tournament.lists_juggler_id}")
       req = Net::HTTP::Get.new(uri.path, 'Accept' => 'application/json')
       response = Net::HTTP.new(uri.host, uri.port).request(req)
+      case response
+      when Net::HTTPRedirection then
+        location = response['location']
+        warn "redirected to #{location}"
+        response = handle_redirect(location)
+      end
       begin
         tournament_data  = ExecJS.eval(encode(response.body))
         venue_attributes = if tournament_data['name'].present? && tournament_data['location'].present? && tournament_data['country'].present?
@@ -136,9 +144,32 @@ module Importers
         end
         req = Net::HTTP::Get.new(uri.to_s, {'Accept' => 'application/json'})
         response = Net::HTTP.new(uri.host, uri.port).request(req)
+        case response
+          when Net::HTTPRedirection then
+            location = response['location']
+            warn "redirected to #{location}"
+            response = handle_redirect(location)
+        end
         cleaned = encode(response.body)
         tournaments = ExecJS.eval(cleaned)
         return tournaments
+      end
+
+      def handle_redirect(uri_str, limit=10)
+        raise ArgumentError, 'too many HTTP redirects' if limit == 0
+
+        response = Net::HTTP.get_response(URI(uri_str))
+
+        case response
+        when Net::HTTPSuccess then
+          response
+        when Net::HTTPRedirection then
+          location = response['location']
+          warn "redirected to #{location}"
+          fetch(location, limit - 1)
+        else
+          response.value
+        end
       end
 
       def encode str

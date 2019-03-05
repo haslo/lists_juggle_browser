@@ -45,7 +45,7 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet                  = true
 
-  config.x.listfortress.uri = 'http://127.0.0.1:3000/api/v1'
+  config.x.listfortress.uri = 'http://listfortress.com/api/v1'
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
