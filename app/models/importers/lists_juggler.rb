@@ -84,6 +84,42 @@ module Importers
       tournament
     end
 
+    def clean_tournaments()
+      tournaments = get_tournaments(nil,false)
+      if tournaments.present?
+        tournaments = tournaments.sort_by { |hash| hash['id'].to_i || 0}
+        tourney_ids = []
+        tournaments.each do |t|
+          if t['id'].present?
+            tourney_ids.push(t['id'])
+          end
+        end
+        if !tourney_ids.empty?
+          deleted_tournaments = Tournament.where.not(lists_juggler_id:tourney_ids)
+          deleted_tournaments.each do |dt|
+            puts dt.lists_juggler_id
+            remove_tournament(dt.lists_juggler_id)
+          end
+        end
+      end
+    end
+
+    def remove_tournament(tournament_id)
+      begin
+        tournament = Tournament.find_by(lists_juggler_id: tournament_id)
+        if tournament.present?
+          tournament.games.destroy_all
+          tournament.squadrons.destroy_all
+          tournament.destroy
+        else
+          raise InvalidTournament
+        end
+      rescue => e
+        puts "ERROR " + e.message
+        #puts e.backtrace
+      end
+    end
+
     def sync_games(tournament, rounds_data, squadron_container)
       rounds_data.each do |round_data|
         round_number = round_data['round_number']

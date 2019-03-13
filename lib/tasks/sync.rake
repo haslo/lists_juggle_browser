@@ -12,6 +12,17 @@ namespace :sync do
     Importers::XwingData2.new.sync_all
   end
 
+  desc 'list fortress remove deleted tournaments'
+  task clean_tournaments: :environment do
+    Importers::ListsJuggler.new.clean_tournaments()
+  end
+
+  desc 'list fortress delete tournament'
+  task :tournament_delete, [:tournament_id] => :environment do |_t, args|
+    tournament_id = args[:tournament_id].to_i
+    Importers::ListsJuggler.new.remove_tournament(tournament_id)
+  end
+
   desc 'lists fortress'
   task :tournaments, [:minimum_id] => :environment do |_t, args|
     Importers::ListsJuggler.new.sync_tournaments(minimum_id: args[:minimum_id].to_i, add_missing: false, use_updated: false)
