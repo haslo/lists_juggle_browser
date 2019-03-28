@@ -68,13 +68,18 @@ module Importers
         sync_pilot(pilot_hash,ship,faction_id)
       end
 
-      ship.save!
+      ship.save
     end
 
     def sync_pilot(pilot_hash,ship,faction_id)
-      pilot = Pilot.find_or_create_by(xws:pilot_hash['xws'],ffg:pilot_hash['ffg'],ship_id:ship.id,faction_id:faction_id)
+      pilot = Pilot.where({ffg:pilot_hash['ffg'],ship_id:ship.id,faction_id:faction_id}).find_or_create_by(xws:pilot_hash['xws'])
+      pilot.ffg = pilot_hash['ffg']
+      pilot.ship_id = ship.id
+      pilot.faction_id = faction_id
       pilot.name = pilot_hash['name']
-      pilot.caption = pilot_hash['caption']
+      if pilot_hash['caption'].present?
+        pilot.caption = pilot_hash['caption']
+      end
       pilot.initiative = pilot_hash['initiative']
       pilot.limited = pilot_hash['limited']
       pilot.ability = pilot_hash['ability']
@@ -106,8 +111,11 @@ module Importers
         pilot.force_recovers = pilot_hash['force']['recovers']
         pilot.force_side = pilot_hash['force']['side']
       end
-
-      pilot.save!
+      
+      if !pilot.save
+        puts pilot.name
+        puts pilot.errors.full_messages
+      end
     end
 
     def sync_upgrades
@@ -135,7 +143,7 @@ module Importers
         end
 
         #TODO Restrictions
-        upgrade.save!
+        upgrade.save
       end
     end
 

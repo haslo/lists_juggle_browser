@@ -53,7 +53,9 @@ module Importers
           'forcepower' => 'Force Power',
           'ept'   => 'Talent',
           'amd'   => 'Astromech',
-          'mod'   => 'Modification'
+          'mod'   => 'Modification',
+          'tactical-relay' => 'Tactical Relay',
+          'tacticalrelay' => 'Tactical Relay'
         }.each do |original, substitute|
           if key.casecmp(original) == 0
             key = substitute
