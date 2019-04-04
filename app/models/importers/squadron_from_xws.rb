@@ -96,7 +96,8 @@ module Importers
           'niennumb-t70xwing' => 'niennunb',
           'tiesilencer'       => 'tievnsilencer',
           'scavengedyt1300lightfreighter' => 'scavengedyt1300',
-          'upsilonclasscommandshuttle' => 'upsilonclassshuttle'
+          'upsilonclasscommandshuttle' => 'upsilonclassshuttle',
+          'oddballarc170' => 'oddball-arc170starfighter'
         }.each do |original, substitute|
           key = key.gsub(original, substitute)
         end
