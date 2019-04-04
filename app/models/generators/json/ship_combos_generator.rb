@@ -21,9 +21,12 @@ module Generators
             faction:            ship_combo.faction,
             link:               context.ship_combo_url(ship_combo.id, format: :json),
             ships:              ships[ship_combo.id].map do |ship|
+              puts ship[:id]
+              puts ship[:xws]
               {
                 id:   ship[:id],
                 name: ship[:name],
+                xws: ship[:xws],
                 link: context.ship_url(ship[:id], format: :json),
               }
             end,

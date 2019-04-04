@@ -19,7 +19,7 @@
         %td.text-nowrap
           %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{faction_icon(ship.faction_name)}"}
       %td.text-nowrap
-        %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship.font_icon_class}"}
+        %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship_icon(ship.xws)}"}
         = link_with_filter_to ship_path(ship.id) do
           = ship.name
       %td.pilots-cell

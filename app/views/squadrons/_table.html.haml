@@ -37,6 +37,7 @@
               = link_with_filter_to ship_path(ship_configuration.pilot.ship.id) do
                 = "(#{ship_configuration.pilot.ship.name})"
               - ship_configuration.upgrades.each do |upgrade|
+                %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{upgrade_type_icon(upgrade.upgrade_sides[0].upgrade_type)}"}
                 = link_with_filter_to upgrade_path(upgrade.id), class: 'link-with-hover-image' do
                   = image_tag upgrade_image_path(upgrade, format: :png)
                   = upgrade.name
@@ -44,6 +45,7 @@
             = t('.missing_pilot')
             %small
               - ship_configuration.upgrades.each do |upgrade|
+                %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{upgrade_type_icon(upgrade.upgrade_sides[0].upgrade_type)}"}
                 = link_with_filter_to upgrade_path(upgrade.id), class: 'link-with-hover-image' do
                   = image_tag upgrade_image_path(upgrade, format: :png)
                   = upgrade.name
