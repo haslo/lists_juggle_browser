@@ -7,6 +7,7 @@ module Rankers
       start_date      = ranking_configuration[:ranking_start]
       end_date        = ranking_configuration[:ranking_end]
       tournament_type = ranking_configuration[:tournament_type]
+      game_format = ranking_configuration[:format_id]
       joins           = <<-SQL
         inner join squadrons
           on squadrons.ship_combo_id = ship_combos.id
@@ -16,8 +17,6 @@ module Rankers
           on squadrons.tournament_id = tournaments.id
         inner join factions
           on squadrons.faction_id = factions.id
-        inner join factions as primary_factions
-          on factions.primary_faction_id = primary_factions.id
       SQL
       weight_query_builder = WeightQueryBuilder.new(ranking_configuration)
       attributes           = {
@@ -26,13 +25,13 @@ module Rankers
         weight:             weight_query_builder.build_weight_query,
         squadrons:          'count(distinct squadrons.id)',
         tournaments:        'count(distinct tournaments.id)',
-        faction:            'primary_factions.name',
+        faction:            'factions.name',
         average_percentile: weight_query_builder.build_average_query,
         average_wlr:        weight_query_builder.build_win_loss_query,
       }
       ship_combos_relation = ShipCombo
                                .joins(joins)
-                               .group('ship_combos.id, ship_combos.archetype_name, primary_factions.name')
+                               .group('ship_combos.id, ship_combos.archetype_name, factions.name')
                                .order('weight desc')
                                .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       if ship_id.present?
@@ -69,10 +68,13 @@ module Rankers
       if tournament_type.present?
         ship_combos_relation = ship_combos_relation.where('tournaments.tournament_type_id = ?', tournament_type)
       end
+      if game_format.present?
+        ship_combos_relation = ship_combos_relation.where('tournaments.format_id = ?', game_format)
+      end
       @ship_combos = ShipCombo.fetch_query(ship_combos_relation, attributes)
-      @ships       = Hash[ShipCombo.where(id: @ship_combos.map(&:id)).includes(:ships).map { |c| [c.id, c.ships.map { |s| { id: s.id, name: s.name, font_icon_class: s.font_icon_class } }] }]
+      @ships       = Hash[ShipCombo.where(id: @ship_combos.map(&:id)).includes(:ships).map { |c| [c.id, c.ships.map { |s| { id: s.id, name: s.name, xws: s.xws} }] }]
 
-      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
+      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type, game_format).numbers
     end
 
   end

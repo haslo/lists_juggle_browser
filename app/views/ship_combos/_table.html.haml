@@ -21,7 +21,7 @@
         %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{faction_icon(ship_combo.faction)}"}
       %td.ship-combo-cell
         - ships[ship_combo.id].each do |ship_info|
-          %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship_info[:font_icon_class]}"}
+          %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship_icon(ship_info[:xws])}"}
           = link_with_filter_to ship_path(ship_info[:id]) do
             = ship_info[:name]
           %br

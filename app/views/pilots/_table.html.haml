@@ -24,7 +24,7 @@
       %td
         %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{faction_icon(pilot.faction)}"}
       %td
-        %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{pilot.ship_font_icon_class}"}
+        %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship_id_icon(pilot.ship_id)}"}
         = link_with_filter_to ship_path(pilot.ship_id) do
           = pilot.ship_name
       %td

@@ -2,9 +2,9 @@
 
 * [FFG's fantastic X-Wing miniatures game](https://www.fantasyflightgames.com/en/products/x-wing),
 of course
-* [X-Wing Lists Juggler](http://lists.starwarsclubhouse.com/), sozin who built it, and all the folks
+* [X-Wing Lists Fortress](http://listfortress.com/), antigrapist who built it, and all the folks
 who contributed data by adding their tournaments
-* Guido Kessels and his [xwing-data repository](https://github.com/guidokessels/xwing-data)
+* Guido Kessels and his [xwing-data repository](https://github.com/guidokessels/xwing-data2)
 * The [X-Wing Miniatures Font](https://github.com/geordanr/xwing-miniatures-font) for symbols and icons
 * Everybody behind the [XWS Spec](https://github.com/elistevens/xws-spec)
 * My X-Wing team, the [Krayt Dragons](http://theflyingdragons.ch/)

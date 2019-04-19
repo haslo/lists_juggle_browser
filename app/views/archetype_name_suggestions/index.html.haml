@@ -33,7 +33,6 @@
       %td= suggestion.comment.presence || '-'
       %td.ship-combo-cell
         - suggestion.ship_combo.ships.each do |ship|
-          %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship.font_icon_class}"}
           = ship.name
           %br
       %td{style: 'white-space: nowrap'}

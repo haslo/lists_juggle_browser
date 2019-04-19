@@ -9,6 +9,7 @@ class Ship < ApplicationRecord
   validates :xws, uniqueness: true
 
   scope :small, -> { where(size: 'small') }
+  scope :medium, -> { where(size: 'medium')}
   scope :large, -> { where(size: 'large') }
   scope :huge, -> { where(size: 'huge') }
 

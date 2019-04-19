@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
         ranking_start:               params['ranking_start'].nil?               ? 1.month.ago.to_date  : params['ranking_start'],
         ranking_end:                 params['ranking_end'].nil?                 ? Time.current.to_date : params['ranking_end'],
         tournament_type:             params['tournament_type'].nil?             ? nil                  : params['tournament_type'],
+        format_id:                   params['format_id'].nil?                   ? nil                  : params['format_id'],
     }
   end
   helper_method :ranking_configuration
@@ -30,6 +31,8 @@ class ApplicationController < ActionController::Base
         params['ranking_end'].blank?                 || params['ranking_end'] == Time.current.to_date.to_s   ? nil : params['ranking_end'],
       tournament_type:
         params['tournament_type'].blank?                                                                     ? nil : params['tournament_type'],
+      format_id:
+        params['format_id'].blank?                                                                     ? nil : params['format_id'],
     }.reject{|_k, v| v.nil?}]
   end
   helper_method :raw_ranking_configuration

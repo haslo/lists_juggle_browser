@@ -1,12 +1,12 @@
 en:
   layouts:
     application:
-      title: 'meta-wing'
-      description: 'Meta analysis for the X-Wing Lists Juggler'
-      author: 'Guido Gloor Modjib'
+      title: 'meta-wing 2.0'
+      description: 'Meta analysis for the X-Wing List Fortress'
+      author: 'Matt Whited'
       currently_importing: 'Currently Importing...'
     top_navigation:
-      title: 'meta-wing'
+      title: 'meta-wing 2.0'
       browser: 'Data Browser'
       squad_visualizations: 'Squad Visualization'
       links:

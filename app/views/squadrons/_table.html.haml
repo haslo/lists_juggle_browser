@@ -8,7 +8,7 @@
   - squadrons.each do |squadron|
     %tr.row-for-search{data: {squadron_id: squadron.id}}
       %td
-        = link_to "http://lists.starwarsclubhouse.com/get_tourney_details?tourney_id=#{squadron.tournament.lists_juggler_id}" do
+        = link_to "http://listfortress.com/tournaments/#{squadron.tournament.lists_juggler_id}" do
           = squadron.tournament.name
         %br
         = squadron.tournament.tournament_type.name
@@ -29,7 +29,6 @@
             = t('.visualize')
         - squadron.ship_configurations.each do |ship_configuration|
           - if ship_configuration.pilot.present?
-            %i.xwing-miniatures-ship{class: "xwing-miniatures-ship-#{ship_configuration.pilot.ship.font_icon_class}"}
             %strong
               = link_with_filter_to pilot_path(ship_configuration.pilot.id), class: 'link-with-hover-image' do
                 = image_tag pilot_image_path(ship_configuration.pilot, format: :png)
@@ -38,7 +37,7 @@
               = link_with_filter_to ship_path(ship_configuration.pilot.ship.id) do
                 = "(#{ship_configuration.pilot.ship.name})"
               - ship_configuration.upgrades.each do |upgrade|
-                %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{upgrade.upgrade_type.font_icon_class}"}
+                %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{upgrade_type_icon(upgrade.upgrade_sides[0].upgrade_type)}"}
                 = link_with_filter_to upgrade_path(upgrade.id), class: 'link-with-hover-image' do
                   = image_tag upgrade_image_path(upgrade, format: :png)
                   = upgrade.name
@@ -46,7 +45,7 @@
             = t('.missing_pilot')
             %small
               - ship_configuration.upgrades.each do |upgrade|
-                %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{upgrade.upgrade_type.font_icon_class}"}
+                %i.xwing-miniatures-font{class: "xwing-miniatures-font-#{upgrade_type_icon(upgrade.upgrade_sides[0].upgrade_type)}"}
                 = link_with_filter_to upgrade_path(upgrade.id), class: 'link-with-hover-image' do
                   = image_tag upgrade_image_path(upgrade, format: :png)
                   = upgrade.name

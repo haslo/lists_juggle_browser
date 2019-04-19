@@ -7,13 +7,12 @@ module Rankers
       start_date      = ranking_configuration[:ranking_start]
       end_date        = ranking_configuration[:ranking_end]
       tournament_type = ranking_configuration[:tournament_type]
+      game_format = ranking_configuration[:format_id]
       joins           = <<-SQL
         inner join pilots
           on ships.id = pilots.ship_id
         inner join factions
           on pilots.faction_id = factions.id
-        inner join factions as primary_factions
-          on primary_factions.id = factions.primary_faction_id
         inner join ship_configurations
           on ship_configurations.pilot_id = pilots.id
         inner join squadrons
@@ -27,7 +26,7 @@ module Rankers
         xws:                'ships.xws',
         name:               'ships.name',
         weight:             weight_query_builder.build_weight_query,
-        font_icon_class:    'ships.font_icon_class',
+        font_icon_class:    'ships.icon',
         squadrons:          'count(distinct squadrons.id)',
         tournaments:        'count(distinct tournaments.id)',
         average_percentile: weight_query_builder.build_average_query,
@@ -39,9 +38,9 @@ module Rankers
                                .order('weight desc')
                                .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       if group_by_faction
-        ships_relation            = ships_relation.group('primary_factions.id, primary_factions.name')
-        attributes[:faction_id]   = 'primary_factions.id'
-        attributes[:faction_name] = 'primary_factions.name'
+        ships_relation            = ships_relation.group('factions.id, factions.name')
+        attributes[:faction_id]   = 'factions.id'
+        attributes[:faction_name] = 'factions.name'
       end
       if faction_id.present?
         ships_relation = ships_relation.where('factions.id = ?', faction_id)
@@ -55,10 +54,13 @@ module Rankers
       if tournament_type.present?
         ships_relation = ships_relation.where('tournaments.tournament_type_id = ?', tournament_type)
       end
+      if game_format.present?
+        ships_relation = ships_relation.where('tournaments.format_id = ?', game_format)
+      end
       @ships  = Ship.fetch_query(ships_relation, attributes)
       @pilots = Pilot.all.includes(:faction).to_a
 
-      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
+      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type, game_format).numbers
     end
 
     def ship_pilots

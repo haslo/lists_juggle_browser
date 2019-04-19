@@ -7,9 +7,10 @@ module Rankers
       start_date      = ranking_configuration[:ranking_start]
       end_date        = ranking_configuration[:ranking_end]
       tournament_type = ranking_configuration[:tournament_type]
+      game_format = ranking_configuration[:format_id]
       joins           = <<-SQL
-        inner join upgrade_types
-          on upgrade_types.id = upgrades.upgrade_type_id
+        inner join upgrade_sides
+          on upgrade_sides.upgrade_id = upgrades.id
         inner join ship_configurations_upgrades
           on ship_configurations_upgrades.upgrade_id = upgrades.id
         inner join ship_configurations
@@ -28,8 +29,8 @@ module Rankers
         id:                           'upgrades.id',
         xws:                          'upgrades.xws',
         name:                         'upgrades.name',
-        upgrade_type:                 'upgrade_types.name',
-        upgrade_type_font_icon_class: 'upgrade_types.font_icon_class',
+        upgrade_type:                 'upgrade_sides.upgrade_type',
+        #upgrade_type_font_icon_class: nil,
         weight:                       weight_query_builder.build_weight_query,
         squadrons:                    'count(distinct squadrons.id)',
         tournaments:                  'count(distinct tournaments.id)',
@@ -38,7 +39,7 @@ module Rankers
       }
       upgrade_relation     = Upgrade
                                .joins(joins)
-                               .group('upgrades.id, upgrades.name, upgrade_types.name, upgrade_types.font_icon_class')
+                               .group('upgrades.id, upgrades.name, upgrade_sides.upgrade_type') #, upgrade_types.font_icon_class
                                .order('weight desc')
                                .where('tournaments.date >= ? and tournaments.date <= ?', start_date, end_date)
       if ship_id.present?
@@ -63,9 +64,12 @@ module Rankers
       if tournament_type.present?
         upgrade_relation = upgrade_relation.where('tournaments.tournament_type_id = ?', tournament_type)
       end
+      if game_format.present?
+        upgrade_relation = upgrade_relation.where('tournaments.format_id = ?', game_format)
+      end
       @upgrades = Upgrade.fetch_query(upgrade_relation, attributes)
 
-      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type).numbers
+      @number_of_tournaments, @number_of_squadrons = Rankers::GenericRanker.new(start_date, end_date, tournament_type, game_format).numbers
     end
 
   end

@@ -2,17 +2,38 @@ require 'csv'
 
 namespace :sync do
 
-  desc 'xwing-data'
-  task xwing_data: :environment do
-    Importers::XwingData.new.sync_all
+  desc 'reset_pilots'
+  task reset_pilots: :environment do
+    Importers::XwingData2.new.reset_pilots
   end
 
-  desc 'lists juggler'
+  desc 'xwing-data2'
+  task xwing_data2: :environment do
+    Importers::XwingData2.new.sync_all
+  end
+
+  desc 'list fortress remove deleted tournaments'
+  task clean_tournaments: :environment do
+    Importers::ListsJuggler.new.clean_tournaments()
+  end
+
+  desc 'list fortress delete tournament'
+  task :tournament_delete, [:tournament_id] => :environment do |_t, args|
+    tournament_id = args[:tournament_id].to_i
+    Importers::ListsJuggler.new.remove_tournament(tournament_id)
+  end
+
+  desc 'lists fortress'
   task :tournaments, [:minimum_id] => :environment do |_t, args|
-    Importers::ListsJuggler.new.sync_tournaments(minimum_id: args[:minimum_id].to_i, add_missing: false)
+    Importers::ListsJuggler.new.sync_tournaments(minimum_id: args[:minimum_id].to_i, add_missing: false, use_updated: false)
   end
 
-  desc 'lists juggler, last month'
+  desc 'lists fortress'
+  task :tournaments_updated, [:minimum_id] => :environment do |_t, args|
+    Importers::ListsJuggler.new.sync_tournaments(minimum_id: args[:minimum_id].to_i, add_missing: false, use_updated: true)
+  end
+
+  desc 'lists fortress, last month'
   task recent_tournaments: :environment do
     Importers::ListsJuggler.new.sync_tournaments(start_date: 1.month.ago.iso8601, add_missing: true)
   end

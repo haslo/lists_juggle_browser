@@ -2,7 +2,7 @@ class UpgradesController < ApplicationController
 
   def index
     @view = Rankers::UpgradesRanker.new(ranking_configuration)
-
+    p @view
     respond_to do |format|
       format.html do
         # standard render pipeline
@@ -21,6 +21,7 @@ class UpgradesController < ApplicationController
     ship_combos_ranker = Rankers::ShipCombosRanker.new(ranking_configuration, upgrade_id: params[:id], limit: 10)
     @view              = OpenStruct.new({
                                           upgrade:               Upgrade.find(params[:id]),
+                                          upgrade_sides:          UpgradeSide.find_by(upgrade_id:params[:id]),
                                           upgrades:              upgrades_ranker.upgrades,
                                           squadrons:             Rankers::SquadronsRanker.new(ranking_configuration, upgrade_id: params[:id]).squadrons,
                                           pilots:                Rankers::PilotsRanker.new(ranking_configuration, upgrade_id: params[:id]).pilots,
