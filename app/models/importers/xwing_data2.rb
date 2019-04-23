@@ -72,7 +72,7 @@ module Importers
     end
 
     def sync_pilot(pilot_hash,ship,faction_id)
-      pilot = Pilot.where({ffg:pilot_hash['ffg'],ship_id:ship.id,faction_id:faction_id}).find_or_create_by(xws:pilot_hash['xws'])
+      pilot = Pilot.where({ship_id:ship.id,faction_id:faction_id}).find_or_create_by(xws:pilot_hash['xws'])
       pilot.ffg = pilot_hash['ffg']
       pilot.ship_id = ship.id
       pilot.faction_id = faction_id
@@ -90,14 +90,19 @@ module Importers
       pilot_slots = pilot_hash['slots']
       if pilot_slots.present?
         pilot_slots.each do |slot_name|
-          slot = PilotSlot.find_or_create_by(pilot_id:pilot.id,name:slot_name)
+          slot = PilotSlot.where({name:slot_name}).find_or_create_by(pilot_id:pilot.id)
+          slot.name = slot_name
+          slot.save
         end
       end
 
       pilot_alts = pilot_hash['alt']
       if pilot_alts.present?
         pilot_alts.each do |alt_hash|
-          alt = PilotAlt.find_or_create_by(pilot_id:pilot.id,image:alt_hash['image'],source:alt_hash['source'])
+          alt = PilotAlt.where({image:alt_hash['image'],source:alt_hash['source']}).find_or_create_by(pilot_id:pilot.id)
+          alt.image = alt_hash['image']
+          alt.source = alt_hash['source']
+          alt.save
         end
       end
 
