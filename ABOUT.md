@@ -16,7 +16,7 @@ If you'd like to support and help pay for the hosting of ListFortress and Meta-W
 ### Implementation
 
 The original X-Wing 1.0 [source is available on GitHub](https://github.com/haslo/lists_juggle_browser) with an MIT license, and the version 2.0 [source is available on GitHub](https://github.com/AlexRaubach/lists_juggle_browser) with an MIT license.
-and the application stack uses [PostgreSQL](https://www.postgresql.org/), [Ruby on Rails](http://rubyonrails.org/),
+The application stack uses [PostgreSQL](https://www.postgresql.org/), [Ruby on Rails](http://rubyonrails.org/),
 [jQuery](https://jquery.com/) and [Bootstrap](http://getbootstrap.com/). The server runs
 [nginx](https://www.nginx.com/solutions/web-server/) in front of [puma](http://puma.io/) on
 [Ubuntu](https://www.ubuntu.com/). The image export uses [ChunkyPNG](http://chunkypng.com/) with [OilyPNG](https://github.com/wvanbergen/oily_png).
