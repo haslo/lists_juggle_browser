@@ -9,14 +9,14 @@
         %p= t('.explanation')
         = text_area_tag 'xws-text-area', '', id: 'xws-text-area', class: 'form-control'
         %br
-        = form_tag squad_visualizations_path, method: :post, class: 'export-form' do
+        -# form_tag squad_visualizations_path, method: :post, class: 'export-form' do
           = hidden_field_tag :xws, '', class: 'xws-export-data'
           = submit_tag t('.visualize'), class: 'export-button btn btn-secondary btn-sm'
-        = link_to t('.open_in_yasb'), 'javascript:void(0)', class: 'export-button btn btn-secondary btn-sm yasb-export-link'
-        = form_tag 'http://xwing-builder.co.uk/import', method: :post, authenticity_token: false, class: 'export-form' do
+        -# link_to t('.open_in_yasb'), 'javascript:void(0)', class: 'export-button btn btn-secondary btn-sm yasb-export-link'
+        -# form_tag 'http://xwing-builder.co.uk/import', method: :post, authenticity_token: false, class: 'export-form' do
           = hidden_field_tag :data, '', class: 'xws-export-data'
           = submit_tag t('.open_in_voidstate'), class: 'export-button btn btn-secondary btn-sm'
-        = form_tag 'http://x-wing.fabpsb.net/loadxws_process.php', method: :post, authenticity_token: false, class: 'export-form' do
+        -# form_tag 'http://x-wing.fabpsb.net/loadxws_process.php', method: :post, authenticity_token: false, class: 'export-form' do
           = hidden_field_tag :'sq', '', class: 'xws-export-data'
           = submit_tag t('.open_in_fabs'), class: 'export-button btn btn-secondary btn-sm'
         = hidden_field_tag :'xws-content', '', class: 'xws-export-data', id: 'yasb-xws'
