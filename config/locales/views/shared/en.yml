@@ -16,11 +16,11 @@ en:
         today: 'Today'
       multipliers:
         large_tournament_multiplier:
-          multiply: 'Large tournaments = more Magic'
+          multiply: 'Large tournaments = more Weight'
           do_not_multiply: '(no effect)'
         widespread_use_multiplier:
-          multiply_high: 'Widespread use = more Magic'
-          multiply_low: 'Widespread use = slightly more Magic'
+          multiply_high: 'Widespread use = more Weight'
+          multiply_low: 'Widespread use = slightly more Weight'
           do_not_multiply: '(no effect)'
       data_uses:
         swiss: 'use Swiss ranks'

@@ -14,7 +14,7 @@ en:
       tournaments_count: '# Tournaments'
       average_percentile: 'avg Percentile'
       win_loss_ratio: 'Win/Loss Ratio'
-      weight: 'Magic'
+      weight: 'Weighted Score'
       no_image: '(no image)'
     show:
       title: 'Pilot: %{name}'
@@ -37,4 +37,4 @@ en:
       tournaments_count: '# Tournaments'
       average_percentile: 'avg Percentile'
       win_loss_ratio: 'Win/Loss Ratio'
-      weight: 'Magic'
+      weight: 'Weighted Score'
