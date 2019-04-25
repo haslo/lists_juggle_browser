@@ -25,7 +25,7 @@
           = link_to 'javascript:void(0);', class: 'xws-link btn btn-sm btn-secondary', data: {xws: squadron.xws, link: squadron_url(squadron, format: :json)} do
             = t('.export')
           &nbsp;
-          = link_to squad_visualization_path(squadron), class: 'btn btn-sm btn-secondary' do
+          -# link_to squad_visualization_path(squadron), class: 'btn btn-sm btn-secondary' do
             = t('.visualize')
         - squadron.ship_configurations.each do |ship_configuration|
           - if ship_configuration.pilot.present?

@@ -14,7 +14,7 @@
           = t('.browser')
           - if active == :browser
             %span.sr-only= "(#{t('.current')})"
-      %li.nav-item{class: active == :squad_visualizations ? 'active' : ''}
+      -# li.nav-item{class: active == :squad_visualizations ? 'active' : ''}
         = link_with_filter_to new_squad_visualization_path, class: 'nav-link' do
           = t('.squad_visualizations')
           - if active == :squad_visualizations

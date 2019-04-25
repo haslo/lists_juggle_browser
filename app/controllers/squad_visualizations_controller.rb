@@ -63,14 +63,17 @@ class SquadVisualizationsController < ApplicationController
   end
 
   def get_image(model)
-    root   = Rails.root + 'vendor' + 'xwing-data' + 'images'
-    target = root + model.image_path.to_s # if nil, target will be root and thus not a file
-    if target.cleanpath.to_s.include?(root.cleanpath.to_s) && target.file? # check if child of root, to avoid escaping the sandbox
-      ChunkyPNG::Image.from_file(target)
-    else
-      # TODO use placeholder image instead
-      ChunkyPNG::Image.new(1, 1, ChunkyPNG::Color::TRANSPARENT)
-    end
+    # xwing_data2 doesn't include image files so this method would need to grab images from FFG or from a cache instead
+
+    # root   = Rails.root + 'vendor' + 'xwing-data' + 'images'
+    # target = root + model.image_path.to_s # if nil, target will be root and thus not a file
+    # if target.cleanpath.to_s.include?(root.cleanpath.to_s) && target.file? # check if child of root, to avoid escaping the sandbox
+    #   ChunkyPNG::Image.from_file(target)
+    # else
+    #   # TODO use placeholder image instead
+    #   ChunkyPNG::Image.new(1, 1, ChunkyPNG::Color::TRANSPARENT)
+    # end
+    ChunkyPNG::Image.new(1, 1, ChunkyPNG::Color::TRANSPARENT)
   end
 
 end
