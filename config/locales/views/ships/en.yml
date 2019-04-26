@@ -23,7 +23,7 @@ en:
       tournaments_count: '# Tournaments'
       average_percentile: 'avg Percentile'
       win_loss_ratio: 'Win/Loss Ratio'
-      weight: 'Magic'
+      weight: 'Weighted Score'
       no_image: '(no image)'
     edit_modal:
       title: 'Edit Ship Type Data'
@@ -38,4 +38,4 @@ en:
       tournaments_count: '# Tournaments'
       average_percentile: 'avg Percentile'
       win_loss_ratio: 'Win/Loss Ratio'
-      weight: 'Magic'
+      weight: 'Weighted Score'

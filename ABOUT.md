@@ -36,7 +36,7 @@ Examples (slightly simplified): `3rd of 12 => 75th percentile`, `9th of 90 => 90
 `2nd of 16 in cut of 80 => 87.5th percentile`.
 
 The ranking then adds these percentiles for the chosen rankings (Swiss or cut or both), which results in a value I
-call "Magic". Two multipliers are used on this Magic value, if used for the filter: `log(number of players in tournament)`
+call "Weighted Score". Two multipliers are used on this Weighted Score value, if used for the filter: `log(number of players in tournament)`
 in order to reward heavy competition, and `log(number of squadrons who used this thing, total)` in order to bring things
 to the top that are prevalent in the meta.
 
