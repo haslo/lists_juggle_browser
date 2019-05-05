@@ -1,4 +1,4 @@
-# Lists Juggle Browser
+# MetaWing
 
 An application that takes the wealth of data from List Fortress, and tries to
 distill it down into a number of reports that answer questions the community might
@@ -23,7 +23,7 @@ rake db:create db:migrate db:seed
 Importing all the data (takes a while):
 
 ```bash
-rake sync:enable sync:xwing_data sync:tournaments sync:rebuild_rankings sync:disable
+rake sync:enable sync:xwing_data2 sync:tournaments sync:rebuild_rankings sync:disable
 ```
 
 For updates later (updates everything):

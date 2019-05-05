@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727205329) do
+ActiveRecord::Schema.define(version: 20190213221521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,15 +27,13 @@ ActiveRecord::Schema.define(version: 20170727205329) do
   end
 
   create_table "conditions", id: :serial, force: :cascade do |t|
-    t.integer "pilot_id"
-    t.integer "upgrade_id"
     t.string "name"
     t.string "image_path"
     t.string "xws"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["pilot_id"], name: "index_conditions_on_pilot_id"
-    t.index ["upgrade_id"], name: "index_conditions_on_upgrade_id"
+    t.string "ability"
+    t.string "image"
   end
 
   create_table "factions", id: :serial, force: :cascade do |t|
@@ -43,8 +41,14 @@ ActiveRecord::Schema.define(version: 20170727205329) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "xws"
-    t.boolean "is_subfaction"
-    t.integer "primary_faction_id"
+    t.integer "ffg"
+    t.string "icon"
+  end
+
+  create_table "formats", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "games", id: :serial, force: :cascade do |t|
@@ -71,6 +75,23 @@ ActiveRecord::Schema.define(version: 20170727205329) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "pilot_alts", force: :cascade do |t|
+    t.bigint "pilot_id"
+    t.string "image"
+    t.string "source"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pilot_id"], name: "index_pilot_alts_on_pilot_id"
+  end
+
+  create_table "pilot_slots", force: :cascade do |t|
+    t.bigint "pilot_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pilot_id"], name: "index_pilot_slots_on_pilot_id"
+  end
+
   create_table "pilots", id: :serial, force: :cascade do |t|
     t.integer "ship_id"
     t.integer "faction_id"
@@ -78,7 +99,20 @@ ActiveRecord::Schema.define(version: 20170727205329) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "xws"
-    t.string "image_path"
+    t.string "caption"
+    t.integer "initiative"
+    t.integer "limited"
+    t.string "ability"
+    t.string "image"
+    t.string "artwork"
+    t.boolean "hyperspace"
+    t.integer "cost"
+    t.integer "charges_value"
+    t.integer "charges_recovers"
+    t.integer "force_value"
+    t.integer "force_recovers"
+    t.string "force_side"
+    t.integer "ffg"
     t.index ["faction_id"], name: "index_pilots_on_faction_id"
     t.index ["ship_id"], name: "index_pilots_on_ship_id"
   end
@@ -117,10 +151,17 @@ ActiveRecord::Schema.define(version: 20170727205329) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "font_icon_class"
     t.string "xws"
     t.string "size"
+    t.integer "ffg"
+    t.string "icon"
     t.index ["size"], name: "index_ships_on_size"
+  end
+
+  create_table "slots", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "squadrons", id: :serial, force: :cascade do |t|
@@ -162,10 +203,55 @@ ActiveRecord::Schema.define(version: 20170727205329) do
     t.string "city"
     t.string "state"
     t.string "country"
-    t.string "format"
     t.integer "venue_id"
+    t.bigint "format_id"
+    t.index ["format_id"], name: "index_tournaments_on_format_id"
     t.index ["tournament_type_id"], name: "index_tournaments_on_tournament_type_id"
     t.index ["venue_id"], name: "index_tournaments_on_venue_id"
+  end
+
+  create_table "upgrade_side_alts", force: :cascade do |t|
+    t.bigint "upgrade_side_id"
+    t.string "image"
+    t.string "source"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["upgrade_side_id"], name: "index_upgrade_side_alts_on_upgrade_side_id"
+  end
+
+  create_table "upgrade_side_slots", force: :cascade do |t|
+    t.bigint "upgrade_side_id"
+    t.bigint "slot_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slot_id"], name: "index_upgrade_side_slots_on_slot_id"
+    t.index ["upgrade_side_id"], name: "index_upgrade_side_slots_on_upgrade_side_id"
+  end
+
+  create_table "upgrade_sides", force: :cascade do |t|
+    t.bigint "upgrade_id"
+    t.string "title"
+    t.string "upgrade_type"
+    t.string "ability"
+    t.string "image"
+    t.string "artwork"
+    t.integer "charges_value"
+    t.integer "charges_recovers"
+    t.string "attack_arc"
+    t.integer "attack_value"
+    t.integer "attack_minrange"
+    t.integer "attack_maxrange"
+    t.boolean "attack_ordnance"
+    t.string "device_name"
+    t.string "device_type"
+    t.string "device_effect"
+    t.integer "force_value"
+    t.integer "force_recovers"
+    t.string "force_side"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "ffg"
+    t.index ["upgrade_id"], name: "index_upgrade_sides_on_upgrade_id"
   end
 
   create_table "upgrade_types", id: :serial, force: :cascade do |t|
@@ -178,12 +264,12 @@ ActiveRecord::Schema.define(version: 20170727205329) do
 
   create_table "upgrades", id: :serial, force: :cascade do |t|
     t.string "name"
-    t.integer "upgrade_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "xws"
-    t.string "image_path"
-    t.index ["upgrade_type_id"], name: "index_upgrades_on_upgrade_type_id"
+    t.integer "limited"
+    t.integer "cost"
+    t.boolean "hyperspace"
   end
 
   create_table "users", force: :cascade do |t|
@@ -217,14 +303,13 @@ ActiveRecord::Schema.define(version: 20170727205329) do
     t.index ["state"], name: "index_venues_on_state"
   end
 
-  add_foreign_key "conditions", "pilots"
-  add_foreign_key "conditions", "upgrades"
-  add_foreign_key "factions", "factions", column: "primary_faction_id"
   add_foreign_key "games", "ship_combos", column: "losing_combo_id"
   add_foreign_key "games", "ship_combos", column: "winning_combo_id"
   add_foreign_key "games", "squadrons", column: "losing_squadron_id"
   add_foreign_key "games", "squadrons", column: "winning_squadron_id"
   add_foreign_key "games", "tournaments"
+  add_foreign_key "pilot_alts", "pilots"
+  add_foreign_key "pilot_slots", "pilots"
   add_foreign_key "pilots", "factions"
   add_foreign_key "pilots", "ships"
   add_foreign_key "ship_combos_ships", "ship_combos"
@@ -236,7 +321,11 @@ ActiveRecord::Schema.define(version: 20170727205329) do
   add_foreign_key "squadrons", "factions"
   add_foreign_key "squadrons", "ship_combos"
   add_foreign_key "squadrons", "tournaments"
+  add_foreign_key "tournaments", "formats"
   add_foreign_key "tournaments", "tournament_types"
   add_foreign_key "tournaments", "venues"
-  add_foreign_key "upgrades", "upgrade_types"
+  add_foreign_key "upgrade_side_alts", "upgrade_sides"
+  add_foreign_key "upgrade_side_slots", "slots"
+  add_foreign_key "upgrade_side_slots", "upgrade_sides"
+  add_foreign_key "upgrade_sides", "upgrades"
 end
