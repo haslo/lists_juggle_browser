@@ -3,7 +3,7 @@ ruby "~> 2.4.6"
 
 # core
 
-gem 'rails', '~> 5.1.1'
+gem 'rails', '~> 5.1'
 gem 'pg'
 gem 'puma'
 
@@ -13,7 +13,7 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
 gem 'haml'
-gem 'bootstrap'
+gem 'bootstrap', '4.0.0.alpha6'
 gem 'font-awesome-rails'
 
 # core libs
