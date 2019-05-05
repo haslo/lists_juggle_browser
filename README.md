@@ -18,7 +18,8 @@ bundle
 rake db:create db:migrate db:seed
 ```
 
-...and done. It might not work as easily on Windows, because Windows.
+...and done. If you're developing on Windows, 
+install the Linux for Windows subsystem and use that to install and manage dependancies.
 
 Importing all the data (takes a while):
 
