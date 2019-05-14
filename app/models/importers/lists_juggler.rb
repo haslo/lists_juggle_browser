@@ -157,7 +157,7 @@ module Importers
         #p faction.id
         squadron.assign_attributes({
                                      tournament:           tournament,
-                                     player_name:          squadron_data['id'],
+                                     player_name:          squadron_data['name'],
                                      xws:                  squadron_data['list_json'],
                                      mov:                  squadron_data['mov'],
                                      points:               squadron_data['score'],
