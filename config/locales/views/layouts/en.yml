@@ -18,6 +18,7 @@ en:
       about: 'About'
       news: 'Changelog'
       current: 'current'
+      listfortress: 'List Fortress'
     side_navigation:
       links:
         overviews: 'Intro'

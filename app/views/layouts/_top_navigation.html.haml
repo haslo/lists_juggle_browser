@@ -29,6 +29,9 @@
           = t('.news')
           - if active == :news
             %span.sr-only= "(#{t('.current')})"
+      %li.nav-item
+        =link_to 'https://listfortress.com', class: 'nav-link' do
+          = t('.listfortress')
       .hidden-lg-up
         - %w[overviews pilots ships upgrades ship_combos].each do |controller|
           - is_current = controller == params[:controller]
