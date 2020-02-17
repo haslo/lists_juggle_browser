@@ -1,3 +1,9 @@
+# Meta Wing 2.0 lives elsewhere
+
+Thanks for visiting. Please go here instead for the newest version of Meta-Wing:
+
+https://github.com/AlexRaubach/MetaWing
+
 # Lists Juggle Browser
 
 [![Code Climate](https://codeclimate.com/github/haslo/lists_juggle_browser.png)](https://codeclimate.com/github/haslo/lists_juggle_browser)
