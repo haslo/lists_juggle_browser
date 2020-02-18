@@ -4,6 +4,8 @@ Thanks for visiting. Please go here instead for the newest version of Meta-Wing:
 
 https://github.com/AlexRaubach/MetaWing
 
+# Old readme follows for archival purposes
+
 # Lists Juggle Browser
 
 [![Code Climate](https://codeclimate.com/github/haslo/lists_juggle_browser.png)](https://codeclimate.com/github/haslo/lists_juggle_browser)
